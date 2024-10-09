@@ -1,5 +1,5 @@
+# Pratique 04 🗑️ : Supprimer des images et conteneurs & créer une image Nginx
 
-### **Manipulations # 4 - SUPPRIMER DES IMAGES ET DES CONTAINERS & CRÉER UNE IMAGE NGINX**
 
 # **Objectif** :
 - Cet exercice permet de comprendre comment gérer des conteneurs Docker en les lançant, les arrêtant, et les supprimant, ainsi que comment gérer les images Docker. 
