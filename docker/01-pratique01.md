@@ -49,8 +49,31 @@ docker ps -a
 
 ```bash
 docker run -it ubuntu
+cat /etc/os-release
 ls
 ```
+
+3. Ouvrir un autre terminal (terminal 2)  exécutez la commande suivante.
+
+```bash
+docker ps
+```
+
+4. Revenir au premier terminal(terminal 1)  et exécutez la commande suivante.
+
+```bash
+exit
+```
+
+5. Revenir au terminal #2 et exécutez la commande suivante.
+
+```bash
+docker ps
+```
+
+6. Qu'observez-vous dans les résultats ? Pourquoi le résultat est-il différent de celui attendu dans les étapes 3. et 5.?
+
+
 
 ### Exercice 5 : Supprimer toutes les images
 **Objectif :** Comprendre la suppression des images.
