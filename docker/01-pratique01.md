@@ -33,8 +33,12 @@ docker images
 
 ```bash
 docker run --name mon_hello hello-world
+docker ps
+docker ps -a
 docker stop mon_hello
 docker rm mon_hello
+docker ps
+docker ps -a
 ```
 
 ### Exercice 4 : Créer un conteneur interactif
