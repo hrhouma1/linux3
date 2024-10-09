@@ -96,3 +96,18 @@ docker ps
 docker run --name mon_busybox busybox
 docker rmi $(docker images -q)
 ```
+3. Si vous avez des images utilisées par des conteneurs, docker refusera de les supprimer
+
+
+```bash
+docker ps
+docker ps -a
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker ps
+docker ps -a
+docker images
+docker rmi $(docker images -q)
+docker images
+
+```
