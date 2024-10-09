@@ -2,7 +2,7 @@
 
 *Ce quiz est exclusivement centré sur Docker et inclut des questions couvrant les commandes Docker de base, l'utilisation des Dockerfiles, ainsi que des fichiers `docker-compose.yml`.*
 
-### **Partie 1 - QUIZ FORMATIF DOCKER (100 points)**
+### **Partie 1 - QUIZ FORMATIF DOCKER**
 
 1. **Quelle commande est utilisée pour lister tous les conteneurs Docker, y compris ceux qui ne sont pas en cours d'exécution ?**  
 *Choix unique* (3 points)  
