@@ -1,3 +1,5 @@
+# Pratique 05 🌐 : Créer un conteneur Apache avec et sans Dockerfile
+
 ### **Devoir :**
 
 Vous allez créer un conteneur avec Apache installé à l'intérieur et configurer une page web simple. Vous devez effectuer ce devoir avec **deux méthodes** :
