@@ -1,4 +1,4 @@
-# QUIZ 2
+# Pratique 06 📋 : Quiz Docker - Commandes et Docker Compose
 
 *Ce quiz est exclusivement centré sur Docker et inclut des questions couvrant les commandes Docker de base, l'utilisation des Dockerfiles, ainsi que des fichiers `docker-compose.yml`.*
 
