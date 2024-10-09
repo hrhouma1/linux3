@@ -14,13 +14,25 @@
    ```bash
    docker pull alpine
    ```
+
+*commandes à apprendre par coeur pour vérifications:*
+
+   ```bash
+   docker ps
+   docker ps -a
+   docker images
+   ```
+   
 2. Lance un conteneur avec cette image et un processus qui affiche un message puis reste actif pendant 30 secondes :
    ```bash
    docker run alpine sh -c "echo 'Bonjour depuis Alpine' && sleep 30"
    ```
 3. Pendant que le processus est en cours, vérifie que le conteneur est actif avec `docker ps`.
 
-**Question : Pourquoi `docker ps` montre que le conteneur est actif uniquement pendant 30 secondes ?**
+**Question 1: Pourquoi `docker ps` montre que le conteneur est actif uniquement pendant 30 secondes ?**
+**Question 2: Exécutez la commande `docker run alpine` et ensuite `docker ps` et `docker ps -a` ? Vos remarques ?**
+**Question 3: Exécutez la commande `docker run -it alpine` et ensuite (dans un autre terminal) `docker ps` et `docker ps -a` ? Vos remarques ?**
+**Question 4: Exécutez la commande `docker run -d alpine` et ensuite (dans le même terminal) `docker ps` et `docker ps -a` ? Vos remarques ?**
 
 ---
 
@@ -35,7 +47,17 @@
    ```
 3. Vérifie si le conteneur est toujours actif après 1 minute en utilisant `docker ps -a`.
 
-**Question : Qu’est-ce qui se passe après que le temps imparti est terminé ?**
+**Question 1: Qu’est-ce qui se passe après que le temps imparti est terminé ?**
+**Question 2: Les 5 commandes ci-dessous sont-elles équivalentes ? Expliquez en détail la spécificité de chaque commande, en précisant leur effet et les différences éventuelles.**
+
+```bash
+docker run alpine
+docker run -it alpine
+docker run -i alpine
+docker run -it -d alpine
+docker run alpine sh -c "sleep 60"
+
+```
 
 ---
 
@@ -47,7 +69,19 @@
 2. Une fois dans le conteneur, tape des commandes comme `ls`, `pwd`, ou `echo "Bonjour Docker"` pour interagir avec le système.
 3. Tape `exit` pour quitter le conteneur.
 
-**Question : Quelle est la différence entre un conteneur interactif et un conteneur qui se ferme automatiquement après l'exécution d'une commande ?**
+**Question 1: Quelle est la différence entre un conteneur interactif et un conteneur qui se ferme automatiquement après l'exécution d'une commande ?**
+**Question 2 : Associez chaque processus observé avec la commande docker `ps -a` aux commandes ci-dessous (après les avoir exécuté). Expliquez en détail la spécificité de chaque commande et identifiez quel processus correspond à chacune d'elles, en précisant leur effet et les différences éventuelles.**
+
+```bash
+docker run ubuntu
+docker run ubuntu
+docker run ubuntu
+docker run -it ubuntu
+docker run -it -d ubuntu
+docker ps
+docker ps -a
+```
+
 
 ---
 
@@ -63,6 +97,7 @@
    docker run -p 8080:8080 mon-serveur-web
    ```
 3. Ouvre ton navigateur et accède à `http://localhost:8080` pour voir si le serveur tourne.
+4. Observez le terminal également (les réponses et codes de réponses 200, 404, etc ...)
 
 **Question : Pourquoi le conteneur reste actif tant que le serveur est en cours d'exécution ?**
 
