@@ -75,6 +75,17 @@ docker ps
 
 
 
+7. Comparez les commandes *sans* et *avec* l'option -d
+
+```bash
+docker run -it ubuntu
+ls
+exit
+docker ps
+docker run -d -it ubuntu
+docker ps
+```
+
 ### Exercice 5 : Supprimer toutes les images
 **Objectif :** Comprendre la suppression des images.
 
