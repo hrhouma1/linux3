@@ -11,6 +11,7 @@
 docker run -d --name mon_nginx nginx
 docker ps
 ```
+3. Proposez une amélioration des commandes ci-dessus
 
 ### Exercice 2 : Afficher les images Docker
 **Objectif :** Comprendre la gestion des images Docker.
