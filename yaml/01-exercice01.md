@@ -229,3 +229,5 @@ employee:
 
 Complétez le fichier en ajoutant les informations de paie sous la clé **payslips**.
 
+# Correction :
+- https://drive.google.com/drive/folders/1OgTsZy1Cd9LJNyO7C5n2eSV5JVwS59gt?usp=sharing
