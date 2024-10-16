@@ -138,3 +138,94 @@ Dans le fichier **/home/bob/playbooks/practice.yaml**, ajoutez deux valeurs supp
 
 Complétez le fichier en ajoutant deux autres éléments à cette liste pour atteindre le total demandé.
 
+
+# Question 10
+
+Le fichier **/home/bob/playbooks/practice.yaml** a été mis à jour avec des données pour **apple**, **orange**, et **mango**. Comme pour **apple**, nous souhaitons ajouter des détails supplémentaires pour chaque élément, tels que la couleur et le poids. Modifiez les éléments restants pour correspondre aux données ci-dessous.
+
+| Orange  |         |         |
+|---------|---------|---------|
+| color   | orange  |         |
+| weight  | 90g     |         |
+
+| Mango   |         |         |
+|---------|---------|---------|
+| color   | yellow  |         |
+| weight  | 150g    |         |
+
+- Contenu actuel du fichier **practice.yaml** :
+
+```yaml
+- name: apple
+  color: red
+  weight: 100g
+- name: orange
+- name: mango
+```
+
+Complétez les informations manquantes pour **orange** et **mango** avec les détails fournis.
+
+# Question 11
+
+Le fichier **/home/bob/playbooks/practice.yaml** a été mis à jour avec un dictionnaire nommé **employee**. Nous souhaitons enregistrer les informations de plusieurs employés. Convertissez le dictionnaire nommé **employee** en un tableau nommé **employees**.
+
+- Contenu actuel du fichier **practice.yaml** :
+
+```yaml
+employee:
+  name: john
+  gender: male
+  age: 24
+```
+
+Modifiez ce contenu pour convertir le dictionnaire **employee** en un tableau **employees**.
+
+
+# Question 12
+
+Mettez à jour le fichier **/home/bob/playbooks/practice.yaml** pour ajouter un employé supplémentaire (sous l'entrée existante) à la liste en utilisant les informations ci-dessous.
+
+| Clé/Propriété | Valeur  |
+|---------------|---------|
+| name          | sarah   |
+| gender        | female  |
+| age           | 28      |
+
+- Contenu actuel du fichier **practice.yaml** :
+
+```yaml
+employees:
+  - name: john
+    gender: male
+    age: 24
+```
+
+Ajoutez les informations de l'employée **sarah** sous l'entrée actuelle.
+
+
+
+# Question 13
+
+Nous avons mis à jour le fichier **/home/bob/playbooks/practice.yaml** pour ajouter plus de détails. Maintenant, ajoutez les informations de paie. Rappelez-vous que, tandis que **address** est un dictionnaire, **payslips** est un tableau contenant **month** et **amount**.
+
+| Mois   | Montant |
+|--------|---------|
+| june   | 1400    |
+| july   | 2400    |
+| august | 3400    |
+
+- Contenu actuel du fichier **practice.yaml** :
+
+```yaml
+employee:
+  name: john
+  gender: male
+  age: 24
+  address:
+    city: 'edison'
+    state: 'new jersey'
+    country: 'united states'
+```
+
+Complétez le fichier en ajoutant les informations de paie sous la clé **payslips**.
+
