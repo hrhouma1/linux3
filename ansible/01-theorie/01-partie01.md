@@ -37,6 +37,17 @@ Ansible est un outil open-source conçu pour l'automatisation des tâches IT tel
 
 
 
+# L'idempotence ?
+
+> *"L'idempotence, c'est un mot qui peut sembler intimidant, mais l'idée derrière est d'une simplicité presque élégante."*
+> 
+> **Imagine ceci :** tu demandes à quelqu'un de ranger une chaise. Si la chaise est déjà parfaitement en place, il ne la touche pas. Mais si elle est mal placée, il la remet correctement. Une fois bien rangée, inutile de refaire l'action, peu importe combien de fois tu redonnes l'instruction.
+> 
+> **En informatique,** c'est le même principe. Quand une tâche est **idempotente**, cela signifie que tu peux l'exécuter encore et encore, mais le résultat restera inchangé. Prenons **Ansible** : si tu lui demandes d'installer un logiciel ou de configurer une machine, il le fera seulement si c'est nécessaire. Si c'est déjà fait, il s'abstient, évitant ainsi de gaspiller du temps ou de provoquer des erreurs inutiles.
+> 
+> *"C'est un peu comme un gardien vigilant qui veille à ce que tout reste en ordre, sans jamais répéter ce qui a déjà été fait."* Cela assure que ton système atteint et conserve l'état souhaité, sans que tu aies besoin de tout refaire à chaque fois.
+
+
 [Retour à la Table des Matières](#)
 
 ---
