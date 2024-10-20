@@ -219,3 +219,7 @@ Ansible Galaxy est une plateforme où les utilisateurs peuvent partager des rôl
 
 ![image](https://github.com/user-attachments/assets/1615dfd2-f58e-4b12-9260-8bb8e9ade964)
 
+
+![image](https://github.com/user-attachments/assets/245ad78b-f92f-403b-bd18-e56afd6903f7)
+
+
