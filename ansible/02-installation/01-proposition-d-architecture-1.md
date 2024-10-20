@@ -42,7 +42,6 @@ L'objectif de ce document est de configurer une architecture maître-esclave en 
 ---
 
 
-
 # 2. Architecture
 
 ### Important : Il est conseillé de nommer les machines en fonction de leur rôle et de leur adresse IP pour faciliter la reconnaissance et la gestion dans votre infrastructure.
@@ -63,25 +62,21 @@ L'objectif de ce document est de configurer une architecture maître-esclave en 
 |        node01-10.0.2.12          | |         node02-10.0.2.13       | |         node03-10.0.2.14       | |        win-node-10.0.2.15      |
 |      NAT (enp0s8) : 10.0.2.12    | |      NAT (enp0s8) : 10.0.2.13  | |      NAT (enp0s8) : 10.0.2.14  | |      NAT (enp0s8) : 10.0.2.15  |
 |    Bridge (enp0s3) : 192.168.2.112| |  Bridge (enp0s3) : 192.168.2.113| |  Bridge (enp0s3) : 192.168.2.114| |  Bridge (Ethernet) : 192.168.2.115|
-|       (Ubuntu Server - Worker)   | |       (CentOS 7 - Worker)      | |       (Ubuntu Server - Worker) | |      (Windows 10 - Worker)     |
+|       (Ubuntu Desktop - Worker)  | |       (CentOS 7 Desktop - Worker)| |       (Ubuntu Desktop - Worker)| |      (Windows 10 Desktop - Worker)|
 +----------------------------------+ +--------------------------------+ +--------------------------------+ +--------------------------------+
 ```
 
 ### Détails des noms professionnels attribués :
 
-- **Master Node** : `master-node-10.0.2.10` – Ubuntu Server qui contrôle les autres nœuds.
-- **Worker Node 01** : `node01-10.0.2.12` – Ubuntu Server pour les tâches de calculs.
-- **Worker Node 02** : `node02-10.0.2.13` – CentOS 7 pour les opérations distribuées.
-- **Worker Node 03** : `node03-10.0.2.14` – Ubuntu Server pour l'exécution des workloads.
-- **Windows Desktop** : `win-node-10.0.2.15` – Machine Windows servant de Worker dans l'infrastructure.
+- **Master Node** : `master-node-10.0.2.10` – **Ubuntu Server** qui contrôle les autres nœuds.
+- **Worker Node 01** : `node01-10.0.2.12` – **Ubuntu Desktop** pour les tâches de calculs et opérations distribuées.
+- **Worker Node 02** : `node02-10.0.2.13` – **CentOS 7 Desktop** pour les tâches de calculs et opérations distribuées.
+- **Worker Node 03** : `node03-10.0.2.14` – **Ubuntu Desktop** pour les tâches de calculs et opérations distribuées.
+- **Windows Desktop** : `win-node-10.0.2.15` – **Windows 10 Desktop** pour les tâches de calculs et opérations distribuées.
 
-Cette nomenclature rend plus claire la reconnaissance des machines et améliore la gestion de l'architecture.
+Cette nomenclature permet de reconnaître facilement les machines en fonction de leur rôle, de leur système d'exploitation et de leur adresse IP, ce qui facilite grandement la gestion de l'architecture.
 
 
-### Légende :
-- Chaque machine a deux interfaces réseau :
-  - **NAT (enp0s8)** pour la communication interne entre les machines, avec des adresses IP dans la plage **10.0.2.x**.
-  - **Bridge (enp0s3)** pour l'accès SSH, avec des adresses IP dans la plage **192.168.2.x**.
 
 [Retour en haut](#sommaire)
 
