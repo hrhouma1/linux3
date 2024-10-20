@@ -14,7 +14,7 @@
 
 ---
 
-## <a name="section1"></a> 1. Qu'est-ce qu'Ansible ?
+# <a name="section1"></a> 1. Qu'est-ce qu'Ansible ?
 
 Ansible est un outil open-source conçu pour l'automatisation des tâches IT telles que la gestion de configurations, le déploiement d'applications, et la gestion de serveurs.
 
@@ -52,7 +52,7 @@ Ansible est un outil open-source conçu pour l'automatisation des tâches IT tel
 
 ---
 
-## <a name="section2"></a> 2. Pourquoi utiliser Ansible ?
+# <a name="section2"></a> 2. Pourquoi utiliser Ansible ?
 
 - **Facilité d’utilisation** : Syntaxe simple en YAML, pas besoin d'écrire du code complexe.
 - **Sans agent** : Utilisation de SSH pour interagir avec les machines, sans configuration complexe.
@@ -62,7 +62,7 @@ Ansible est un outil open-source conçu pour l'automatisation des tâches IT tel
 
 ---
 
-## <a name="section3"></a> 3. Comment fonctionne Ansible ?
+# <a name="section3"></a> 3. Comment fonctionne Ansible ?
 
 Ansible fonctionne en se connectant aux machines via SSH et en exécutant des modules prédéfinis. Il utilise des playbooks pour orchestrer une série de tâches sur plusieurs hôtes.
 
@@ -73,7 +73,7 @@ Ansible fonctionne en se connectant aux machines via SSH et en exécutant des mo
 
 ---
 
-## <a name="section4"></a> 4. SSH
+# <a name="section4"></a> 4. SSH
 
 Ansible utilise SSH pour se connecter aux machines distantes et exécuter des commandes.
 
@@ -108,7 +108,7 @@ L'inventaire est une liste de machines que vous souhaitez gérer avec Ansible.
 
 ---
 
-## <a name="section6"></a> 6. Playbook
+# <a name="section6"></a> 6. Playbook
 
 Un playbook est un fichier YAML qui contient une liste de tâches à exécuter sur des machines cibles.
 
@@ -126,7 +126,7 @@ Un playbook est un fichier YAML qui contient une liste de tâches à exécuter s
 
 ---
 
-## <a name="section7"></a> 7. Modules
+# <a name="section7"></a> 7. Modules
 
 Les modules dans Ansible sont des scripts qui exécutent des actions spécifiques.
 
@@ -147,7 +147,7 @@ Les modules dans Ansible sont des scripts qui exécutent des actions spécifique
 
 ---
 
-## <a name="section8"></a> 8. Roles
+# <a name="section8"></a> 8. Roles
 
 Les rôles permettent d'organiser et de réutiliser le code Ansible de manière modulaire.
 
@@ -162,7 +162,7 @@ Les rôles permettent d'organiser et de réutiliser le code Ansible de manière 
 
 ---
 
-## <a name="section9"></a> 9. Écrire des scripts
+# <a name="section9"></a> 9. Écrire des scripts
 
 - **Exercice pratique** : Écrire un playbook pour installer un serveur Apache sur un groupe de machines.
 - **Extension** : Ajouter des rôles pour configurer la sécurité SSH.
@@ -171,7 +171,7 @@ Les rôles permettent d'organiser et de réutiliser le code Ansible de manière 
 
 ---
 
-## <a name="section10"></a> 10. Ansible Galaxy
+# <a name="section10"></a> 10. Ansible Galaxy
 
 Ansible Galaxy est une plateforme où les utilisateurs peuvent partager des rôles et les télécharger.
 
