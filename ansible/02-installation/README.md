@@ -35,3 +35,14 @@ nano /etc/hostname
 bash
 hostnamectl
 ```
+
+
+
+Voici les commandes extraites de l'image :
+
+```bash
+hostname master
+bash
+hostnamectl
+hostnamectl
+```
