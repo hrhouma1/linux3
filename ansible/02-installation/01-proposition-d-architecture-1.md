@@ -41,27 +41,42 @@ L'objectif de ce document est de configurer une architecture maître-esclave en 
 
 ---
 
+
+
 # 2. Architecture
 
+### Important : Il est conseillé de nommer les machines en fonction de leur rôle et de leur adresse IP pour faciliter la reconnaissance et la gestion dans votre infrastructure.
+
 ```
-+--------------------------------------------------------------------------------------------+
-|                                       Master Node                                          |
-|                           master-ubuntu-server                                             |
-|                         NAT (enp0s8) : 10.0.2.10                                           |
-|                         Bridge (enp0s3) : 192.168.2.110                                    |
-|                               (Ubuntu Server - Master)                                     |
-+--------------------------------------------------------------------------------------------+
-                                             |
-                                             |
-                +---------------------------+----------------------------+----------------------------+
-                |                           |                            |                            |
-+-------------------------------+ +-------------------------------+ +-------------------------------+ +-------------------------------+
-|        Worker Node 01          | |        Worker Node 02          | |        Worker Node 03          | |        Windows Desktop         |
-|      NAT (enp0s8) : 10.0.2.12  | |      NAT (enp0s8) : 10.0.2.13  | |      NAT (enp0s8) : 10.0.2.14  | |      NAT (enp0s8) : 10.0.2.15  |
-|    Bridge (enp0s3) : 192.168.2.112 | |  Bridge (enp0s3) : 192.168.2.113 | |  Bridge (enp0s3) : 192.168.2.114 | |  Bridge (Ethernet) : 192.168.2.115  |
-|       (Ubuntu Server - Worker) | |       (CentOS 7 - Worker)     | |       (Ubuntu Server - Worker) | |       (Windows 10 - Worker)    |
-+-------------------------------+ +-------------------------------+ +-------------------------------+ +-------------------------------+
++-------------------------------------------------------------------------------------------------+
+|                                           Master Node                                           |
+|                                      master-node-10.0.2.10                                      |
+|                                 NAT (enp0s8) : 10.0.2.10                                        |
+|                                 Bridge (enp0s3) : 192.168.2.110                                 |
+|                                    (Ubuntu Server - Master)                                     |
++-------------------------------------------------------------------------------------------------+
+                                                 |
+                                                 |
+                       +-------------------------+------------------------+------------------------+
+                       |                         |                        |                        |
++----------------------------------+ +--------------------------------+ +--------------------------------+ +--------------------------------+
+|        node01-10.0.2.12          | |         node02-10.0.2.13       | |         node03-10.0.2.14       | |        win-node-10.0.2.15      |
+|      NAT (enp0s8) : 10.0.2.12    | |      NAT (enp0s8) : 10.0.2.13  | |      NAT (enp0s8) : 10.0.2.14  | |      NAT (enp0s8) : 10.0.2.15  |
+|    Bridge (enp0s3) : 192.168.2.112| |  Bridge (enp0s3) : 192.168.2.113| |  Bridge (enp0s3) : 192.168.2.114| |  Bridge (Ethernet) : 192.168.2.115|
+|       (Ubuntu Server - Worker)   | |       (CentOS 7 - Worker)      | |       (Ubuntu Server - Worker) | |      (Windows 10 - Worker)     |
++----------------------------------+ +--------------------------------+ +--------------------------------+ +--------------------------------+
 ```
+
+### Détails des noms professionnels attribués :
+
+- **Master Node** : `master-node-10.0.2.10` – Ubuntu Server qui contrôle les autres nœuds.
+- **Worker Node 01** : `node01-10.0.2.12` – Ubuntu Server pour les tâches de calculs.
+- **Worker Node 02** : `node02-10.0.2.13` – CentOS 7 pour les opérations distribuées.
+- **Worker Node 03** : `node03-10.0.2.14` – Ubuntu Server pour l'exécution des workloads.
+- **Windows Desktop** : `win-node-10.0.2.15` – Machine Windows servant de Worker dans l'infrastructure.
+
+Cette nomenclature rend plus claire la reconnaissance des machines et améliore la gestion de l'architecture.
+
 
 ### Légende :
 - Chaque machine a deux interfaces réseau :
