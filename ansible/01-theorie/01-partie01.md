@@ -86,6 +86,15 @@ Ansible fonctionne en se connectant aux machines via SSH et en exécutant des mo
 - **Playbook** : Un fichier YAML qui définit les étapes à exécuter.
 - **Modules** : Scripts prédéfinis pour accomplir des tâches spécifiques.
 
+
+![image](https://github.com/user-attachments/assets/4f47ee51-42e6-45a9-9111-7ed135d04eec)
+
+![image](https://github.com/user-attachments/assets/d2d2bf50-53b7-4574-a0f1-47a619b2faae)
+
+![image](https://github.com/user-attachments/assets/1615dfd2-f58e-4b12-9260-8bb8e9ade964)
+
+
+
 [Retour à la Table des Matières](#)
 
 ---
