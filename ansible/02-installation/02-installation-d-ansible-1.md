@@ -220,4 +220,8 @@ Bienvenue dans ce guide. Chaque étape est spécifiquement décrite, y compris *
 2. **Vérifier la connectivité avec les machines Workers** :
    ```bash
 
+------------
+# Références :
+--------------
 
+https://stackoverflow.com/questions/63672853/ansible-config-file-not-found-using-defaults
