@@ -74,7 +74,19 @@ L'objectif de ce document est de configurer une architecture maître-esclave en 
 - **Worker Node 03** : `node03-10.0.2.14` – **Ubuntu Desktop** pour les tâches de calculs et opérations distribuées.
 - **Windows Desktop** : `win-node-10.0.2.15` – **Windows 10 Desktop** pour les tâches de calculs et opérations distribuées.
 
-Cette nomenclature permet de reconnaître facilement les machines en fonction de leur rôle, de leur système d'exploitation et de leur adresse IP, ce qui facilite grandement la gestion de l'architecture.
+*Cette nomenclature permet de reconnaître facilement les machines en fonction de leur rôle, de leur système d'exploitation et de leur adresse IP, ce qui facilite grandement la gestion de l'architecture.*
+
+###  Table des adresses et interfaces, récapitulant les informations réseau pour les machines dans l'architecture **Master-Worker** :
+
+| **Machine**            | **Nom**                  | **Interface NAT (enp0s8)** | **Interface Bridge Adapter (enp0s3 / Ethernet)** | **Adresse IP NAT** | **Adresse IP Bridge** |
+|------------------------|--------------------------|----------------------------|--------------------------------------------------|--------------------|-----------------------|
+| **Master Node**         | master-node-10.0.2.10    | enp0s8                     | enp0s3                                            | 10.0.2.10           | 192.168.2.110         |
+| **Worker Node 01**      | node01-10.0.2.12         | enp0s8                     | enp0s3                                            | 10.0.2.12           | 192.168.2.112         |
+| **Worker Node 02**      | node02-10.0.2.13         | enp0s8                     | enp0s3                                            | 10.0.2.13           | 192.168.2.113         |
+| **Worker Node 03**      | node03-10.0.2.14         | enp0s8                     | enp0s3                                            | 10.0.2.14           | 192.168.2.114         |
+| **Windows Desktop**     | win-node-10.0.2.15       | enp0s8                     | Ethernet (Bridge)                                 | 10.0.2.15           | 192.168.2.115         |
+
+*Cette table récapitule les configurations des interfaces réseau pour le **Master Node** et les **Workers** dans ton architecture, incluant à la fois les adresses IP NAT et Bridge.*
 
 
 
