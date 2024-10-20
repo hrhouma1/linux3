@@ -46,3 +46,27 @@ bash
 hostnamectl
 hostnamectl
 ```
+
+
+Voici la commande extraite de l'image :
+
+```bash
+nano /etc/hostname
+```
+
+Dans ce fichier, tu peux effectivement écrire `master` pour changer le nom d'hôte de la machine.
+
+
+
+Voici les commandes extraites de l'image :
+
+```bash
+pwd
+mkdir exercices
+rm -rf exercices/
+mkdir exercices-ansible
+cd exercices-ansible/
+nano inventory
+```
+
+
