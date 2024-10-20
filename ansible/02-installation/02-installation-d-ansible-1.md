@@ -1,4 +1,4 @@
-# 🚀 **Guide d'installation de l'architecture Master-Worker avec Ansible** 🌐
+# 🚀 **Guide d'installation d'Ansible dans la première proposition** 🌐
 
 ### *Le guide ultime pour configurer Ansible sur votre réseau Master-Worker avec Ubuntu, CentOS et Windows* 💻🔧
 
