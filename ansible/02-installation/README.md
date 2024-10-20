@@ -20,3 +20,18 @@ Cependant, il y a un avertissement dans la sortie :
 Cela signifie qu'Ansible n'a pas pu trouver un fichier d'inventaire, et il a utilisé par défaut `localhost`. Si tu souhaites éviter cet avertissement à l'avenir, tu peux soit spécifier un inventaire explicitement, soit créer un fichier d'inventaire.
 
 
+
+
+Voici les commandes extraites de l'image :
+
+```bash
+sudo su -
+hostname worker1
+hostnamectl
+su
+hostname worker1
+hostnamectl
+nano /etc/hostname
+bash
+hostnamectl
+```
