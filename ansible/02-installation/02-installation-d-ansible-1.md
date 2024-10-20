@@ -4,7 +4,7 @@
 
 ---
 
-Bienvenue dans ce guide conçu pour **débutants**. Chaque étape est spécifiquement décrite, y compris **où et comment exécuter chaque commande** pour installer et configurer Ansible dans votre architecture.
+Bienvenue dans ce guide. Chaque étape est spécifiquement décrite, y compris **où et comment exécuter chaque commande** pour installer et configurer Ansible dans votre architecture.
 
 ---
 
