@@ -1,1 +1,22 @@
+![image](https://github.com/user-attachments/assets/a2cd1ba8-90d8-47ac-b383-1bdfe2c3671d)
+
+apt update
+apt install ansible
+ansible version 
+
+
+La commande extraite de l'image est :
+
+```bash
+ansible localhost -m 'ping'
+```
+
+Cependant, il y a un avertissement dans la sortie :
+
+```
+[WARNING]: No inventory was parsed, only implicit localhost is available
+```
+
+Cela signifie qu'Ansible n'a pas pu trouver un fichier d'inventaire, et il a utilisé par défaut `localhost`. Si tu souhaites éviter cet avertissement à l'avenir, tu peux soit spécifier un inventaire explicitement, soit créer un fichier d'inventaire.
+
 
