@@ -58,6 +58,23 @@ Ansible est un outil open-source conçu pour l'automatisation des tâches IT tel
 - **Sans agent** : Utilisation de SSH pour interagir avec les machines, sans configuration complexe.
 - **Modularité** : Les rôles et les playbooks rendent le code réutilisable et bien structuré.
 
+
+
+
+> **Pourquoi choisir Ansible ?**
+
+![why_ansible_slide](https://github.com/user-attachments/assets/097e34b3-b661-4de6-9c8b-a352a7e1ea5d)
+
+> 
+> **Sans agent** - Tant que la machine peut être accessible via SSH et qu’elle dispose de Python, elle peut être configurée avec Ansible.
+> 
+> **Idempotent** - Toute l’architecture d’Ansible est basée sur le concept d’idempotence. L'idée principale est que les tâches ne sont exécutées que si nécessaire et sont répétables sans effets secondaires.
+> 
+> **Déclaratif, pas procédural** - Contrairement à d’autres outils de gestion de configuration qui fonctionnent de manière procédurale, Ansible fonctionne en décrivant l’état souhaité de la machine, puis prend les mesures nécessaires pour atteindre cet état.
+> 
+> **Courbe d’apprentissage très faible** - Ansible est facile à apprendre. Il ne nécessite pas de connaissances supplémentaires.
+
+
 [Retour à la Table des Matières](#)
 
 ---
