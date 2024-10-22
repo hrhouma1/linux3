@@ -15,6 +15,16 @@
 ## 1. Définition de Ansible <a id="definition-ansible"></a>
 Ansible est un outil de gestion de configuration et d'automatisation open-source. Il permet d'automatiser les tâches de déploiement, la gestion des configurations, et l'orchestration d'infrastructure. Sa simplicité repose sur l'utilisation de fichiers texte au format YAML appelés *playbooks* qui décrivent les actions à exécuter sur des serveurs distants.
 
+### 1.1 Pourquoi anssible <a id="pk-ansible"></a>
+
+![image](https://github.com/user-attachments/assets/9652e23a-ef47-460b-8d50-2c3121385755)
+
+### 1.2  Script vs Ansible playbook 
+
+![image](https://github.com/user-attachments/assets/5cd25c80-60f3-4734-b0fb-bc82e7c2c53e)
+
+
+
 [Retour à la table des matières](#table-des-matières)
 
 ---
