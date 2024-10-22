@@ -101,6 +101,61 @@ L'agent n'est pas nécessaire pour un hôte autonome (single-node), mais peut ê
 ![image](https://github.com/user-attachments/assets/758b64db-b479-4129-9162-369338157eda)
 
 
+![image](https://github.com/user-attachments/assets/44469646-3761-4e07-939f-c83f6cb809b4)
+
+# barre de recherche 
+
+![image](https://github.com/user-attachments/assets/73c0cc9d-f0d0-4727-b7ff-97928bd383aa)
+
+![image](https://github.com/user-attachments/assets/715039db-899b-4fde-9191-4ea4b9908f04)
+
+![image](https://github.com/user-attachments/assets/acd7fb65-4ff3-4ad2-9200-6047e0655228)
+
+![image](https://github.com/user-attachments/assets/ec5c2380-d6d0-4de4-be4b-e0eba4b8a012)
+
+![image](https://github.com/user-attachments/assets/5cd58d1a-f32c-4204-9ba5-cd24af3fa50a)
+
+![image](https://github.com/user-attachments/assets/b0406f86-2a90-40b5-a16a-98dde7b1cae0)
+
+![image](https://github.com/user-attachments/assets/66f69e0f-4e46-482f-9f47-37ea470f6c54)
+
+![image](https://github.com/user-attachments/assets/6573eed2-fe19-4652-b45b-8311688d9009)
+
+![image](https://github.com/user-attachments/assets/140028bd-5cec-4cf2-a254-cd85c10a68ea)
+
+![image](https://github.com/user-attachments/assets/3d087bb1-8dfb-47ad-93ff-0231ac1af445)
+
+
+![image](https://github.com/user-attachments/assets/1e58e113-9067-4da3-b6d7-b0530ec4b390)
+
+
+![image](https://github.com/user-attachments/assets/1028c255-8bf5-4e1d-ae19-4e21ffc42687)
+
+
+![image](https://github.com/user-attachments/assets/13e039ef-f986-44e5-aa6b-a9098314681c)
+
+
+![image](https://github.com/user-attachments/assets/23266b49-ea82-47e4-8a35-5d653a43127c)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
