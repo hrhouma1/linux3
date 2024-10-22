@@ -1,13 +1,9 @@
 ![image](https://github.com/user-attachments/assets/a2cd1ba8-90d8-47ac-b383-1bdfe2c3671d)
 
+```bash
 apt update
 apt install ansible
 ansible version 
-
-
-La commande extraite de l'image est :
-
-```bash
 ansible localhost -m 'ping'
 ```
 
@@ -20,9 +16,6 @@ Cependant, il y a un avertissement dans la sortie :
 Cela signifie qu'Ansible n'a pas pu trouver un fichier d'inventaire, et il a utilisé par défaut `localhost`. Si tu souhaites éviter cet avertissement à l'avenir, tu peux soit spécifier un inventaire explicitement, soit créer un fichier d'inventaire.
 
 
-
-
-Voici les commandes extraites de l'image :
 
 ```bash
 sudo su -
@@ -38,8 +31,6 @@ hostnamectl
 
 
 
-Voici les commandes extraites de l'image :
-
 ```bash
 hostname master
 bash
@@ -48,17 +39,11 @@ hostnamectl
 ```
 
 
-Voici la commande extraite de l'image :
 
 ```bash
 nano /etc/hostname
 ```
 
-Dans ce fichier, tu peux effectivement écrire `master` pour changer le nom d'hôte de la machine.
-
-
-
-Voici les commandes extraites de l'image :
 
 ```bash
 pwd
