@@ -1,6 +1,51 @@
 
+### Définition de Portainer
+
+**Portainer** est un outil open-source qui permet de gérer facilement des environnements Docker et Kubernetes via une interface utilisateur graphique (GUI). Il simplifie la gestion des conteneurs en fournissant une interface intuitive pour la création, l'administration, et la surveillance de conteneurs, volumes, réseaux et autres composants Docker. Plutôt que d'utiliser des lignes de commande complexes pour chaque opération, Portainer permet d'exécuter les tâches administratives plus efficacement et visuellement.
+
+Il est particulièrement utile pour les équipes de développement ou les administrateurs système qui doivent superviser et maintenir des environnements Docker à grande échelle. Parmi ses fonctionnalités principales, on retrouve la gestion des stacks, des volumes, des images Docker, et la possibilité de visualiser l'utilisation des ressources.
+
+### Analyse de l'image (Déploiement de Portainer sur un hôte Docker Linux autonome)
+
+Dans cette capture d'écran, on vous montre comment déployer **Portainer Server** sur un hôte Docker Linux autonome ou sur un cluster de nœuds Swarm (ou encore sur un hôte Docker sous Windows 10 fonctionnant en mode conteneurs Linux).
+
+Voici les deux commandes Docker à utiliser pour le déploiement :
+
+1. **Création d'un volume pour les données de Portainer :**
+
+   ```bash
+   docker volume create portainer_data
+   ```
+
+   - Cette commande crée un volume Docker nommé `portainer_data`. Les volumes Docker sont utilisés pour stocker des données persistantes. Ici, ce volume va stocker toutes les informations de configuration et les données nécessaires au fonctionnement de Portainer.
+   - L'utilisation d'un volume permet de garantir que ces données seront préservées même si le conteneur de Portainer est supprimé ou redémarré.
+
+2. **Exécution du conteneur Portainer :**
+
+   ```bash
+   docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+   ```
+
+   Détaillons cette commande :
+   
+   - **`docker run`** : Lance un conteneur Docker.
+   - **`-d`** : Démarre le conteneur en arrière-plan (mode détaché).
+   - **`-p 8000:8000` et `-p 9000:9000`** : Ces options mappent les ports du conteneur aux ports de l'hôte Docker :
+     - Le port **8000** est utilisé pour le tunnel Edge de Portainer.
+     - Le port **9000** est l'interface principale de Portainer accessible via un navigateur web.
+   - **`-v /var/run/docker.sock:/var/run/docker.sock`** : Monte le socket Docker de l'hôte dans le conteneur. Cela permet à Portainer d'interagir avec le moteur Docker local et de gérer les conteneurs directement.
+   - **`-v portainer_data:/data`** : Monte le volume `portainer_data` dans le conteneur, sous le répertoire `/data`. Cela permet à Portainer de stocker ses données de manière persistante.
+   - **`portainer/portainer`** : Spécifie l'image Docker de Portainer à utiliser.
+
+### Fonctionnement
+
+Une fois ces commandes exécutées, Portainer est déployé sur l'hôte Docker. Vous pouvez ensuite accéder à l'interface Web de Portainer via `http://<votre-ip>:9000` dans un navigateur pour commencer à gérer vos conteneurs Docker.
+
+L'agent n'est pas nécessaire pour un hôte autonome (single-node), mais peut être utilisé dans un environnement distribué (multi-node Swarm) pour des fonctionnalités supplémentaires.
+
 ![image](https://github.com/user-attachments/assets/b68246e5-0b33-4408-a5eb-b3093e0792c5)
 
+--------
 
 ![image](https://github.com/user-attachments/assets/0419ac85-9211-42b6-9c47-342a77df53f2)
 
