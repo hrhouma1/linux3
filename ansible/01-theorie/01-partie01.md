@@ -24,6 +24,11 @@ Ansible est un outil de gestion de configuration et d'automatisation open-source
 ![image](https://github.com/user-attachments/assets/5cd25c80-60f3-4734-b0fb-bc82e7c2c53e)
 
 
+### 1.3  Ansible documentation
+
+![image](https://github.com/user-attachments/assets/275ab69e-3203-434e-b567-bbaf627d34ec)
+
+
 
 [Retour à la table des matières](#table-des-matières)
 
@@ -43,11 +48,19 @@ Pour vérifier l'installation, utilisez la commande suivante :
 ansible --version
 ```
 
+
+sinon 
+
+![image](https://github.com/user-attachments/assets/419efa38-c38d-4a25-9f2a-9616c2b377a2)
+
+
+
 [Retour à la table des matières](#table-des-matières)
 
 ---
 
 ## 3. Ansible Inventory <a id="ansible-inventory"></a>
+
 L'inventaire Ansible est un fichier texte qui contient la liste des hôtes sur lesquels les commandes Ansible vont être exécutées. Un inventaire basique ressemble à ceci :
 
 ```ini
@@ -56,7 +69,32 @@ L'inventaire Ansible est un fichier texte qui contient la liste des hôtes sur l
 192.168.1.11
 ```
 
+ou 
+
+![image](https://github.com/user-attachments/assets/f22d33d3-1832-4b3c-8edf-3e94572681d8)
+
+ou 
+
+![image](https://github.com/user-attachments/assets/5f3a3d12-4a82-4c47-a307-ad6a1b824cab)
+
+
 Les hôtes peuvent être regroupés pour simplifier la gestion. Ansible interagit avec les hôtes spécifiés dans ce fichier lors de l'exécution des *playbooks*.
+
+![image](https://github.com/user-attachments/assets/7758b6ee-8060-4daf-b85e-e2af644ec3f4)
+
+
+### 3.1. Ansible inventory
+
+![image](https://github.com/user-attachments/assets/ced018e2-c07e-4e6b-8e17-6d1d44a987f4)
+
+![image](https://github.com/user-attachments/assets/68d6954f-6d22-46d2-a9d3-0397e8334f27)
+
+
+
+
+
+
+
 
 [Retour à la table des matières](#table-des-matières)
 
@@ -65,7 +103,25 @@ Les hôtes peuvent être regroupés pour simplifier la gestion. Ansible interagi
 ## 4. Qu'est-ce que YAML ? <a id="yaml"></a>
 YAML (YAML Ain't Markup Language) est un langage de sérialisation de données qui est lisible par les humains. Ansible utilise YAML pour définir ses *playbooks*. Un fichier YAML est structuré avec des indentations pour définir des hiérarchies.
 
-Exemple simple de structure YAML :
+![image](https://github.com/user-attachments/assets/ce84afa6-fa9c-4b8c-903b-189c840d12d1)
+
+
+
+### 4.2. exemples
+
+#### Exemples 1
+
+![image](https://github.com/user-attachments/assets/0fc867cf-c102-42f8-93ce-e0d99f74bf1b)
+
+![image](https://github.com/user-attachments/assets/8338d3d5-2772-455f-a62d-6eb21a771295)
+
+![image](https://github.com/user-attachments/assets/dd6c435e-1d58-4879-98e2-071868d7fea5)
+
+![image](https://github.com/user-attachments/assets/3cf3b25a-fe5d-4a07-8dfe-651284f44a51)
+
+
+
+####  Exemple 2  de structure YAML :
 
 ```yaml
 - nom: Installation d'Apache
@@ -76,6 +132,12 @@ Exemple simple de structure YAML :
         nom: apache2
         état: installé
 ```
+
+# 4.3. Dictionnaires vs Listes en Yaml
+
+![image](https://github.com/user-attachments/assets/0395f277-d75c-46c0-bb45-ab79902b91f2)
+
+
 
 [Retour à la table des matières](#table-des-matières)
 
