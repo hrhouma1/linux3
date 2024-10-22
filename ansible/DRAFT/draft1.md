@@ -161,10 +161,294 @@ host_key_checking = false
 
 Cela désactivera la vérification des clés hôtes lors de la connexion aux cibles.
 
+![image](https://github.com/user-attachments/assets/95815f11-6e40-4168-9a2b-e616f001ea20)
+
+
+- https://stackoverflow.com/questions/42462435/ansible-provisioning-error-using-a-ssh-password-instead-of-a-key-is-not-possibl
+- https://stackoverflow.com/questions/23074412/how-to-set-host-key-checking-false-in-ansible-inventory-file
+
+
+
+# 12
+
+![image](https://github.com/user-attachments/assets/1acaca32-6f02-4040-9675-3b2863412807)
+
+![image](https://github.com/user-attachments/assets/f5fd18a7-ba6a-46c0-9b83-cf3790ed127f)
+
+![image](https://github.com/user-attachments/assets/e7fec34e-43fe-49a9-9c06-1c6e2be923f4)
+
+![image](https://github.com/user-attachments/assets/7c68f749-2f46-46ad-a622-49b28b1049ef)
+
+
+# 13 
+
+
+```bash
+nano /etc/ansible/ansible.cfg
+cd
+cd exercices-ansible/
+ansible all -m 'ping' -i inventory
+nano /etc/ansible/ansible.cfg
+```
+
+
+# 14
+
+![image](https://github.com/user-attachments/assets/8ca5bdc6-42a9-42ed-a1d4-a1e0d61eb70e)
+
+Il semble que tu as oublié d'inclure la section `[defaults]` dans le fichier de configuration Ansible. Voici l'extrait correct avec la section `[defaults]` :
+
+```ini
+[defaults]
+host_key_checking = false
+```
+
+Assure-toi que cette section est bien présente en haut de ton fichier `ansible.cfg` pour éviter les erreurs.
+
+
+# 15
+
+![image](https://github.com/user-attachments/assets/01314c13-231e-478b-a991-fc352345d5cd)
+
+Voici les commandes extraites de l'image :
+
+```bash
+nano /etc/ansible/ansible.cfg
+cd
+cd exercices-ansible/
+ansible all -m 'ping' -i inventory
+nano /etc/ansible/ansible.cfg
+cd
+cd exercices-ansible/
+ansible all -m 'ping' -i inventory
+```
 
 
 
 
+# 16
+
+![image](https://github.com/user-attachments/assets/71415795-a91d-4686-9d69-4814d8227b1e)
+
+Voici le contenu extrait du fichier `inventory` :
+
+```
+master  ansible_connection=local
+node1   ansible_host=192.168.2.12 ansible_connection=ssh ansible_user=eleve ansible_ssh_pass=eleve
+node2   ansible_host=192.168.2.13 ansible_connection=ssh ansible_user=eleve ansible_ssh_pass=eleve
+```
+
+Cela définit un fichier d'inventaire pour Ansible avec une connexion locale pour le master et des connexions SSH pour `node1` et `node2`, utilisant l'utilisateur et le mot de passe `eleve`.
+
+![image](https://github.com/user-attachments/assets/1046c5ca-f3b8-4896-8845-308affe5e3a6)
+
+Voici les commandes extraites de l'image :
+
+```bash
+nano inventory
+ansible all -m 'ping' -i inventory
+```
+
+![image](https://github.com/user-attachments/assets/5bc5b176-7c89-41b8-aa2a-871650c8c1f9)
+
+Le problème avec le **node2** semble être lié à la connexion SSH et au message d'erreur suivant :
+
+```
+node2 | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.2.13 port 22: No route to host",
+    "unreachable": true
+}
+```
+
+L'erreur "No route to host" indique que la machine hôte ne parvient pas à atteindre l'adresse IP du **node2** (192.168.2.13) sur le port 22 (utilisé pour SSH).
+
+Voici quelques pistes pour résoudre ce problème :
+
+1. **Vérification du réseau** : Assure-toi que le **node2** est bien en ligne et accessible depuis le **master**. Tu peux utiliser la commande `ping` pour tester la connectivité :
+
+   ```bash
+   ping 192.168.2.13
+   ```
+
+   Si tu obtiens un message comme **"Destination Host Unreachable"**, cela signifie qu'il y a un problème réseau entre le **master** et le **node2**.
+
+2. **Vérification de SSH sur node2** : Vérifie que le service SSH est bien actif et configuré correctement sur le **node2**. Tu peux redémarrer le service SSH sur le **node2** en exécutant :
+
+   ```bash
+   sudo systemctl restart ssh
+   ```
+
+3. **Pare-feu** : Assure-toi que le pare-feu sur le **node2** ne bloque pas les connexions sur le port 22. Si nécessaire, ajoute une règle pour autoriser SSH :
+
+   ```bash
+   sudo ufw allow 22/tcp
+   ```
+
+4. **Route statique ou réseau** : Si tu utilises des routes statiques ou des interfaces multiples, assure-toi que la configuration réseau est correcte et que le **node2** peut être atteint depuis le **master**.
+
+Essaye ces étapes et teste à nouveau la connectivité avec Ansible après avoir corrigé les éventuels problèmes.
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+
+# 17
+
+
+# 17
+
+
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+
+# 17
+
+
+# 17
+
+
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+
+# 17
+
+
+# 17
+
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+
+# 17
+
+
+# 17
+
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+
+# 17
+
+
+# 17
+
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+# 17
+
+
+
+# 17
+
+
+# 17
 
 
 
