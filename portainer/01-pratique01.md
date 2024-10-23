@@ -1212,6 +1212,249 @@ Ces commandes offrent la possibilité de gérer Docker de manière exhaustive vi
 
 
 
+# Annexe 2 - autres commandes
+
+Je vous propose un guide exhaustif (ou rappel) avec **toutes les commandes Docker nécessaires** pour gérer les conteneurs, réseaux, volumes, images, ainsi que des exemples spécifiques pour entrer dans un conteneur, démarrer Flask, et déployer Portainer.
+
+### Commandes Docker exhaustives
+
+#### 1. **Commandes de base pour la gestion des conteneurs :**
+
+- **Lister les conteneurs en cours d'exécution :**
+  ```bash
+  docker ps
+  ```
+  
+- **Lister tous les conteneurs (inclus ceux qui sont arrêtés) :**
+  ```bash
+  docker ps -a
+  ```
+
+- **Démarrer un conteneur arrêté :**
+  ```bash
+  docker start <nom_du_conteneur> ou <ID_du_conteneur>
+  ```
+
+- **Arrêter un conteneur en cours d'exécution :**
+  ```bash
+  docker stop <nom_du_conteneur> ou <ID_du_conteneur>
+  ```
+
+- **Redémarrer un conteneur :**
+  ```bash
+  docker restart <nom_du_conteneur> ou <ID_du_conteneur>
+  ```
+
+- **Supprimer un conteneur :**
+  ```bash
+  docker rm <nom_du_conteneur> ou <ID_du_conteneur>
+  ```
+
+- **Supprimer un conteneur arrêté :**
+  ```bash
+  docker rm $(docker ps -a -q)
+  ```
+
+- **Créer et exécuter un nouveau conteneur :**
+  ```bash
+  docker run -d -p <port_hôte>:<port_conteneur> --name <nom_du_conteneur> <image_docker>
+  ```
+
+#### 2. **Accéder à un conteneur en cours d'exécution :**
+
+- **Ouvrir un shell dans un conteneur :**
+  ```bash
+  docker exec -it <nom_du_conteneur> /bin/bash
+  ```
+  ou pour un conteneur léger (comme Alpine) :
+  ```bash
+  docker exec -it <nom_du_conteneur> /bin/sh
+  ```
+
+- **Ouvrir un terminal dans un conteneur déjà démarré :**
+  ```bash
+  docker attach <nom_du_conteneur> ou <ID_du_conteneur>
+  ```
+
+#### 3. **Logs et statistiques d’un conteneur :**
+
+- **Afficher les logs d'un conteneur :**
+  ```bash
+  docker logs <nom_du_conteneur>
+  ```
+
+- **Suivre les logs en temps réel :**
+  ```bash
+  docker logs -f <nom_du_conteneur>
+  ```
+
+- **Obtenir les statistiques d'un conteneur (CPU, RAM, etc.) :**
+  ```bash
+  docker stats <nom_du_conteneur>
+  ```
+
+#### 4. **Gestion des images Docker :**
+
+- **Lister toutes les images disponibles :**
+  ```bash
+  docker images
+  ```
+
+- **Télécharger une image Docker depuis DockerHub :**
+  ```bash
+  docker pull <nom_image>:<tag>
+  ```
+
+- **Supprimer une image Docker :**
+  ```bash
+  docker rmi <nom_image>
+  ```
+
+- **Construire une nouvelle image Docker à partir d'un Dockerfile :**
+  ```bash
+  docker build -t <nom_image>:<tag> .
+  ```
+
+#### 5. **Gestion des volumes Docker :**
+
+- **Lister les volumes Docker :**
+  ```bash
+  docker volume ls
+  ```
+
+- **Créer un volume Docker :**
+  ```bash
+  docker volume create <nom_du_volume>
+  ```
+
+- **Supprimer un volume Docker :**
+  ```bash
+  docker volume rm <nom_du_volume>
+  ```
+
+- **Monter un volume dans un conteneur :**
+  ```bash
+  docker run -d -v <nom_du_volume>:/<chemin_dans_le_conteneur> <image>
+  ```
+
+#### 6. **Gestion des réseaux Docker :**
+
+- **Lister les réseaux Docker :**
+  ```bash
+  docker network ls
+  ```
+
+- **Créer un réseau Docker :**
+  ```bash
+  docker network create <nom_du_réseau>
+  ```
+
+- **Supprimer un réseau Docker :**
+  ```bash
+  docker network rm <nom_du_réseau>
+  ```
+
+- **Connecter un conteneur à un réseau spécifique :**
+  ```bash
+  docker network connect <nom_du_réseau> <nom_du_conteneur>
+  ```
+
+- **Déconnecter un conteneur d'un réseau :**
+  ```bash
+  docker network disconnect <nom_du_réseau> <nom_du_conteneur>
+  ```
+
+#### 7. **Démarrer une application Flask dans Docker :**
+
+Si tu veux démarrer une application Flask dans un conteneur Docker, voici comment procéder :
+
+1. **Créer un fichier `Dockerfile` pour Flask :**
+   ```Dockerfile
+   FROM python:3.8-slim
+   WORKDIR /app
+   COPY requirements.txt requirements.txt
+   RUN pip install -r requirements.txt
+   COPY . .
+   CMD ["python", "app.py"]
+   ```
+
+2. **Créer un fichier `requirements.txt` pour les dépendances :**
+   ```text
+   Flask
+   ```
+
+3. **Construire l'image Docker :**
+   ```bash
+   docker build -t flask-app .
+   ```
+
+4. **Exécuter le conteneur Flask :**
+   ```bash
+   docker run -d -p 5000:5000 --name flask-container flask-app
+   ```
+
+5. **Accéder à Flask :**  
+   Ouvre ton navigateur et accède à [http://localhost:5000](http://localhost:5000).
+
+#### 8. **Déployer Portainer :**
+
+Pour installer et déployer Portainer sur Docker, voici les étapes :
+
+1. **Créer un volume pour les données persistantes de Portainer :**
+   ```bash
+   docker volume create portainer_data
+   ```
+
+2. **Déployer Portainer :**
+   ```bash
+   docker run -d -p 8000:8000 -p 9000:9000 \
+   --name portainer --restart=always \
+   -v /var/run/docker.sock:/var/run/docker.sock \
+   -v portainer_data:/data portainer/portainer-ce
+   ```
+
+3. **Accéder à l'interface de Portainer :**  
+   Ouvre ton navigateur et va à [http://localhost:9000](http://localhost:9000) pour configurer l'interface et créer l'utilisateur administrateur.
+
+#### 9. **Commandes avancées pour Docker :**
+
+- **Inspecter les détails d'un conteneur (configuration, réseau, etc.) :**
+  ```bash
+  docker inspect <nom_du_conteneur>
+  ```
+
+- **Exécuter une commande spécifique à l'intérieur d'un conteneur sans entrer dans le shell :**
+  ```bash
+  docker exec <nom_du_conteneur> <commande>
+  ```
+
+- **Entrer dans un conteneur arrêté (à partir de son point de sauvegarde) :**
+  ```bash
+  docker commit <nom_du_conteneur>
+  docker start <nouveau_conteneur>
+  ```
+
+#### 10. **Sauvegarder et charger des images :**
+
+- **Exporter une image Docker dans un fichier :**
+  ```bash
+  docker save -o <fichier_tar> <nom_image>
+  ```
+
+- **Charger une image Docker depuis un fichier :**
+  ```bash
+  docker load -i <fichier_tar>
+  ```
+
+### Conclusion
+
+Avec cet ensemble complet de commandes Docker, tu es en mesure de :
+- Gérer des conteneurs (création, démarrage, arrêt, logs, statistiques, accès aux shells).
+- Gérer les réseaux et volumes Docker.
+- Démarrer des applications comme Flask ou déployer Portainer.
+- Construire, exporter et importer des images Docker.
+
+Ces commandes te permettent de couvrir tous les aspects essentiels et avancés de la gestion Docker dans n'importe quel environnement, que ce soit pour le développement ou la production.
 
 
 
