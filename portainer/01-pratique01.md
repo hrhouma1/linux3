@@ -342,12 +342,45 @@ Cette interface permet d'avoir un aperçu rapide et global des conteneurs déplo
 # Capture 11
 ![image](https://github.com/user-attachments/assets/e5f77ae6-3658-4593-90f9-5e4d9fe8573a)
 
+Cette capture d'écran montre les détails d'un conteneur Docker dans **Portainer**, une fois déployé. Elle fournit des informations clés sur la configuration du conteneur, notamment l'image utilisée, les variables d'environnement, la configuration des ports, et les réseaux auxquels le conteneur est connecté.
 
+### Détails du conteneur :
 
-# Capture 12
+1. **Image** :
+   - Le conteneur utilise l'image `pythonincontainers/flask-hello:latest`. Cette image est identifiée de manière unique avec un hash SHA256, qui garantit l'intégrité de l'image.
+
+2. **Configuration des ports** :
+   - Le conteneur expose le port **5000/tcp** sur l'IP **0.0.0.0** avec un port hôte mappé sur **32772**. Cela signifie que l'application Flask à l'intérieur du conteneur est accessible sur le port 5000 et est mappée au port 32772 de l'hôte Docker.
+
+3. **CMD (Commande)** :
+   - La commande exécutée lors du démarrage du conteneur est `/bin/sh -c python flask-hello.py`. Cette commande lance le serveur Flask.
+
+4. **Variables d'environnement (ENV)** :
+   - Plusieurs variables d'environnement sont définies pour configurer le comportement de l'application à l'intérieur du conteneur :
+     - **PATH** : Spécifie les répertoires où les binaires système sont recherchés.
+     - **LANG** : Définit la langue du conteneur en UTF-8.
+     - **GPG_KEY** : Une clé GPG utilisée pour des vérifications.
+     - **PYTHON_VERSION** : Version de Python (3.7.4).
+     - **PYTHON_PIP_VERSION** : Version de `pip` (19.2.2).
+     - **PYTHON_GET_PIP_URL** : URL pour obtenir `pip`.
+     - **FLASK_DEBUG** : Débogage activé (`True`), ce qui peut être utile lors du développement pour avoir plus de logs détaillés.
+
+5. **Politiques de redémarrage (Restart policies)** :
+   - Ici, aucune politique de redémarrage n'a été définie. Vous pouvez en choisir une si nécessaire pour gérer le comportement du conteneur en cas de plantage ou d'arrêt.
+
+6. **Réseaux connectés** :
+   - Le conteneur est connecté au réseau **bridge** avec l'adresse IP **172.17.0.2** et la passerelle **172.17.0.1**.
+   - Vous avez également la possibilité de rejoindre un autre réseau en le sélectionnant dans la liste déroulante et en cliquant sur **Join network**.
+
+### Fonctionnement :
+Cette vue vous permet de consulter les détails du conteneur une fois qu'il est en cours d'exécution. Vous pouvez facilement voir comment le conteneur est configuré, quelles variables d'environnement sont utilisées, et à quel réseau il est connecté. Vous pouvez également quitter un réseau en cliquant sur **Leave network** si le conteneur n'a plus besoin d'y être connecté.
+
+Ces informations sont cruciales pour comprendre le fonctionnement du conteneur et effectuer des ajustements si nécessaire.
+
+# Capture 12-1
 ![image](https://github.com/user-attachments/assets/49486a67-cdae-494a-b29e-f8b6107b821c)
 
-# Capture 2
+# Capture 12-2
 ![image](https://github.com/user-attachments/assets/c38e4cce-66c7-47dc-b59e-17f55f4417cc)
 
 # Capture 13
