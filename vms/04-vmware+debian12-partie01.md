@@ -1,6 +1,7 @@
-# **Installation complète de Debian 12 sur VMware Workstation Pro**
+# Partie 1 - **Installation complète de Debian 12 sur VMware Workstation Pro**
 
 *Ceci est un guide simplifié pour installer **Debian 12** sur **VMware Workstation Pro** en utilisant l'option **Typical (recommended)***
+
 
 ### **1. Créer une nouvelle machine virtuelle dans VMware Workstation Pro**
 1. Ouvrez **VMware Workstation Pro**.
@@ -99,4 +100,99 @@
 - **Taille du disque :** 25 Go
 - **Type de réseau :** NAT
 - **Graphical Install** avec **GNOME** et **Serveur SSH**.
+
+
+-------------------------------------------
+# Partie 2 - installation de docker et docker-compose
+-------------------------------------------
+
+*Ce script automatisera entièrement l'installation de Docker et Docker Compose sur Debian 12.*
+
+- Je vous propose un script bash automatisé pour installer **Docker** et **Docker Compose** sur **Debian 12**. Ce script comprend l'installation de Docker, puis Docker Compose, et permet de vérifier les installations.
+
+### **Script : Installer Docker et Docker Compose sur Debian 12**
+
+```bash
+#!/bin/bash
+
+# Met à jour la liste des paquets et installe les dépendances nécessaires
+echo "Mise à jour des paquets et installation des dépendances..."
+sudo apt-get update
+sudo apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+
+# Ajoute la clé GPG officielle de Docker
+echo "Ajout de la clé GPG officielle de Docker..."
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+# Ajoute le dépôt Docker à la source APT
+echo "Ajout du dépôt Docker au fichier sources..."
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Met à jour la liste des paquets à nouveau
+echo "Mise à jour de la liste des paquets avec le dépôt Docker..."
+sudo apt-get update
+
+# Installe Docker
+echo "Installation de Docker..."
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Démarre Docker et active-le au démarrage
+echo "Démarrage de Docker et activation au démarrage..."
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Vérifie que Docker est bien installé
+echo "Vérification de l'installation de Docker..."
+sudo docker --version
+
+# Installe Docker Compose
+echo "Installation de Docker Compose..."
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+# Applique les permissions d'exécution à Docker Compose
+echo "Applique les permissions d'exécution à Docker Compose..."
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Vérifie que Docker Compose est bien installé
+echo "Vérification de l'installation de Docker Compose..."
+docker-compose --version
+
+echo "Installation terminée avec succès !"
+```
+
+### **Comment utiliser ce script :**
+1. **Créer le script :**
+   - Ouvrez un éditeur de texte (par exemple Nano) :
+     ```bash
+     nano install-docker.sh
+     ```
+   - Collez le script ci-dessus dans l'éditeur.
+   - Enregistrez le fichier en appuyant sur `CTRL + O`, puis `Entrée`, et quittez avec `CTRL + X`.
+
+2. **Donner les permissions d'exécution :**
+   ```bash
+   chmod +x install-docker.sh
+   ```
+
+3. **Exécuter le script :**
+   ```bash
+   sudo ./install-docker.sh
+   ```
+
+---
+
+### **Ce que fait le script :**
+1. Met à jour la liste des paquets et installe les dépendances nécessaires.
+2. Ajoute la clé GPG officielle et le dépôt Docker.
+3. Installe Docker (Docker CE, CLI, et plugins).
+4. Démarre Docker et le configure pour démarrer au lancement de la machine.
+5. Installe Docker Compose directement à partir du dépôt officiel.
+6. Vérifie les versions installées de Docker et Docker Compose pour s'assurer que tout est en place.
 
