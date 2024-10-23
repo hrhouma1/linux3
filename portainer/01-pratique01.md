@@ -1076,13 +1076,135 @@ Cette interface permet de visualiser, ajouter ou supprimer des volumes Docker di
 # Capture 33
 ![image](https://github.com/user-attachments/assets/13e039ef-f986-44e5-aa6b-a9098314681c)
 
+Cette capture d'écran montre la section **Event list** dans Portainer, qui répertorie les événements liés aux conteneurs.
+
+### Détails de la liste des événements :
+
+1. **Liste des événements** :
+   - Les événements sont classés par date et heure.
+   - **Date** : Affiche la date et l'heure exactes de chaque événement (ex. 2019-08-19 14:21:42).
+   - **Category** : La catégorie d'événement, qui dans ce cas est **container**. Cela indique que tous ces événements sont liés à des actions effectuées sur des conteneurs Docker.
+   - **Details** : Les détails de l'événement, tels que :
+     - **Unsupported event** : Signifie que Portainer ne prend pas en charge la visualisation de l'événement en question.
+     - **Exec instance created** : Indique qu'une instance d'exécution (un shell ou une commande) a été créée dans un conteneur.
+     - **Exec instance started** : Indique qu'une instance d'exécution a été démarrée dans un conteneur.
+
+2. **Actions disponibles** :
+   - Il est possible de rechercher des événements spécifiques à l'aide de la barre de recherche.
+   - Les événements peuvent être actualisés avec l'icône de rafraîchissement en haut de la page.
+
+### Utilité :
+La **Event list** permet de suivre les différentes actions et événements qui se produisent au niveau des conteneurs Docker. Cette fonctionnalité est utile pour surveiller les activités, diagnostiquer les problèmes et suivre les événements exécutés sur les conteneurs, comme la création et le démarrage d'instances d'exécution. Elle permet également aux administrateurs de vérifier les logs d'événements pour résoudre les problèmes de conteneurs Docker de manière proactive.
+
 # Capture 34
 ![image](https://github.com/user-attachments/assets/23266b49-ea82-47e4-8a35-5d653a43127c)
 
+Cette capture d'écran montre la section **Host Overview** dans Portainer, qui donne un aperçu des détails de l'hôte Docker sur lequel Portainer est déployé.
+
+### Détails de l'hôte :
+
+1. **Host Details** (Détails de l'hôte) :
+   - **Hostname** : Nom de l'hôte Docker (ici, `docker-desktop`).
+   - **OS Information** : Informations sur le système d'exploitation (ici, `linux x86_64 Docker Desktop`).
+   - **Kernel Version** : Version du noyau Linux utilisée (ici, `4.9.184-linuxkit`).
+   - **Total CPU** : Le nombre total de cœurs de processeur (ici, 2 cœurs).
+   - **Total Memory** : Quantité totale de mémoire (ici, 2.1 Go).
+
+2. **Engine Details** (Détails du moteur) :
+   - **Version** : Version du moteur Docker (ici, `19.03.1` avec l'API `1.40`).
+   - **Root Directory** : Répertoire racine utilisé par Docker pour stocker les données (ici, `/var/lib/docker`).
+   - **Storage Driver** : Le driver de stockage utilisé (ici, `overlay2`).
+   - **Logging Driver** : Le driver utilisé pour gérer les journaux (ici, `json-file`).
+   - **Volume Plugins** : Plugins de gestion des volumes activés (ici, `local`).
+   - **Network Plugins** : Plugins réseau activés (ici, `bridge`, `host`, `ipvlan`, `macvlan`, `null`, `overlay`).
+
+### Utilité :
+Cette section permet aux utilisateurs d'obtenir rapidement des informations sur la configuration matérielle et logicielle de l'hôte Docker. Les administrateurs peuvent utiliser ces informations pour vérifier la version du moteur Docker, les capacités CPU et mémoire de l'hôte, ainsi que la configuration du stockage et des plugins réseau. Cela facilite la gestion et le dépannage des environnements Docker.
 
 
 
 
+
+
+
+
+
+# Conclusion du cours sur Portainer
+
+Portainer est un outil puissant pour la gestion simplifiée des environnements Docker, offrant une interface graphique intuitive permettant de superviser, configurer et administrer des conteneurs, volumes, réseaux et stacks Docker sans avoir à maîtriser les lignes de commande complexes. Grâce à ses fonctionnalités comme la gestion des logs, la surveillance des statistiques en temps réel, et l’inspection des conteneurs, il offre aux administrateurs et aux équipes de développement un contrôle total sur leurs environnements Docker. Portainer est donc idéal pour les environnements de production ou de développement où l'efficacité, la visibilité, et la simplicité sont essentielles.
+
+Portainer permet également de créer et de déployer facilement des images Docker à partir de Dockerfiles, de gérer les réseaux et volumes, et d'administrer les ressources des hôtes Docker avec des options de configuration avancées. Il simplifie grandement les tâches administratives, rendant Docker plus accessible même pour ceux qui ne sont pas à l'aise avec la ligne de commande.
+
+### Commandes équivalentes en Linux pour Docker
+
+Voici un résumé des commandes Docker Linux équivalentes aux actions possibles dans Portainer :
+
+1. **Créer un volume Docker :**
+   ```bash
+   docker volume create <nom_du_volume>
+   ```
+
+2. **Créer un réseau Docker :**
+   ```bash
+   docker network create --driver bridge <nom_du_réseau>
+   ```
+
+3. **Lister les conteneurs en cours d’exécution :**
+   ```bash
+   docker ps
+   ```
+
+4. **Inspecter un conteneur :**
+   ```bash
+   docker inspect <nom_du_conteneur>
+   ```
+
+5. **Visualiser les logs d’un conteneur :**
+   ```bash
+   docker logs <nom_du_conteneur>
+   ```
+
+6. **Démarrer un conteneur :**
+   ```bash
+   docker start <nom_du_conteneur>
+   ```
+
+7. **Arrêter un conteneur :**
+   ```bash
+   docker stop <nom_du_conteneur>
+   ```
+
+8. **Supprimer un conteneur :**
+   ```bash
+   docker rm <nom_du_conteneur>
+   ```
+
+9. **Supprimer une image Docker :**
+   ```bash
+   docker rmi <nom_de_l_image>
+   ```
+
+10. **Construire une image à partir d’un Dockerfile :**
+    ```bash
+    docker build -t <nom_image>:<tag> -f <chemin_vers_dockerfile> .
+    ```
+
+11. **Lancer un conteneur avec des options de port et de volume :**
+    ```bash
+    docker run -d -p <port_hôte>:<port_conteneur> -v <volume_hôte>:<volume_conteneur> <nom_image>
+    ```
+
+12. **Lister les volumes Docker :**
+    ```bash
+    docker volume ls
+    ```
+
+13. **Supprimer un volume Docker :**
+    ```bash
+    docker volume rm <nom_du_volume>
+    ```
+
+Ces commandes offrent la possibilité de gérer Docker de manière exhaustive via la ligne de commande, et sont complétées par les fonctionnalités graphiques de Portainer pour une gestion encore plus intuitive et visuelle.
 
 
 
