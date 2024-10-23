@@ -666,9 +666,63 @@ Vous pouvez ainsi interagir directement avec l'environnement du conteneur de man
 # Capture 19
 ![image](https://github.com/user-attachments/assets/758b64db-b479-4129-9162-369338157eda)
 
+Cette capture d'écran montre une session active de **console** à l'intérieur d'un conteneur Docker dans Portainer, où la commande **ps -ef** a été exécutée pour afficher les processus en cours dans le conteneur.
+
+### Détails de la console du conteneur :
+
+1. **Commande exécutée** : 
+   - La commande **ps -ef** a été utilisée pour lister tous les processus en cours d'exécution dans le conteneur avec des détails tels que l'UID (utilisateur), le PID (identifiant du processus), le PPID (identifiant du processus parent), l'heure de démarrage (STIME), et la commande en cours d'exécution (CMD).
+
+2. **Processus affichés** :
+   - **Processus 1** : Le processus de démarrage (`/bin/sh -c "python flask-hello.py"`) avec l'UID **root**. Ce processus a été lancé à **11:14** et exécute la commande de démarrage du serveur Flask.
+   - **Processus 10** : Le processus Python qui exécute directement le serveur Flask (`python flask-hello.py`), également démarré à **11:14**.
+   - **Processus 9** : Une session Bash active, démarrée à **11:42**, ce qui correspond probablement à la session interactive ouverte via la console dans Portainer.
+   - **Processus 14** : La commande **ps -ef** elle-même, exécutée à **11:45**, pour afficher cette liste de processus.
+
+3. **Utilisateur** : 
+   - Tous les processus sont exécutés sous l'utilisateur **root**, qui dispose de tous les privilèges dans le conteneur.
+
+4. **Bouton "Disconnect"** :
+   - Un bouton **Disconnect** est disponible pour quitter la session et arrêter l'accès à la console du conteneur.
+
+### Utilité :
+L'exécution de la commande **ps -ef** permet de voir tous les processus en cours à l'intérieur du conteneur, ce qui est essentiel pour le débogage ou la surveillance des applications. Vous pouvez ainsi vérifier quels processus sont actifs, et si des processus inattendus ou non désirés tournent dans le conteneur.
+
+Cela vous permet également de confirmer que l'application Flask est en cours d'exécution avec le processus Python approprié, ce qui est crucial pour diagnostiquer des problèmes de performance ou des comportements inattendus dans le conteneur.
+
+Cette interface interactive est très utile pour administrer des conteneurs en temps réel et réagir rapidement aux anomalies ou aux besoins de maintenance.
+
 # Capture 20
 ![image](https://github.com/user-attachments/assets/44469646-3761-4e07-939f-c83f6cb809b4)
 
+Cette capture d'écran montre la section **Image list** dans Portainer, où vous pouvez gérer les images Docker stockées localement sur votre hôte Docker.
+
+### Détails de la gestion des images Docker :
+
+1. **Pull image** :
+   - **Image** : Vous pouvez entrer le nom d'une image (par exemple `myimage:myTag`) dans ce champ pour télécharger une nouvelle image depuis un registre Docker. Si aucun tag n'est spécifié, Portainer va récupérer la version **latest** par défaut.
+   - **Registry** : Le registre par défaut est **DockerHub**, mais vous pouvez spécifier un autre registre si nécessaire.
+   - **Pull the Image** : En cliquant sur ce bouton, vous téléchargez l'image Docker spécifiée à partir du registre choisi.
+
+2. **Liste des images** :
+   - La section **Images** montre les images Docker qui sont déjà présentes sur l'hôte Docker.
+   - **Id** : L'identifiant unique de chaque image est affiché sous forme de hash SHA256.
+   - **Tags** : Les tags associés à chaque image (par exemple `alpine:latest`, `centos:latest`, etc.). Les tags permettent de savoir quelle version de l'image est disponible.
+   - **Unused** : Les images non utilisées par les conteneurs actifs sont marquées comme **Unused**, ce qui signifie qu'elles sont disponibles mais ne sont pas actuellement utilisées dans un conteneur en cours d'exécution.
+
+3. **Actions disponibles** :
+   - **Remove** : Supprimer les images sélectionnées de l'hôte Docker.
+   - **Build a new Image** : Vous pouvez construire une nouvelle image Docker en spécifiant un Dockerfile ou d'autres méthodes.
+   - **Import** : Importer une image Docker depuis un fichier local.
+   - **Export** : Exporter une image Docker vers un fichier.
+
+4. **Barre de recherche** :
+   - Un champ de recherche vous permet de filtrer les images en fonction de leur ID, de leurs tags ou d'autres critères, ce qui facilite la gestion d'un grand nombre d'images.
+
+### Utilité :
+Cette interface vous permet de gérer efficacement les images Docker sur votre hôte sans avoir à utiliser la ligne de commande. Vous pouvez télécharger de nouvelles images, supprimer celles qui ne sont plus nécessaires, ou encore importer et exporter des images pour les déplacer d'un environnement à un autre.
+
+Les images marquées comme **Unused** peuvent être candidates à la suppression pour libérer de l'espace sur le disque, mais il est aussi possible de garder des images en réserve pour des déploiements futurs. Grâce à cette interface, vous pouvez facilement administrer toutes les images présentes et maintenir un environnement Docker propre et optimisé.
 
 # Capture 21 - barre de recherche 
 ![image](https://github.com/user-attachments/assets/73c0cc9d-f0d0-4727-b7ff-97928bd383aa)
