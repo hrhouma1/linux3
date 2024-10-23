@@ -1017,8 +1017,61 @@ Cette interface permet de visualiser et de gérer les réseaux Docker et les con
 # Capture 31
 ![image](https://github.com/user-attachments/assets/1e58e113-9067-4da3-b6d7-b0530ec4b390)
 
+Cette capture d'écran montre la **Network list** (liste des réseaux) dans Portainer, qui permet de visualiser et gérer les réseaux Docker configurés sur un hôte.
+
+### Détails de la liste des réseaux :
+
+1. **Liste des réseaux** :
+   - Les réseaux sont listés avec leurs détails :
+     - **bridge** : Réseau par défaut avec le driver de type **bridge**. Ce type de réseau permet de connecter des conteneurs entre eux sur le même hôte.
+     - **host** : Utilise le réseau de l'hôte directement, sans isolation.
+     - **int-net** : Un réseau personnalisé avec le sous-réseau **172.24.0.0/16**.
+     - **my-addr** et **my-net** : Réseaux créés par l'utilisateur avec les sous-réseaux respectifs **10.10.0.0/16** et **172.21.0.0/16**.
+     - **none** : Réseau Docker spécial qui n'attribue pas de connectivité réseau aux conteneurs qui l'utilisent.
+
+2. **Colonnes affichées** :
+   - **Name** : Le nom du réseau.
+   - **Stack** : Les stacks associées (ici non utilisées, colonne vide).
+   - **Scope** : Portée du réseau (ici tous les réseaux sont **local**).
+   - **Driver** : Le driver réseau utilisé (ex. **bridge**, **host**, ou **null** pour le réseau **none**).
+   - **Attachable** : Indique si des conteneurs peuvent être attachés au réseau (seul le réseau **int-net** a cette option activée).
+   - **Internal** : Indique si le réseau est interne uniquement (aucun réseau dans cette liste n'est interne).
+   - **IPAM Driver** : Le driver IPAM utilisé pour la gestion des adresses IP (ici tous utilisent **default**).
+   - **IPAM Subnet** : Le sous-réseau IP configuré pour chaque réseau (ex. **172.17.0.0/16** pour le réseau **bridge**).
+   - **IPAM Gateway** : La passerelle associée au sous-réseau (ex. **172.17.0.1** pour le réseau **bridge**).
+
+3. **Actions disponibles** :
+   - **Remove** : Permet de supprimer les réseaux sélectionnés.
+   - **Add network** : Permet d'ajouter un nouveau réseau Docker via une interface graphique.
+
+### Utilité :
+Cette vue est utile pour visualiser et gérer tous les réseaux Docker configurés sur un hôte. Elle permet de vérifier rapidement les configurations réseau, comme les sous-réseaux et les passerelles, et de créer ou supprimer des réseaux. Portainer simplifie la gestion réseau pour les utilisateurs de Docker, en particulier pour ceux qui préfèrent utiliser une interface graphique plutôt que des commandes en ligne.
+
 # Capture 32
 ![image](https://github.com/user-attachments/assets/1028c255-8bf5-4e1d-ae19-4e21ffc42687)
+
+Cette capture d'écran montre la section **Volume list** dans Portainer, qui répertorie les volumes Docker configurés sur l'hôte.
+
+### Détails de la liste des volumes :
+
+1. **Liste des volumes** :
+   - La liste affiche les volumes Docker créés, avec les colonnes suivantes :
+     - **Name** : Le nom unique généré pour chaque volume.
+     - **Stack** : La stack associée (ici vide, car les volumes ne sont pas liés à des stacks spécifiques).
+     - **Driver** : Le driver utilisé pour gérer les volumes (ici, tous utilisent le driver **local**).
+     - **Mount point** : Le point de montage du volume sur l'hôte Docker (ex. `/var/lib/docker/volumes/471e97.../_data`).
+     - **Created** : La date de création de chaque volume.
+     - **State** : Les volumes affichés sont marqués comme **Unused**, ce qui signifie qu'ils ne sont actuellement pas utilisés par des conteneurs.
+
+2. **Actions disponibles** :
+   - **Remove** : Vous pouvez supprimer les volumes sélectionnés à l'aide de ce bouton.
+   - **Add volume** : Permet d'ajouter un nouveau volume Docker via une interface graphique.
+
+3. **Exemple de volume utilisé** :
+   - **portainer_data** est un volume utilisé pour stocker les données persistantes de Portainer. Il est monté sous `/var/lib/docker/volumes/portainer_data/_data`.
+
+### Utilité :
+Cette interface permet de visualiser, ajouter ou supprimer des volumes Docker directement depuis l'interface de Portainer. Les volumes sont essentiels pour stocker des données persistantes, notamment pour les bases de données ou d'autres services nécessitant de la rétention de données au-delà du cycle de vie d'un conteneur. L'interface fournit un moyen simple d'identifier les volumes inutilisés et de gérer l'espace disque en supprimant les volumes qui ne sont plus nécessaires.
 
 # Capture 33
 ![image](https://github.com/user-attachments/assets/13e039ef-f986-44e5-aa6b-a9098314681c)
