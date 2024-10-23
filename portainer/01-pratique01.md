@@ -104,8 +104,69 @@ En résumé, ces deux options vous offrent la flexibilité de gérer à la fois 
 # Capture 4
 ![image](https://github.com/user-attachments/assets/452f263b-3ae2-4018-b87d-52b7f4c20c03)
 
+Cette capture d'écran montre l'interface principale de **Portainer** après la connexion à un environnement Docker. Voici ce que l'on peut observer :
+
+### **Page d'accueil de Portainer (Home)**
+
+1. **Endpoints** :
+   - La section des points de terminaison (Endpoints) permet de visualiser et de gérer les différents environnements Docker connectés à Portainer.
+   - Ici, un environnement Docker local est connecté, comme indiqué par l'étiquette "local".
+
+2. **Statistiques de l'environnement Docker** :
+   - **Stacks** : Il n'y a actuellement aucune stack déployée dans cet environnement.
+   - **Containers** : Il y a 39 conteneurs au total, dont 20 sont en cours d'exécution (indiqués en vert), et 19 sont arrêtés (indiqués en rouge).
+   - **Volumes** : 5 volumes sont disponibles dans cet environnement Docker.
+   - **Images** : 21 images Docker sont présentes dans l'environnement.
+
+3. **Informations supplémentaires** :
+   - Le Docker est configuré en tant qu'instance autonome ("Standalone 19.03.12"), utilisant le socket `/var/run/docker.sock` pour l'accès.
+
+4. **Groupes et Tags** :
+   - Aucune étiquette ou groupe spécifique n'a été assigné à cet environnement Docker ("Group: Unassigned").
+
+### Actions possibles :
+- Vous pouvez **actualiser** les données affichées en cliquant sur le bouton **Refresh**.
+- Une barre de recherche permet de rechercher des conteneurs, des groupes, ou des volumes par nom, groupe, tag, statut, ou URL.
+
+En résumé, cette interface donne une vue d'ensemble de l'état de l'environnement Docker connecté et permet d'accéder rapidement à la gestion des conteneurs, volumes, et images. C'est ici que vous pouvez commencer à administrer et superviser les ressources Docker via Portainer.
+
 # Capture 5
 ![image](https://github.com/user-attachments/assets/1ecdeeda-e295-4bf8-af53-4c554daa639d)
+
+Cette capture d'écran présente la **liste des conteneurs** dans l'interface de gestion de Portainer. Elle montre les conteneurs Docker actifs et leur état.
+
+### Détails de la liste des conteneurs :
+
+1. **Tableau des conteneurs** :
+   - Chaque ligne représente un conteneur Docker avec des informations clés comme :
+     - **Nom** : Le nom unique du conteneur (ex. `nostalgic_roentgen`, `flask-hello`).
+     - **État** : L'état actuel du conteneur, qui est ici **running** (en cours d'exécution).
+     - **Image** : L'image Docker utilisée pour créer ce conteneur (ex. `portainer/portainer`, `flask-hello-latest`).
+     - **Créé** : La date et l'heure de création du conteneur.
+     - **Adresse IP** : L'adresse IP attribuée au conteneur par Docker.
+   
+2. **Actions rapides (Quick actions)** :
+   - Pour chaque conteneur, vous avez plusieurs actions rapides disponibles via des icônes :
+     - **Console** : Accès à une console directement dans le conteneur.
+     - **Statistiques** : Voir les statistiques d'utilisation des ressources du conteneur (CPU, mémoire, etc.).
+     - **Logs** : Afficher les journaux de ce conteneur pour le débogage ou la surveillance.
+     - **Inspecter** : Voir les détails approfondis du conteneur.
+
+3. **Commandes principales** :
+   - En haut de la liste, vous avez des boutons pour gérer l'état des conteneurs sélectionnés :
+     - **Start** : Démarrer un conteneur arrêté.
+     - **Stop** : Arrêter un conteneur en cours d'exécution.
+     - **Kill** : Forcer l'arrêt d'un conteneur.
+     - **Restart** : Redémarrer un conteneur.
+     - **Pause/Resume** : Suspendre ou reprendre un conteneur.
+     - **Remove** : Supprimer un conteneur.
+     - **Add container** : Ajouter un nouveau conteneur Docker via une interface utilisateur.
+
+4. **Fonction de recherche** :
+   - Une barre de recherche permet de trouver rapidement un conteneur par nom, image, ou autre critère.
+
+### Utilité :
+Cette vue est particulièrement pratique pour avoir un aperçu global des conteneurs Docker déployés et de leur état. Vous pouvez facilement gérer, surveiller et effectuer des opérations sur chaque conteneur via cette interface intuitive. Cela simplifie grandement la gestion des conteneurs, surtout dans des environnements où plusieurs conteneurs sont en cours d'exécution.
 
 # Capture 6
 ![image](https://github.com/user-attachments/assets/39d6cc08-5772-40c4-a251-c5d50baf8731)
