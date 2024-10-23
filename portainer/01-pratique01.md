@@ -53,7 +53,8 @@ L'agent n'est pas nécessaire pour un hôte autonome (single-node), mais peut ê
 -----------
 
 # Capture 2
-![image](https://github.com/user-attachments/assets/f09ec36c-07b5-4087-a5e6-576e366bc4da)
+
+![image](https://github.com/user-attachments/assets/0419ac85-9211-42b6-9c47-342a77df53f2)
 
 Cette capture d'écran montre l'étape de création de l'utilisateur administrateur initial dans l'interface de Portainer. Une fois que vous avez déployé le conteneur Portainer via les commandes Docker, cette page apparaît pour configurer l'accès administrateur.
 
@@ -69,8 +70,7 @@ Cela montre la simplicité d'utilisation de Portainer pour administrer visuellem
 ------------------------
 # Captures 3
 
-![image](https://github.com/user-attachments/assets/0419ac85-9211-42b6-9c47-342a77df53f2)
-
+![image](https://github.com/user-attachments/assets/f09ec36c-07b5-4087-a5e6-576e366bc4da)
 ![image](https://github.com/user-attachments/assets/6ca697d4-96a1-4dc6-bb40-d081c989b41a)
 
 # Capture 4
