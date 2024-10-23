@@ -17,7 +17,7 @@
 4. Une fois l'installation terminée, lancez VirtualBox.
 
 ### **2. Téléchargement de l'image ISO de Debian 12**
-1. Ouvrez votre navigateur et allez sur [le site officiel de Debian](https://www.debian.org/distrib/).
+1. Ouvrez votre navigateur et allez sur [le site officiel de Debian](https://www.debian.org/) ou https://www.debian.org/distrib/ 
 2. Sous **Small installation image**, cliquez sur **64-bit PC netinst ISO** (recommandé).
 3. Téléchargez le fichier ISO (environ 400 à 600 Mo).
 
