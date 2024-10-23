@@ -1,3 +1,51 @@
+# Installation de Portainer
+
+*Pour installer et configurer Portainer avec la ligne de commande Linux, voici les étapes à suivre :*
+
+### Prérequis :
+- Docker doit être installé sur votre machine.
+
+### Étapes :
+
+
+1. **Lancer Portainer en tant que container Docker :**
+   Exécutez les commandes suivantes pour déployer Portainer en mode `standalone` (pour un usage unique ou sur une petite installation Docker) :
+
+   a. **Créer un volume Docker pour Portainer :**
+   ```bash
+   docker volume create portainer_data
+   ```
+
+   b. **Déployer le conteneur Portainer :**
+   ```bash
+   docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always \
+   -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+   ```
+
+   - `-d` : lance le conteneur en mode détaché (en arrière-plan).
+   - `-p 9000:9000` : mappe le port 9000 de votre machine hôte au port 9000 du conteneur (port d'accès à l'interface web de Portainer).
+   - `-p 8000:8000` : optionnel, utilisé pour la gestion des agents Docker (si vous utilisez l'agent Portainer sur plusieurs hôtes).
+   - `--restart=always` : permet au conteneur de redémarrer automatiquement en cas de redémarrage de votre machine.
+
+2. **Accéder à l'interface web de Portainer :**
+   Ouvrez votre navigateur et allez à l'adresse suivante :
+
+   ```
+   http://<IP-de-votre-machine>:9000
+   ```
+
+   Lors de la première connexion, vous serez invité à créer un utilisateur administrateur.
+
+### Commande complète en une seule étape :
+Pour plus de simplicité, voici la commande complète pour déployer Portainer :
+
+```bash
+docker volume create portainer_data && docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+```
+
+Après cela, vous pourrez utiliser Portainer pour gérer vos conteneurs Docker à travers une interface graphique intuitive.
+
+
 
 ### Définition de Portainer
 
