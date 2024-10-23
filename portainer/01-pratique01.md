@@ -237,11 +237,46 @@ Une fois ces configurations définies, vous pouvez cliquer sur **Deploy the cont
 # Capture 8
 ![image](https://github.com/user-attachments/assets/9735e0ce-f220-48aa-a6ba-f3fcdebf4ec1)
 
+Cette capture d'écran montre l'onglet **Env** dans les **paramètres avancés** lors de la création d'un conteneur dans Portainer.
+
+### Détails des paramètres avancés du conteneur (section **Env**) :
+
+1. **Environment variables (Variables d'environnement)** :
+   - Cette section vous permet d'ajouter des variables d'environnement spécifiques au conteneur.
+   - Les variables d'environnement sont souvent utilisées pour configurer le comportement d'une application à l'intérieur d'un conteneur sans avoir besoin de modifier l'image ou le code de l'application.
+   - Vous pouvez ajouter une nouvelle variable en cliquant sur **add environment variable**. Par exemple, vous pourriez définir des variables comme `ENV=production` ou configurer une clé d'API avec `API_KEY=xxxxxx`.
+
+### Fonctionnement :
+L'ajout de variables d'environnement est un moyen flexible de configurer dynamiquement des applications dans des conteneurs Docker. Cela vous permet de contrôler les paramètres de l'application directement depuis l'interface Portainer, sans avoir à reconstruire ou à modifier l'image Docker elle-même.
+
+Une fois les variables ajoutées, elles seront appliquées lors du démarrage du conteneur. Comme pour les autres paramètres avancés, vous pouvez cliquer sur **Deploy the container** une fois que toutes vos configurations sont complètes, afin de lancer le conteneur avec les variables d'environnement et les autres paramètres définis.
+
+Cette section est particulièrement utile dans les environnements où vous devez déployer la même image avec différentes configurations selon les environnements (développement, production, etc.).
+
 # Capture 9
 ![image](https://github.com/user-attachments/assets/8f8549d2-f3ff-4391-ad5f-2a6c5202ff5d)
 
+Cette capture d'écran montre l'onglet **Restart policy** dans les **paramètres avancés** lors de la création d'un conteneur dans Portainer.
+
+### Détails des paramètres avancés du conteneur (section **Restart policy**) :
+
+1. **Restart policy (Politique de redémarrage)** :
+   - Ce paramètre détermine comment Docker gère les redémarrages du conteneur dans différentes situations. Plusieurs options sont disponibles :
+     - **Never** : Le conteneur ne sera jamais redémarré automatiquement, même s'il plante.
+     - **Always** : Le conteneur sera toujours redémarré automatiquement, quelle que soit la raison de l'arrêt (crash ou arrêt manuel).
+     - **On failure** : Le conteneur sera redémarré uniquement s'il plante. C'est utile pour éviter un redémarrage en boucle après un arrêt manuel.
+     - **Unless stopped** : Le conteneur sera redémarré automatiquement à chaque fois que Docker démarre, sauf si vous l'avez manuellement arrêté.
+
+### Fonctionnement :
+En définissant une politique de redémarrage appropriée, vous pouvez contrôler le comportement de votre conteneur après un échec ou un redémarrage du système. Par exemple, dans un environnement de production, il est souvent recommandé d'utiliser la politique **On failure** pour s'assurer que les conteneurs redémarrent automatiquement en cas de crash.
+
+Une fois la politique de redémarrage sélectionnée et les autres configurations du conteneur définies, vous pouvez cliquer sur **Deploy the container** pour démarrer le conteneur avec les paramètres spécifiés.
+
+Cette option est essentielle pour garantir la résilience et la continuité des services, en particulier dans les environnements critiques où un arrêt inattendu ne doit pas interrompre les opérations du conteneur.
+
 # Capture 10
 ![image](https://github.com/user-attachments/assets/9239f7d2-c386-4aff-8a59-4d17f597de8e)
+
 
 # Capture 2
 ![image](https://github.com/user-attachments/assets/cd593414-e614-45db-87c1-f785fcbfde7c)
