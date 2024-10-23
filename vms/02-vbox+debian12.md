@@ -5,7 +5,6 @@
 - C'est l'une des versions les plus récentes et robustes, recommandée pour les débutants et les utilisateurs expérimentés.
 - Si vous souhaitez une version différente (comme une version testing ou une version plus ancienne), vous pouvez adapter le processus de téléchargement au début en choisissant l'image ISO correspondant à la version de Debian que vous voulez installer.
 - Je vous présente un **Guide complet et détaillé** pour installer **Debian 12 "Bookworm"** sur **Oracle VirtualBox** sur une machine hôte **Windows** avec un environnement de bureau (desktop). 
-- Chaque étape inclut absolument **tous les détails** du début à la fin, spécialement pour une machine virtuelle.
 
 ---
 
