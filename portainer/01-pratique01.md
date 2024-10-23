@@ -73,6 +73,34 @@ Cela montre la simplicité d'utilisation de Portainer pour administrer visuellem
 ![image](https://github.com/user-attachments/assets/f09ec36c-07b5-4087-a5e6-576e366bc4da)
 ![image](https://github.com/user-attachments/assets/6ca697d4-96a1-4dc6-bb40-d081c989b41a)
 
+
+Ces captures d'écran montrent deux options différentes pour connecter **Portainer** à un environnement Docker : local ou distant.
+
+### Première capture 3-1 : Connexion à un environnement Docker distant
+
+1. **Option "Remote" (Gestion d'un environnement Docker distant)** :
+   - Cette option permet de connecter Portainer à un environnement Docker situé sur une machine distante en utilisant l'API Docker via TCP.
+   - **Nom de l'environnement** : Vous devez entrer un nom d'identification pour l'environnement Docker distant (par exemple, `docker-prod01`).
+   - **URL du point de terminaison** : Entrez l'URL ou l'adresse IP du Docker distant (par exemple, `10.0.0.10:2375` ou `mydocker.mydomain.com:2375`).
+   - **TLS** : Vous avez l'option d'activer ou non TLS (Transport Layer Security) pour sécuriser la connexion avec le Docker distant.
+   - Une fois ces informations remplies, cliquez sur **Connect** pour lier Portainer à cet environnement.
+
+Cette option est utile pour gérer des environnements Docker situés sur des serveurs distants ou dans le cloud. Il est important de noter que l'API Docker doit être exposée correctement sur le serveur distant pour que la connexion fonctionne.
+
+### Deuxième capture 3-2 : Connexion à un environnement Docker local
+
+1. **Option "Local" (Gestion de l'environnement Docker local)** :
+   - Ici, vous gérez l'environnement Docker local où Portainer est déjà en cours d'exécution.
+   - **Pré-requis** : Il est nécessaire de monter le socket Docker de l'hôte dans le conteneur Portainer. Cela est fait en spécifiant l'option suivante lors du démarrage du conteneur :
+     - Pour Linux : `-v /var/run/docker.sock:/var/run/docker.sock`
+     - Pour Windows : `-v \\.\pipe\docker_engine:\\.\pipe\docker_engine`
+   - Une fois que le socket est monté correctement, cliquez sur **Connect** pour commencer à gérer l'environnement Docker local.
+
+Cette option permet de gérer directement les conteneurs qui s'exécutent sur la même machine que Portainer. Cela facilite la gestion locale sans avoir besoin de configuration réseau particulière.
+
+En résumé, ces deux options vous offrent la flexibilité de gérer à la fois des environnements Docker locaux et distants depuis la même interface Portainer, avec une configuration simple pour chaque cas.
+
+
 # Capture 4
 ![image](https://github.com/user-attachments/assets/452f263b-3ae2-4018-b87d-52b7f4c20c03)
 
