@@ -171,8 +171,68 @@ Cette vue est particulièrement pratique pour avoir un aperçu global des conten
 # Capture 6
 ![image](https://github.com/user-attachments/assets/39d6cc08-5772-40c4-a251-c5d50baf8731)
 
+Cette capture d'écran montre l'interface de création d'un nouveau conteneur dans **Portainer**.
+
+### Détails de la création d'un conteneur :
+
+1. **Nom du conteneur** :
+   - **Name** : Le nom du conteneur est défini comme `flask-hello`.
+
+2. **Configuration de l'image** :
+   - **Image** : Le champ image montre que le conteneur sera créé à partir de l'image `pythonincontainers/flask-hello:latest` provenant du registre **DockerHub**.
+   - **Always pull the image** : Cette option est activée, ce qui signifie que Portainer va toujours récupérer la dernière version de l'image depuis DockerHub avant de créer le conteneur.
+
+3. **Configuration des ports réseau** :
+   - **Publish all exposed network ports to random host ports** : Cette option est activée, ce qui signifie que tous les ports exposés par le conteneur seront mappés aléatoirement sur des ports de l'hôte Docker.
+   - **Manual network port publishing** : Cette option permet de spécifier manuellement les ports réseau à publier, mais elle est désactivée ici.
+
+4. **Contrôle d'accès** :
+   - **Enable access control** : Cette option est activée, ce qui permet de restreindre l'accès à la gestion du conteneur.
+   - Deux choix sont proposés :
+     - **Administrators** : Restreindre la gestion de cette ressource aux administrateurs uniquement (option sélectionnée).
+     - **Restricted** : Restreindre la gestion à un ensemble d'utilisateurs spécifiques.
+
+5. **Actions supplémentaires** :
+   - **Auto remove** : Cette option, lorsqu'elle est activée, permet de supprimer automatiquement le conteneur après son arrêt.
+   - **Deploy the container** : Ce bouton permet de lancer le déploiement du conteneur avec les paramètres spécifiés.
+
+### Fonctionnement :
+Après avoir configuré tous les paramètres souhaités, vous pouvez cliquer sur **Deploy the container** pour créer et démarrer le conteneur basé sur l'image sélectionnée. Vous aurez alors accès à ce conteneur via Portainer pour le gérer, le surveiller, et interagir avec lui, notamment pour consulter les journaux ou accéder à la console du conteneur.
+
+Cet écran montre à quel point Portainer simplifie la création de conteneurs Docker via une interface intuitive, rendant la configuration des ports, des images, et des règles de sécurité plus accessible et facile à gérer sans avoir recours à la ligne de commande.
+
 # Capture 7
 ![image](https://github.com/user-attachments/assets/47a3030a-ca2f-49a2-be36-24e97928c915)
+
+Cette capture d'écran montre les **paramètres avancés** de configuration réseau pour un conteneur dans Portainer.
+
+### Détails des paramètres avancés du conteneur (section **Network**) :
+
+1. **Network (Réseau)** :
+   - Vous pouvez choisir le type de réseau Docker à utiliser pour le conteneur. Ici, le réseau sélectionné est `bridge`, qui est le réseau par défaut pour les conteneurs Docker.
+
+2. **Hostname** :
+   - Le nom d'hôte du conteneur peut être spécifié ici. Par exemple, vous pouvez entrer `web01` pour assigner un nom d'hôte spécifique au conteneur.
+
+3. **Domain Name** :
+   - Vous pouvez également définir un domaine, comme `example.com`, si le conteneur fait partie d'une infrastructure plus large nécessitant une gestion de domaine.
+
+4. **Mac Address** :
+   - Il est possible d'attribuer manuellement une adresse MAC au conteneur. Cela est généralement utilisé pour des configurations réseau spécifiques où le conteneur doit avoir une adresse MAC prédéfinie.
+
+5. **IPv4 Address** :
+   - Si vous voulez attribuer une adresse IPv4 statique à votre conteneur sur un réseau spécifique, vous pouvez la définir ici (par exemple, `172.20.0.7`).
+
+6. **IPv6 Address** :
+   - De même, vous pouvez attribuer une adresse IPv6 statique si votre infrastructure le nécessite.
+
+7. **Hosts file entries** :
+   - Vous avez la possibilité d'ajouter manuellement des entrées supplémentaires au fichier `hosts` du conteneur, ce qui peut être utile pour la résolution de noms personnalisés à l'intérieur du conteneur.
+
+### Fonctionnement :
+Ces paramètres avancés vous permettent de configurer la façon dont votre conteneur interagit avec le réseau. Si vous avez besoin d'une gestion fine des réseaux Docker, comme le choix d'un réseau spécifique, l'attribution d'adresses IP statiques, ou des ajustements au fichier `hosts`, cette interface vous permet de le faire facilement via Portainer.
+
+Une fois ces configurations définies, vous pouvez cliquer sur **Deploy the container** pour démarrer votre conteneur avec les paramètres réseau spécifiques que vous avez configurés. Ces options sont particulièrement utiles dans des environnements complexes où des configurations réseau précises sont requises.
 
 # Capture 8
 ![image](https://github.com/user-attachments/assets/9735e0ce-f220-48aa-a6ba-f3fcdebf4ec1)
