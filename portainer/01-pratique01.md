@@ -304,8 +304,45 @@ Cette section est essentielle pour ajuster les autorisations d'un conteneur en f
 # Capture 10-2
 ![image](https://github.com/user-attachments/assets/cd593414-e614-45db-87c1-f785fcbfde7c)
 
+Cette capture d'écran présente à nouveau la **liste des conteneurs** dans Portainer, similaire à celle que vous avez déjà fournie plus tôt, mais avec des détails supplémentaires ou mis à jour.
+
+### Détails de la liste des conteneurs :
+
+1. **Tableau des conteneurs** :
+   - Les conteneurs Docker actuellement en cours d'exécution sont listés ici avec des informations importantes comme :
+     - **Nom** : Le nom unique de chaque conteneur (par exemple, `flask-hello`, `nostalgic_roentgen`).
+     - **État** : L'état actuel de chaque conteneur. Tous sont en état **running** (indiqué par le libellé vert).
+     - **Image** : L'image Docker utilisée pour démarrer chaque conteneur (ex. `pythonincontainers/flask-hello:latest` et `portainer/portainer`).
+     - **Créé** : La date et l'heure de création des conteneurs.
+     - **Adresse IP** : Les adresses IP attribuées à chaque conteneur par Docker.
+
+2. **Actions rapides (Quick actions)** :
+   - Pour chaque conteneur, plusieurs actions rapides sont disponibles via les icônes :
+     - **Console** : Ouvrir une console à l'intérieur du conteneur.
+     - **Statistiques** : Afficher les statistiques d'utilisation (CPU, mémoire, etc.) du conteneur.
+     - **Logs** : Accéder aux journaux pour surveiller l'activité ou diagnostiquer des problèmes.
+     - **Inspecter** : Voir les détails techniques et la configuration du conteneur.
+
+3. **Commandes principales** :
+   - En haut de la liste, plusieurs boutons permettent de gérer l'état des conteneurs sélectionnés :
+     - **Start** : Démarrer les conteneurs arrêtés.
+     - **Stop** : Arrêter un ou plusieurs conteneurs en cours d'exécution.
+     - **Kill** : Forcer l'arrêt d'un conteneur immédiatement.
+     - **Restart** : Redémarrer un conteneur.
+     - **Pause/Resume** : Mettre en pause ou reprendre l'exécution d'un conteneur.
+     - **Remove** : Supprimer un conteneur arrêté.
+     - **Add container** : Créer un nouveau conteneur.
+
+4. **Barre de recherche** :
+   - Une barre de recherche permet de trouver rapidement un conteneur en filtrant par nom, stack, ou autres critères.
+
+### Utilité :
+Cette interface permet d'avoir un aperçu rapide et global des conteneurs déployés et de leur état de fonctionnement. Vous pouvez facilement démarrer, arrêter, surveiller ou gérer les conteneurs directement à partir de cette vue. Cela rend la gestion des conteneurs Docker plus intuitive et accessible, en particulier pour ceux qui préfèrent ne pas utiliser la ligne de commande.
+
 # Capture 11
 ![image](https://github.com/user-attachments/assets/e5f77ae6-3658-4593-90f9-5e4d9fe8573a)
+
+
 
 # Capture 12
 ![image](https://github.com/user-attachments/assets/49486a67-cdae-494a-b29e-f8b6107b821c)
