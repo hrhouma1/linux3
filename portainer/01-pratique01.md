@@ -380,8 +380,80 @@ Ces informations sont cruciales pour comprendre le fonctionnement du conteneur e
 # Capture 12-1
 ![image](https://github.com/user-attachments/assets/49486a67-cdae-494a-b29e-f8b6107b821c)
 
+Cette capture d'écran montre les **statistiques en temps réel** d'un conteneur Docker dans Portainer, plus spécifiquement pour le conteneur nommé **flask-hello**.
+
+### Détails des statistiques du conteneur :
+
+1. **Taux de rafraîchissement (Refresh rate)** :
+   - La fréquence de mise à jour des statistiques est définie ici à **5 secondes**. Cela signifie que les données seront automatiquement actualisées toutes les 5 secondes pour refléter les ressources utilisées par le conteneur.
+
+2. **Utilisation de la mémoire (Memory usage)** :
+   - Ce graphique montre la quantité de mémoire utilisée par le conteneur, divisée en **Memory** (mémoire utilisée activement) et **Cache** (mémoire mise en cache).
+   - Ici, le conteneur utilise environ **40 MB** de mémoire, avec une distinction claire entre la mémoire active et celle en cache.
+
+3. **Utilisation du CPU (CPU usage)** :
+   - Ce graphique affiche le pourcentage de **CPU** utilisé par le conteneur. Dans cette capture, l'utilisation du CPU est relativement faible, oscillant autour de **2%**.
+
+4. **Utilisation du réseau (Network usage)** :
+   - Le graphique **Network usage** montre les données entrantes et sortantes (en réception **RX** sur l'interface réseau **eth0**) pour le conteneur.
+   - Ici, le trafic réseau semble faible avec moins de **1 KB** utilisé, ce qui est typique pour un conteneur simple comme une petite application Flask.
+
+5. **Liste des processus (Processes)** :
+   - La section **Processes** liste les processus actifs à l'intérieur du conteneur. Chaque processus est identifié par :
+     - **PID** : L'identifiant du processus (ex. `61026`).
+     - **USER** : L'utilisateur sous lequel le processus s'exécute (ex. `root`).
+     - **TIME** : Le temps CPU utilisé par chaque processus.
+     - **COMMAND** : La commande ou le script exécuté. Ici, les processus exécutent des commandes liées à l'application Flask (par exemple, `/bin/sh -c python flask-hello.py` et `python flask-hello.py`).
+
+### Fonctionnement :
+Cette interface vous permet de surveiller en temps réel les ressources consommées par le conteneur, telles que la mémoire, le CPU et le réseau. Cela est particulièrement utile pour identifier les goulets d'étranglement ou comprendre comment l'application utilise les ressources du système.
+
+En bas, la liste des processus vous permet d'obtenir un aperçu des processus en cours à l'intérieur du conteneur, ce qui est utile pour déboguer et diagnostiquer des problèmes de performance ou des processus inattendus.
+
+Ces informations sont essentielles pour la gestion efficace d'un conteneur en production, permettant de surveiller la santé du conteneur et d'optimiser l'utilisation des ressources.
+
 # Capture 12-2
 ![image](https://github.com/user-attachments/assets/c38e4cce-66c7-47dc-b59e-17f55f4417cc)
+
+Cette capture d'écran montre la section des **logs du conteneur** dans Portainer, où vous pouvez consulter les journaux générés par le conteneur en temps réel.
+
+### Détails des paramètres de visualisation des logs :
+
+1. **Auto-refresh logs (Rafraîchissement automatique des logs)** :
+   - Cette option est activée, ce qui signifie que les journaux sont automatiquement mis à jour pour afficher les nouvelles entrées au fur et à mesure qu'elles sont générées par le conteneur.
+
+2. **Wrap lines (Retour à la ligne)** :
+   - L'option est activée, ce qui permet d'afficher les lignes longues sur plusieurs lignes afin qu'elles soient lisibles sans avoir à faire défiler horizontalement.
+
+3. **Display timestamps (Afficher les horodatages)** :
+   - Cette option est désactivée ici, mais elle permettrait d'ajouter des horodatages à chaque ligne des journaux pour savoir à quel moment chaque entrée a été générée.
+
+4. **Fetch (Récupération des logs)** :
+   - Vous pouvez choisir de récupérer **All logs** (tous les journaux) ou filtrer selon des critères spécifiques pour afficher seulement une partie des journaux générés.
+
+5. **Search (Rechercher)** :
+   - Un champ de recherche permet de filtrer les journaux en fonction de mots-clés ou de chaînes spécifiques, facilitant ainsi l'exploration de grandes quantités de données de logs.
+
+6. **Lines (Nombre de lignes)** :
+   - Vous pouvez spécifier combien de lignes de journaux vous souhaitez voir à la fois. Ici, il est défini à **100** lignes.
+
+7. **Actions** :
+   - **Copy** : Permet de copier l'intégralité des journaux visibles.
+   - **Copy selected lines** : Vous pouvez sélectionner des lignes spécifiques et les copier.
+   - **Unselect** : Permet de désélectionner toutes les lignes.
+
+### Contenu des logs affichés :
+Dans la partie inférieure de l'écran, vous voyez un extrait des journaux du conteneur Flask, qui inclut des informations sur le serveur Flask en cours d'exécution :
+- **Serving Flask app "flask-hello"** : Le conteneur exécute l'application Flask.
+- **Environment: production** : L'application est exécutée en mode production.
+- **WARNING** : Avertissement indiquant que ce serveur de développement ne doit pas être utilisé en production.
+- **Debug mode: off** : Le mode de débogage est désactivé.
+- **Running on http://0.0.0.0:5000/** : L'application est accessible sur le port 5000.
+
+### Utilité :
+Cette interface est essentielle pour surveiller l'activité du conteneur en temps réel, identifier les erreurs, et comprendre comment l'application fonctionne à l'intérieur du conteneur. Vous pouvez facilement copier les informations importantes ou rechercher des erreurs spécifiques grâce aux options de filtrage et de recherche.
+
+Ces journaux sont particulièrement utiles pour déboguer les applications, diagnostiquer des problèmes de performance ou de connectivité, et assurer une bonne gestion des services dans un environnement de production ou de développement.
 
 # Capture 13
 ![image](https://github.com/user-attachments/assets/1df16e76-651e-458e-9eed-6abc38db57e6)
