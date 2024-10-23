@@ -274,11 +274,34 @@ Une fois la politique de redémarrage sélectionnée et les autres configuration
 
 Cette option est essentielle pour garantir la résilience et la continuité des services, en particulier dans les environnements critiques où un arrêt inattendu ne doit pas interrompre les opérations du conteneur.
 
-# Capture 10
+# Capture 10-1
 ![image](https://github.com/user-attachments/assets/9239f7d2-c386-4aff-8a59-4d17f597de8e)
 
+Cette capture d'écran montre l'onglet **Runtime & Resources** dans les **paramètres avancés** lors de la création d'un conteneur dans Portainer, spécifiquement la section des **capacités du conteneur**.
 
-# Capture 2
+### Détails des paramètres avancés du conteneur (section **Container capabilities**) :
+
+1. **Container capabilities (Capacités du conteneur)** :
+   - Ces options permettent de définir les capacités du conteneur en termes de permissions pour accéder à certaines fonctionnalités du noyau et des ressources système. Il s'agit de capacités qui déterminent ce que le conteneur est autorisé à faire.
+   - Voici quelques capacités que vous pouvez activer ou désactiver :
+     - **AUDIT_CONTROL** : Contrôle des paramètres du système d'audit.
+     - **CHOWN** : Permet de changer les propriétaires des fichiers.
+     - **KILL** : Permet au processus de tuer d'autres processus.
+     - **NET_RAW** : Permet l'utilisation de sockets RAW et d'autres opérations réseau de bas niveau.
+     - **SYS_ADMIN** : Autorise certaines opérations administratives du système.
+     - **SYS_TIME** : Permet de modifier l'heure du système.
+
+   - Les capacités activées sont représentées par des boutons bleus, et celles désactivées sont en gris. Vous pouvez activer ou désactiver chaque capacité individuellement, selon les besoins spécifiques de votre application et du niveau de sécurité requis.
+
+### Fonctionnement :
+Ces capacités permettent d'affiner les permissions et les accès que votre conteneur aura sur le système hôte. Par défaut, Docker applique une politique de sécurité qui désactive certaines capacités sensibles pour éviter que des conteneurs n'interagissent directement avec des composants critiques du noyau. Cependant, vous pouvez ajuster ces capacités pour donner plus de flexibilité à votre conteneur, si nécessaire pour des cas d'utilisation particuliers (par exemple, des conteneurs qui nécessitent un accès aux configurations réseau ou à la gestion des fichiers système).
+
+Une fois que vous avez configuré les capacités du conteneur, vous pouvez cliquer sur **Deploy the container** pour lancer le conteneur avec ces permissions spécifiques.
+
+Cette section est essentielle pour ajuster les autorisations d'un conteneur en fonction de son rôle dans l'infrastructure, tout en respectant les bonnes pratiques de sécurité.
+
+
+# Capture 10-2
 ![image](https://github.com/user-attachments/assets/cd593414-e614-45db-87c1-f785fcbfde7c)
 
 # Capture 11
