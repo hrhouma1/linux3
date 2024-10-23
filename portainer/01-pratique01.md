@@ -7,6 +7,9 @@ Il est particulièrement utile pour les équipes de développement ou les admini
 
 ### Analyse de l'image (Déploiement de Portainer sur un hôte Docker Linux autonome)
 
+# Capture 1
+![image](https://github.com/user-attachments/assets/b68246e5-0b33-4408-a5eb-b3093e0792c5)
+
 Dans cette capture d'écran, on vous montre comment déployer **Portainer Server** sur un hôte Docker Linux autonome ou sur un cluster de nœuds Swarm (ou encore sur un hôte Docker sous Windows 10 fonctionnant en mode conteneurs Linux).
 
 Voici les deux commandes Docker à utiliser pour le déploiement :
@@ -43,14 +46,14 @@ Une fois ces commandes exécutées, Portainer est déployé sur l'hôte Docker. 
 
 L'agent n'est pas nécessaire pour un hôte autonome (single-node), mais peut être utilisé dans un environnement distribué (multi-node Swarm) pour des fonctionnalités supplémentaires.
 
-# Capture 1
-![image](https://github.com/user-attachments/assets/b68246e5-0b33-4408-a5eb-b3093e0792c5)
+
 
 --------
 
 # Capture 2
 ![image](https://github.com/user-attachments/assets/0419ac85-9211-42b6-9c47-342a77df53f2)
 
+-----------
 
 # Capture 2
 ![image](https://github.com/user-attachments/assets/f09ec36c-07b5-4087-a5e6-576e366bc4da)
@@ -66,6 +69,7 @@ Cette étape est essentielle pour sécuriser l'accès à l'interface de gestion 
 
 Cela montre la simplicité d'utilisation de Portainer pour administrer visuellement votre environnement Docker.
 
+------------------------
 # Capture 3
 ![image](https://github.com/user-attachments/assets/6ca697d4-96a1-4dc6-bb40-d081c989b41a)
 
