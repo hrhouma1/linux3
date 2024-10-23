@@ -549,8 +549,64 @@ En cas de problème de performance ou d'anomalies dans le comportement du conten
 # Capture 15
 ![image](https://github.com/user-attachments/assets/29557d79-5448-4b0e-a828-068b4a7ae8c7)
 
+Cette capture d'écran montre la **liste des conteneurs** dans l'interface Portainer, où plusieurs conteneurs Docker sont en cours d'exécution.
+
+### Détails de la liste des conteneurs :
+
+1. **Tableau des conteneurs** :
+   - Chaque conteneur est répertorié avec des informations clés :
+     - **Name** : Le nom unique du conteneur (ex. `flask-hello`, `nostalgic_roentgen`).
+     - **State** : L'état actuel du conteneur est affiché comme **running** (en cours d'exécution), représenté en vert.
+     - **Quick actions** : Des actions rapides comme :
+       - **Console** : Accès à une console shell à l'intérieur du conteneur.
+       - **Stats** : Voir les statistiques d'utilisation des ressources du conteneur (CPU, mémoire, etc.).
+       - **Logs** : Afficher les journaux du conteneur pour suivre l'activité.
+       - **Inspect** : Obtenir des détails approfondis sur le conteneur (configuration, réseau, volumes, etc.).
+     - **Stack** : Si le conteneur fait partie d'une stack Docker, celle-ci sera affichée ici.
+     - **Image** : L'image Docker utilisée pour créer le conteneur (ex. `pythonincontainers/flask-hello:latest`).
+     - **Created** : La date et l'heure de création du conteneur.
+
+2. **Actions principales** :
+   - Au-dessus de la liste des conteneurs, des boutons permettent de gérer l'état des conteneurs sélectionnés :
+     - **Start** : Démarrer un ou plusieurs conteneurs arrêtés.
+     - **Stop** : Arrêter un conteneur en cours d'exécution.
+     - **Kill** : Forcer l'arrêt immédiat d'un conteneur.
+     - **Restart** : Redémarrer un conteneur.
+     - **Pause** et **Resume** : Suspendre ou reprendre un conteneur.
+     - **Remove** : Supprimer un conteneur.
+     - **Add container** : Ajouter un nouveau conteneur Docker.
+
+3. **Barre de recherche** :
+   - Un champ de recherche est disponible pour filtrer rapidement les conteneurs par nom ou d'autres critères.
+
+### Utilité :
+Cette vue offre une gestion simple et rapide de tous les conteneurs Docker actifs dans l'environnement. Vous pouvez voir en un coup d'œil l'état de chaque conteneur, accéder à ses logs, consulter les statistiques ou entrer dans la console du conteneur pour des tâches spécifiques. Cela permet une administration efficace des conteneurs directement via l'interface Portainer sans avoir besoin de passer par la ligne de commande Docker.
+
+En utilisant les actions rapides ou en filtrant les conteneurs, il est facile de gérer plusieurs conteneurs dans des environnements complexes avec un minimum d'effort.
+
 # Capture 16
 ![image](https://github.com/user-attachments/assets/7613e32d-7904-4d86-a10f-b9e66087fe4e)
+
+Cette capture d'écran montre une erreur de connexion à l'adresse IP **0.0.0.0:32772**, avec un message d'erreur **ERR_ADDRESS_INVALID**, indiquant que l'adresse spécifiée est invalide ou que le site ne peut pas être atteint.
+
+### Solution proposée :
+Le texte suggère de remplacer l'adresse **0.0.0.0** par **localhost** dans la barre d'adresse du navigateur.
+
+### Détails de l'erreur :
+
+- **Problème** : L'adresse **0.0.0.0** n'est pas utilisable directement dans un navigateur web. Cette adresse est utilisée dans la configuration réseau pour signifier "toutes les adresses IP disponibles", mais elle n'est pas résoluble en une adresse réseau spécifique.
+- **Cause** : Dans ce cas, le service Docker exposé sur le port **32772** est disponible sur l'adresse IP de la machine hôte, mais pas sur **0.0.0.0**.
+
+### Résolution :
+
+- Il est suggéré de changer l'adresse **0.0.0.0** en **localhost**. Ainsi, la nouvelle URL serait :
+  ```
+  http://localhost:32772
+  ```
+  Cela permet d'accéder au service local sur la machine hôte via son adresse **localhost**, qui est l'adresse IP **127.0.0.1** utilisée pour représenter la machine locale.
+
+### Conclusion :
+Ce message d'erreur est un rappel que **0.0.0.0** n'est pas une adresse valide pour accéder à un service dans un navigateur. En remplaçant par **localhost**, vous pouvez accéder correctement au service web qui fonctionne sur la machine locale.
 
 # Capture 17
 ![image](https://github.com/user-attachments/assets/1ed5e458-b919-4f29-b0d2-8ca354e2cd41)
