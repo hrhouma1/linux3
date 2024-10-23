@@ -6,7 +6,7 @@
 3. Installez VirtualBox en suivant les instructions (il suffit de cliquer sur "Next" puis "Install").
 
 ### **2. Télécharger l'image ISO de Debian 12**
-1. Ouvrez votre navigateur et allez sur [le site officiel de Debian](https://www.debian.org/distrib/).
+1. Ouvrez votre navigateur et allez sur [le site officiel de Debian](https://www.debian.org/) :  https://www.debian.org/distrib/ ou https://www.debian.org/
 2. Téléchargez **Debian 12 "Bookworm" 64-bit netinst ISO**.
 
 ### **3. Création automatique de la machine virtuelle dans VirtualBox 7**
