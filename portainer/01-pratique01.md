@@ -48,10 +48,7 @@ L'agent n'est pas nécessaire pour un hôte autonome (single-node), mais peut ê
 
 
 
---------
-
-# Capture 2
-![image](https://github.com/user-attachments/assets/0419ac85-9211-42b6-9c47-342a77df53f2)
+-
 
 -----------
 
@@ -70,7 +67,10 @@ Cette étape est essentielle pour sécuriser l'accès à l'interface de gestion 
 Cela montre la simplicité d'utilisation de Portainer pour administrer visuellement votre environnement Docker.
 
 ------------------------
-# Capture 3
+# Captures 3
+
+![image](https://github.com/user-attachments/assets/0419ac85-9211-42b6-9c47-342a77df53f2)
+
 ![image](https://github.com/user-attachments/assets/6ca697d4-96a1-4dc6-bb40-d081c989b41a)
 
 # Capture 4
