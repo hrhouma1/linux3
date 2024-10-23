@@ -853,8 +853,48 @@ Le **Web editor** est particulièrement utile pour tester rapidement des modific
 # Capture 25
 ![image](https://github.com/user-attachments/assets/5cd58d1a-f32c-4204-9ba5-cd24af3fa50a)
 
+Cette capture d'écran montre une vue rapprochée du **Web editor** dans Portainer, utilisée pour créer ou modifier un **Dockerfile** pour construire une image Docker.
+
+### Détails du Dockerfile :
+
+1. **FROM python:3** :
+   - Cette ligne spécifie l'image de base utilisée pour construire l'image Docker. Ici, l'image **python:3** est utilisée, ce qui signifie que l'environnement Python 3 sera inclus dans l'image.
+
+2. **ENV TEST hello** :
+   - Cette ligne définit une variable d'environnement nommée **TEST** avec la valeur **hello**. Les variables d'environnement sont souvent utilisées pour passer des informations dans un conteneur sans avoir à les coder en dur.
+
+3. **CMD echo 'print("Hello from my-test")' | python** :
+   - Cette ligne définit la commande par défaut qui sera exécutée lorsque le conteneur sera lancé. Ici, la commande `echo 'print("Hello from my-test")' | python` imprime la phrase **Hello from my-test** en utilisant Python.
+
+### Utilité :
+Cette interface simplifiée permet de créer et d'éditer rapidement des Dockerfiles directement depuis Portainer, sans avoir à passer par un éditeur de texte externe ou un terminal. Ce Dockerfile simple montre comment définir une image de base Python, ajouter une variable d'environnement et exécuter une commande Python.
+
+Cette fonctionnalité est utile pour des déploiements rapides ou pour tester de petites configurations avant de créer des environnements plus complexes. Portainer rend la gestion des images Docker plus accessible, même pour les utilisateurs qui ne sont pas familiers avec les lignes de commande Docker.
+
 # Capture 26
 ![image](https://github.com/user-attachments/assets/b0406f86-2a90-40b5-a16a-98dde7b1cae0)
+
+Cette capture d'écran montre le résultat du processus de création d'une image Docker via l'interface **Build image** dans Portainer.
+
+### Détails de la sortie (Output) de la construction de l'image :
+
+1. **Étapes de construction** :
+   - Le processus de construction de l'image suit les étapes définies dans le Dockerfile :
+     - **Step 1/3** : Utilisation de l'image de base **python:3**.
+     - **Step 2/3** : Définition de la variable d'environnement **TEST** avec la valeur **hello**.
+     - **Step 3/3** : Exécution de la commande **CMD** pour imprimer "Hello from my-test" en utilisant Python.
+
+2. **Conteneurs intermédiaires** :
+   - Pendant la construction, Docker crée et supprime des **conteneurs intermédiaires** pour chaque étape (ex. `9be02a9c7a46`, `453a15f94867`). Ces conteneurs sont utilisés temporairement pour exécuter chaque commande du Dockerfile.
+
+3. **Image créée** :
+   - La construction est réussie avec un identifiant d'image **6a357220d333**.
+   - L'image est également étiquetée sous le nom **my-test:latest**, ce qui signifie que l'image est maintenant disponible localement avec ce tag.
+
+### Utilité :
+Cette interface dans Portainer permet de suivre en temps réel la progression de la construction d'une image Docker et de voir chaque étape s'exécuter. Cela vous permet de vérifier rapidement que tout se passe comme prévu, et que l'image est correctement construite et taguée.
+
+Les logs détaillés des conteneurs intermédiaires et des étapes permettent de diagnostiquer facilement les erreurs si le processus échoue, et d'optimiser le Dockerfile si nécessaire. Cela simplifie grandement la gestion des images Docker pour les utilisateurs, sans qu'ils aient besoin de passer par des commandes Docker en ligne de commande.
 
 # Capture 27
 ![image](https://github.com/user-attachments/assets/66f69e0f-4e46-482f-9f47-37ea470f6c54)
