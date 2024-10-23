@@ -611,8 +611,57 @@ Ce message d'erreur est un rappel que **0.0.0.0** n'est pas une adresse valide p
 # Capture 17
 ![image](https://github.com/user-attachments/assets/1ed5e458-b919-4f29-b0d2-8ca354e2cd41)
 
+Cette capture d'écran montre la section **Container console** dans Portainer, où vous pouvez accéder à une console à l'intérieur du conteneur Docker en cours d'exécution.
+
+### Détails de la **Container console** :
+
+1. **Command** :
+   - Par défaut, la commande à exécuter est `/bin/bash`. Cela ouvre une session bash dans le conteneur, vous permettant d'exécuter des commandes comme si vous étiez à l'intérieur du conteneur.
+
+2. **Use custom command** :
+   - Cette option, lorsqu'elle est activée, vous permet de définir une commande personnalisée autre que `/bin/bash` si vous avez besoin d'exécuter autre chose à l'intérieur du conteneur. Ici, l'option est désactivée, donc la commande par défaut sera utilisée.
+
+3. **User** :
+   - L'utilisateur avec lequel vous allez exécuter la commande est défini ici à **root**. Cela signifie que vous avez un accès complet et des privilèges d'administrateur pour exécuter des commandes dans le conteneur.
+
+4. **Connect** :
+   - En cliquant sur **Connect**, vous accédez à la console interactive du conteneur et pouvez commencer à entrer des commandes.
+
+### Fonctionnement :
+Cette interface vous permet d'accéder à une **shell interactive** à l'intérieur du conteneur sans avoir à sortir de l'interface web Portainer. C'est une fonctionnalité très utile pour les administrateurs qui souhaitent rapidement déboguer ou modifier un conteneur sans avoir à se connecter via SSH ou utiliser des outils de ligne de commande Docker externes.
+
+### Utilité :
+Vous pouvez utiliser cette console pour :
+- Exécuter des commandes Linux à l'intérieur du conteneur.
+- Déboguer des problèmes en accédant directement aux fichiers ou processus internes.
+- Modifier des fichiers de configuration ou examiner les journaux sans quitter l'interface web.
+
+Cela simplifie grandement l'administration des conteneurs et permet de réagir rapidement à des problèmes ou à des changements nécessaires en temps réel.
+
 # Capture 18
 ![image](https://github.com/user-attachments/assets/72e9d499-524d-495b-9edd-c4fec555a00d)
+
+Cette capture d'écran montre une session de **console** dans un conteneur Docker via Portainer, où vous avez réussi à accéder au conteneur **flask-hello**.
+
+### Détails de la console du conteneur :
+
+1. **Message d'exécution** :
+   - Vous êtes connecté au conteneur en tant qu'utilisateur **default** (qui est ici défini comme **root**). La commande par défaut exécutée est **bash**, ce qui ouvre une session Bash à l'intérieur du conteneur.
+
+2. **Prompt de commande** :
+   - Le prompt indique que vous êtes connecté en tant que **root** dans le répertoire **/myproject** à l'intérieur du conteneur. Le conteneur a pour identifiant **6c67dc4b...**, qui est un raccourci de l'identifiant complet du conteneur.
+
+3. **Bouton "Disconnect"** :
+   - Vous pouvez quitter cette session interactive en cliquant sur le bouton **Disconnect**, ce qui fermera la console et mettra fin à l'accès direct à ce conteneur.
+
+### Utilité :
+Cette console vous permet d'exécuter des commandes directement à l'intérieur du conteneur en utilisant l'utilisateur root. Cela peut être utile pour :
+- Naviguer dans le système de fichiers du conteneur.
+- Exécuter des scripts ou des commandes de maintenance.
+- Modifier ou vérifier des fichiers de configuration.
+- Déboguer des problèmes en direct sans avoir à arrêter ou redémarrer le conteneur.
+
+Vous pouvez ainsi interagir directement avec l'environnement du conteneur de manière rapide et efficace, sans quitter l'interface Portainer. Cela simplifie la gestion des conteneurs et permet une intervention en temps réel pour les opérations courantes ou d'urgence.
 
 # Capture 19
 ![image](https://github.com/user-attachments/assets/758b64db-b479-4129-9162-369338157eda)
