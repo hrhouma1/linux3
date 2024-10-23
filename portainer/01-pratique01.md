@@ -727,8 +727,62 @@ Les images marquées comme **Unused** peuvent être candidates à la suppression
 # Capture 21 - barre de recherche 
 ![image](https://github.com/user-attachments/assets/73c0cc9d-f0d0-4727-b7ff-97928bd383aa)
 
+
+Cette capture d'écran montre la section **Image list** dans Portainer avec un exemple de recherche utilisant la barre de recherche.
+
+### Détails de la capture (barre de recherche) :
+
+1. **Barre de recherche** :
+   - La recherche a été effectuée avec le terme **flask-hello**, ce qui permet de filtrer et d'afficher uniquement les images Docker correspondant à ce nom.
+   - La barre de recherche se trouve sous la section des actions (Remove, Build a new Image, Import, Export) et permet de filtrer rapidement les images par leur nom, leur ID ou leurs tags.
+
+2. **Résultats de la recherche** :
+   - Deux images sont listées dans les résultats, toutes deux liées à **flask-hello** :
+     - **Image 1** : Taguée `flask-hello:1.0`, `pythonincontainers/flask-hello:1.0`, marquée comme **Unused** et de taille **927.6 MB**.
+     - **Image 2** : Taguée `flask-hello:2.0`, `pythonincontainers/flask-hello:2.0`, ainsi que `pythonincontainers/flask-hello:latest`, également de **927.6 MB**.
+
+3. **Actions disponibles** :
+   - Vous pouvez toujours supprimer (`Remove`) les images sélectionnées, construire une nouvelle image (`Build a new Image`), importer ou exporter des images.
+
+### Utilité :
+La barre de recherche dans cette interface est essentielle pour filtrer rapidement les images Docker lorsque vous en avez beaucoup stockées localement. Cela vous permet de trouver immédiatement les images pertinentes sans avoir à parcourir manuellement une longue liste.
+
+Dans cet exemple, la recherche de **flask-hello** a permis de retrouver plusieurs versions de l'image (1.0, 2.0, latest), facilitant ainsi la gestion des différentes versions de l'image Docker utilisée pour le projet Flask. Cette fonctionnalité permet une gestion efficace des images Docker dans un environnement multi-projets ou multi-versions.
+
 # Capture 22
 ![image](https://github.com/user-attachments/assets/715039db-899b-4fde-9191-4ea4b9908f04)
+
+Cette capture d'écran montre les **détails d'une image Docker** dans Portainer.
+
+### Détails de l'image Docker :
+
+1. **Image details** :
+   - **ID** : Identifiant unique de l'image, ici en SHA256 (ex. `sha256:6d8ca6b...`).
+   - **Parent** : Référence à l'image parente à partir de laquelle celle-ci a été dérivée (ex. `sha256:bc899...`).
+   - **Size** : La taille de l'image, qui est de **927.6 MB**.
+   - **Created** : La date et l'heure de création de l'image, ici le **19 août 2019** à **08:36:41**.
+   - **Build** : Informations sur la version de Docker utilisée pour créer l'image (Docker 19.03.1 sur Linux, amd64).
+
+2. **Dockerfile details** :
+   - **CMD** : La commande exécutée par défaut dans l'image lors du lancement du conteneur (ici `/bin/sh -c python flask-hello.py`).
+   - **EXPOSE** : Le port **5000/tcp** est exposé, ce qui signifie que l'application à l'intérieur du conteneur sera accessible sur ce port.
+   - **ENV** : Les variables d'environnement définies dans l'image Docker incluent :
+     - **PATH** : Répertoires de chemin pour la recherche de binaires.
+     - **LANG** : Définit la langue en UTF-8.
+     - **GPG_KEY** : Clé GPG utilisée pour des vérifications.
+     - **PYTHON_VERSION** : Version de Python (3.7.4).
+     - **PYTHON_PIP_VERSION** : Version de pip (19.2.2).
+     - **PYTHON_GET_PIP_URL** : L'URL pour obtenir pip.
+     - **FLASK_DEBUG** : Le mode debug de Flask est activé (`True`), utile pour le développement.
+
+3. **Actions disponibles** :
+   - **Delete this image** : Supprimer cette image Docker de l'hôte.
+   - **Export this image** : Exporter cette image vers un fichier pour l'utiliser ailleurs ou la sauvegarder.
+
+### Utilité :
+Cette section permet de visualiser les informations critiques sur une image Docker stockée localement, incluant les commandes par défaut, les variables d'environnement, et les ports exposés. C'est un excellent outil pour vérifier le contenu et la configuration d'une image avant de l'utiliser ou de la partager.
+
+Les options **Delete** et **Export** permettent de gérer les images, soit pour les supprimer si elles ne sont plus nécessaires, soit pour les sauvegarder ou les transférer dans d'autres environnements Docker. Cela simplifie la gestion des images directement depuis l'interface graphique de Portainer sans avoir à recourir aux commandes Docker en ligne de commande.
 
 # Capture 23
 ![image](https://github.com/user-attachments/assets/acd7fb65-4ff3-4ad2-9200-6047e0655228)
