@@ -787,8 +787,68 @@ Les options **Delete** et **Export** permettent de gérer les images, soit pour 
 # Capture 23
 ![image](https://github.com/user-attachments/assets/acd7fb65-4ff3-4ad2-9200-6047e0655228)
 
+
+Cette capture d'écran montre les **détails des couches (layers)** d'une image Docker dans Portainer, décrivant les différentes étapes de construction de cette image.
+
+### Détails des couches de l'image Docker (layers) :
+
+1. **Order** : 
+   - Cela représente l'ordre dans lequel chaque commande a été exécutée dans le Dockerfile. Chaque commande du Dockerfile crée une nouvelle couche dans l'image Docker.
+
+2. **Size** :
+   - La taille de chaque couche est indiquée. Certaines couches sont très petites (par exemple, 0 B) tandis que d'autres peuvent être assez grandes, comme les 510.2 MB utilisés pour installer des paquets système.
+
+3. **Layer** :
+   - Voici un résumé des commandes exécutées pour chaque couche :
+     - **ADD** : Ajouter un fichier au conteneur (ici un fichier de 114 MB).
+     - **CMD** : La commande par défaut exécutée à l'intérieur du conteneur est `bash`.
+     - **RUN** : Exécute des commandes pour installer des paquets ou configurer l'environnement. Par exemple, `apt-get update && apt-get install` pour installer divers outils et dépendances.
+     - **ENV** : Définit des variables d'environnement comme **PATH**, **LANG**, **PYTHON_VERSION**, **PYTHON_PIP_VERSION**, etc.
+     - **WORKDIR** : Définit le répertoire de travail du conteneur, ici `/myproject`.
+     - **COPY** : Copie un fichier du système hôte vers l'image Docker.
+
+4. **Exemple de commandes exécutées** :
+   - **apt-get update && apt-get install** : Cela installe divers outils comme `ca-certificates`, `gnupg`, `mercurial`, `python`, etc.
+   - **ENV PYTHON_VERSION=3.7.4** : Définit la version de Python à utiliser dans l'image.
+   - **RUN wget** : Télécharge Python à partir d'une URL spécifique, le compile et l'installe.
+
+### Utilité :
+Cette vue permet d'avoir un aperçu clair des différentes étapes ayant conduit à la construction de l'image Docker. Cela inclut l'installation des dépendances, la configuration de l'environnement et les fichiers ajoutés au conteneur.
+
+Grâce à ces détails, vous pouvez comprendre les composants et les étapes impliquées dans la création de l'image. Cela facilite également le débogage si une couche particulière pose problème ou si vous souhaitez optimiser une image en réduisant sa taille ou en modifiant des étapes.
+
+### Gestion des images :
+Les utilisateurs peuvent visualiser ces informations pour optimiser leurs Dockerfiles, réduire la taille des images, ou simplement mieux comprendre comment l'image a été construite. Portainer fournit ici une vue claire et simple de chaque commande exécutée lors de la création de l'image.
+
 # Capture 24
 ![image](https://github.com/user-attachments/assets/ec5c2380-d6d0-4de4-be4b-e0eba4b8a012)
+
+Cette capture d'écran montre l'interface **Build image** dans Portainer, qui permet de créer une nouvelle image Docker à partir d'un Dockerfile.
+
+### Détails de l'interface Build image :
+
+1. **Naming** :
+   - Vous pouvez spécifier un nom pour l'image à créer. Dans cet exemple, l'image est nommée **my-test**.
+   - Vous pouvez ajouter plusieurs noms pour la même image si nécessaire. Les formats acceptés pour les noms sont indiqués (ex. `name:tag`, `repository/name:tag`, etc.).
+
+2. **Build method** :
+   - Vous avez deux options pour créer l'image :
+     - **Web editor** : Utiliser l'éditeur intégré de Portainer pour écrire ou modifier directement un Dockerfile.
+     - **Upload** : Importer un fichier Dockerfile depuis votre ordinateur ou un fichier d'archive (tarball) contenant les instructions de construction.
+
+3. **Web editor** :
+   - Dans l'exemple, l'éditeur Web est utilisé pour définir un Dockerfile simple :
+     - **FROM python:3** : Utilise une image de base Python 3.
+     - **ENV TEST hello** : Définit une variable d'environnement appelée **TEST** avec la valeur **hello**.
+     - **CMD echo 'print("Hello from my-test")' | python** : Exécute une commande Python qui affiche le message "Hello from my-test".
+
+4. **Construction de l'image** :
+   - Une fois que le Dockerfile est prêt, vous pouvez lancer la construction de l'image Docker directement depuis l'interface.
+
+### Utilité :
+Cette interface simplifie la création d'images Docker pour les utilisateurs de Portainer. Vous pouvez rédiger ou importer un Dockerfile, spécifier un nom pour l'image, et démarrer le processus de construction, tout cela sans quitter l'interface graphique.
+
+Le **Web editor** est particulièrement utile pour tester rapidement des modifications ou créer des images simples à la volée, tandis que l'option **Upload** permet de gérer des Dockerfiles plus complexes ou de travailler sur des projets déjà structurés. Cette flexibilité rend la gestion des images Docker accessible même pour des utilisateurs qui ne maîtrisent pas forcément la ligne de commande Docker.
 
 # Capture 25
 ![image](https://github.com/user-attachments/assets/5cd58d1a-f32c-4204-9ba5-cd24af3fa50a)
