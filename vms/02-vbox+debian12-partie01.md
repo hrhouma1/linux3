@@ -1,4 +1,4 @@
-## **Installation automatique de Debian 12 sur VirtualBox 7 (version simplifiée)**
+# **Installation automatique de Debian 12 sur VirtualBox 7 (version simplifiée)**
 
 ### **1. Télécharger et installer VirtualBox 7 sur Windows**
 1. Rendez-vous sur le site officiel de [VirtualBox](https://www.virtualbox.org/).
