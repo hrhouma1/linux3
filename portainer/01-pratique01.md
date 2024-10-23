@@ -458,8 +458,93 @@ Ces journaux sont particulièrement utiles pour déboguer les applications, diag
 # Capture 13
 ![image](https://github.com/user-attachments/assets/1df16e76-651e-458e-9eed-6abc38db57e6)
 
+Cette capture d'écran montre à nouveau la section des **logs du conteneur** dans Portainer, similaire à la capture précédente. Voici les détails de ce que l'on peut observer :
+
+### Paramètres de visualisation des logs :
+
+1. **Auto-refresh logs (Rafraîchissement automatique des logs)** :
+   - Cette option est activée, ce qui signifie que les journaux sont continuellement mis à jour pour refléter les nouvelles entrées en temps réel.
+
+2. **Wrap lines (Retour à la ligne)** :
+   - L'option de retour à la ligne est désactivée, donc les lignes longues ne sont pas automatiquement découpées pour s'adapter à la largeur de l'affichage. Si une ligne dépasse la largeur de la fenêtre, il faudra faire défiler horizontalement pour la lire.
+
+3. **Display timestamps (Afficher les horodatages)** :
+   - Cette option est désactivée, donc les journaux ne montrent pas d'horodatages pour chaque entrée.
+
+4. **Fetch (Récupération des logs)** :
+   - Cette option est réglée sur **All logs**, ce qui signifie que tous les journaux disponibles sont récupérés sans filtrage.
+
+5. **Search (Rechercher)** :
+   - Un champ de recherche permet de filtrer les journaux en fonction de mots-clés ou de chaînes spécifiques.
+
+6. **Lines (Nombre de lignes)** :
+   - Ce paramètre est défini à **100**, ce qui signifie que les 100 premières lignes de journaux sont affichées.
+
+7. **Actions** :
+   - **Copy** : Vous pouvez copier l'intégralité des journaux visibles.
+   - **Copy selected lines** : Vous pouvez sélectionner des lignes spécifiques à copier.
+   - **Unselect** : Permet de désélectionner toutes les lignes sélectionnées.
+
+### Contenu des logs :
+Dans cette section, vous voyez les journaux de démarrage de l'application Flask :
+- **Serving Flask app "flask-hello"** : L'application Flask est en cours de service.
+- **Environment: production** : L'application est en mode production.
+- **WARNING** : Il y a un avertissement indiquant que ce serveur de développement ne doit pas être utilisé en production. Un serveur WSGI de production est recommandé.
+- **Debug mode: off** : Le mode de débogage est désactivé.
+- **Running on http://0.0.0.0:5000/** : L'application est accessible à cette adresse et sur le port 5000.
+
+### Utilité :
+Cette interface est un outil essentiel pour surveiller les activités du conteneur, en particulier lorsque vous devez diagnostiquer des erreurs ou surveiller des événements spécifiques dans l'application. Les options de copie et de filtrage facilitent également le travail des administrateurs en leur permettant de rapidement identifier et extraire les informations pertinentes des journaux.
+
+Vous pouvez utiliser cette interface pour observer l'activité en temps réel ou examiner les journaux historiques pour mieux comprendre les performances de l'application.
+
 # Capture 14
 ![image](https://github.com/user-attachments/assets/abfd7faa-fcf8-4dd6-8fd7-2c49e49cd13d)
+
+Cette capture d'écran montre les détails d'inspection d'un conteneur Docker dans Portainer, offrant une vue détaillée de la configuration du conteneur **flask-hello**.
+
+### Détails de l'inspection du conteneur :
+
+1. **AppArmorProfile** :
+   - Le conteneur utilise un profil **AppArmor**, une solution de sécurité qui permet de restreindre les actions qu'un programme peut exécuter, mais ici, aucun profil spécifique n'est assigné (valeur vide).
+
+2. **Args** :
+   - La commande exécutée lors du démarrage du conteneur est `/bin/sh -c python flask-hello.py`. Cela lance le serveur Flask.
+
+3. **Config** :
+   - **AttachStdin**, **AttachStdout**, et **AttachStderr** sont désactivés, ce qui signifie que les flux d'entrée/sortie/erreur ne sont pas attachés à la console.
+   - **Cmd** : La commande principale exécutée par le conteneur est `/bin/sh -c python flask-hello.py`.
+   - Le conteneur a été créé le **2019-08-19** à **11:42:58** UTC.
+
+4. **Driver** :
+   - Le conteneur utilise le pilote de stockage **overlay2**, qui est le pilote par défaut pour Docker et est optimisé pour les performances.
+
+5. **GraphDriver** :
+   - Les informations ici détaillent le type de système de fichiers et le backend de stockage utilisé pour les fichiers du conteneur.
+
+6. **HostConfig** :
+   - Cela montre comment le conteneur est configuré par rapport à son hôte. Des informations sur les chemins comme :
+     - **HostnamePath**, **HostsPath**, **ResolvConfPath** : Spécifient où se trouvent les fichiers système tels que le nom d'hôte, le fichier hosts et la configuration DNS à l'intérieur du conteneur.
+     - **LogPath** : Chemin vers les fichiers de logs du conteneur.
+   - La configuration des ports montre que le conteneur est lié à l'hôte sur un port spécifique.
+
+7. **Mounts** :
+   - Cette section décrit les volumes montés dans le conteneur. Ici, il semble qu'aucun volume persistant externe ne soit monté dans ce conteneur particulier.
+
+8. **Networks** :
+   - Le conteneur est connecté au réseau **bridge**, le réseau par défaut utilisé par Docker. Le conteneur exécute la commande dans l'environnement `/bin/sh`.
+
+9. **Portainer** :
+   - Les détails incluent le chemin de résolution DNS et l'état actuel du conteneur.
+
+10. **State** :
+   - Montre l'état actuel du conteneur. Ici, il est précisé si le conteneur est en cours d'exécution, s'il est arrêté ou s'il y a eu des erreurs.
+   - Le conteneur est dans un état "Running" avec des informations sur le dernier redémarrage et sur les erreurs éventuelles qui ont pu survenir.
+
+### Utilité :
+Cette page d'inspection est cruciale pour obtenir une vue complète de la configuration et du statut d'un conteneur Docker. Elle fournit des informations détaillées sur les commandes exécutées, les chemins de fichiers critiques, les volumes, les réseaux, et l'état du conteneur. C'est un excellent outil pour le diagnostic et la résolution des problèmes, permettant d'inspecter chaque aspect technique du conteneur.
+
+En cas de problème de performance ou d'anomalies dans le comportement du conteneur, ces informations permettent de comprendre ce qui pourrait être mal configuré ou nécessiter une modification.
 
 # Capture 15
 ![image](https://github.com/user-attachments/assets/29557d79-5448-4b0e-a828-068b4a7ae8c7)
