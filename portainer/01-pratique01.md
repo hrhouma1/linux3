@@ -899,8 +899,54 @@ Les logs détaillés des conteneurs intermédiaires et des étapes permettent de
 # Capture 27
 ![image](https://github.com/user-attachments/assets/66f69e0f-4e46-482f-9f47-37ea470f6c54)
 
+Cette capture d'écran montre la section **Image list** dans Portainer après avoir construit et tagué une image Docker nommée **my-test**.
+
+### Détails de la liste des images Docker :
+
+1. **Barre de recherche** :
+   - Le terme **my-test** a été saisi dans la barre de recherche, permettant de filtrer les images affichées et de n'afficher que l'image nommée **my-test**.
+
+2. **Images filtrées** :
+   - L'image Docker créée plus tôt, **my-test:latest**, est maintenant visible dans la liste des images.
+   - Elle est identifiée par un hash SHA256 (ex. `sha256:6a357220d333...`).
+   - Le tag associé est **my-test:latest**.
+   - L'image est marquée comme **Unused**, ce qui signifie qu'elle n'est actuellement utilisée par aucun conteneur.
+
+3. **Actions disponibles** :
+   - Vous pouvez :
+     - **Remove** : Supprimer l'image.
+     - **Build a new image** : Construire une nouvelle image Docker.
+     - **Import** : Importer une image Docker à partir d'un fichier.
+     - **Export** : Exporter l'image Docker dans un fichier pour la sauvegarder ou l'utiliser ailleurs.
+
+### Utilité :
+Cette interface vous permet de gérer les images Docker de manière simple et intuitive. Vous pouvez voir immédiatement l'image que vous avez créée (avec son tag `latest`), et décider si vous souhaitez la déployer, la supprimer ou l'exporter.
+
+La fonctionnalité de filtre est particulièrement utile dans les environnements où plusieurs images Docker sont présentes, car elle permet de trouver rapidement l'image spécifique dont vous avez besoin.
+
 # Capture 28
 ![image](https://github.com/user-attachments/assets/6573eed2-fe19-4652-b45b-8311688d9009)
+
+Cette capture d'écran montre la section **Container logs** dans Portainer, affichant les journaux d'un conteneur nommé **my-test**.
+
+### Détails de la section Container logs :
+
+1. **Log viewer settings** :
+   - **Auto-refresh logs** : Option activée pour rafraîchir automatiquement les journaux à mesure que de nouvelles entrées sont générées.
+   - **Wrap lines** : Option activée pour permettre l'affichage des lignes longues en les coupant sur plusieurs lignes afin de les rendre lisibles.
+   - **Display timestamps** : Désactivé ici, mais cette option permettrait d'afficher l'heure de chaque ligne de log.
+   - **Fetch** : Vous pouvez sélectionner d'afficher tous les journaux ou filtrer par des journaux spécifiques.
+   - **Search** : Un champ de recherche permet de filtrer les journaux pour trouver des informations spécifiques.
+   - **Lines** : Le nombre de lignes affichées est ici limité à 100.
+   - **Actions** : Des boutons permettent de copier les journaux, soit en entier (`Copy`), soit seulement les lignes sélectionnées (`Copy selected lines`).
+
+2. **Contenu des logs** :
+   - Le message "Hello from my-test" est visible dans la partie inférieure des journaux, ce qui correspond à la commande Python définie dans le Dockerfile de ce conteneur, qui affiche ce message lors de l'exécution.
+
+### Utilité :
+Cette section permet de consulter les journaux d'un conteneur pour vérifier son comportement. Ici, le message de test "Hello from my-test" confirme que le conteneur fonctionne comme prévu et exécute la commande Python définie.
+
+Les fonctionnalités de recherche et de copie sont utiles pour extraire des informations spécifiques des logs, ce qui est pratique pour le débogage et la surveillance des conteneurs en production ou en développement. Grâce à la fonctionnalité d'auto-refresh, vous pouvez également voir les journaux en temps réel sans avoir besoin de rafraîchir manuellement la page.
 
 # Capture 29
 ![image](https://github.com/user-attachments/assets/140028bd-5cec-4cf2-a254-cd85c10a68ea)
