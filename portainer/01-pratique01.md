@@ -951,8 +951,68 @@ Les fonctionnalités de recherche et de copie sont utiles pour extraire des info
 # Capture 29
 ![image](https://github.com/user-attachments/assets/140028bd-5cec-4cf2-a254-cd85c10a68ea)
 
+
+Cette capture d'écran montre les **détails du réseau** dans Portainer pour un réseau nommé **my-net**.
+
+### Détails du réseau :
+
+1. **Network details** :
+   - **Name** : Le nom du réseau est **my-net**.
+   - **ID** : L'identifiant unique du réseau est visible (ex. `59e07951...`).
+   - **Driver** : Le type de réseau est **bridge**, qui est l'un des types de réseaux Docker par défaut, utilisé pour connecter des conteneurs sur un même hôte.
+   - **Scope** : Le scope du réseau est **local**, ce qui signifie qu'il est limité à l'hôte Docker.
+   - **Attachable** : Indique si d'autres conteneurs peuvent être attachés à ce réseau (ici, **false**).
+   - **Internal** : Définit si le réseau est interne uniquement (ici, **false**).
+   - **Subnet** : Le sous-réseau associé au réseau est **172.21.0.0/16**.
+   - **Gateway** : La passerelle du réseau est **172.21.0.1**.
+
+2. **Access control** :
+   - Le contrôle d'accès est configuré pour permettre uniquement aux **administrators** de gérer ce réseau.
+   - Il y a une option pour **Change ownership**, ce qui permet de modifier la propriété du réseau.
+
+3. **Containers in network** :
+   - Un conteneur nommé **proxy-server** est connecté à ce réseau.
+   - Son adresse IPv4 est **172.21.0.2/16**.
+   - Son adresse MAC est **02:42:ac:15:00:02**.
+   - Il est possible de cliquer sur **Leave Network** pour déconnecter le conteneur du réseau.
+
+### Utilité :
+Cette section permet de visualiser et gérer les réseaux Docker dans Portainer. Vous pouvez voir quels conteneurs sont connectés au réseau, leurs adresses IP et MAC, ainsi que les paramètres du réseau (type, sous-réseau, passerelle).
+
+Cela simplifie la gestion des réseaux Docker, permettant aux utilisateurs d’ajouter ou de retirer des conteneurs, de configurer les propriétés du réseau, ou de supprimer des réseaux inutilisés via l'interface graphique.
+
 # Capture 30
 ![image](https://github.com/user-attachments/assets/3d087bb1-8dfb-47ad-93ff-0231ac1af445)
+
+Cette capture d'écran montre à nouveau les **détails du réseau** pour un réseau Docker nommé **my-net** dans Portainer.
+
+### Détails du réseau :
+
+1. **Network details** :
+   - **Name** : Le réseau s'appelle **my-net**.
+   - **ID** : Un identifiant unique est attribué à ce réseau (`59e07951dc4...`).
+   - **Driver** : Le type de réseau est défini comme **bridge**, un réseau par défaut dans Docker.
+   - **Scope** : Le réseau est de portée **local**, c'est-à-dire qu'il est limité à l'hôte Docker.
+   - **Attachable** : Ce paramètre est **false**, signifiant que d'autres conteneurs ne peuvent pas être ajoutés facilement à ce réseau.
+   - **Internal** : Le réseau n'est pas interne (paramètre **false**).
+   - **Subnet** : Le sous-réseau est défini avec l'adresse **172.21.0.0/16**.
+   - **Gateway** : La passerelle pour ce réseau est **172.21.0.1**.
+
+2. **Access control** :
+   - Le contrôle d'accès est limité aux **administrators**, qui peuvent gérer ce réseau.
+   - Il est possible de changer la propriété du réseau via l'option **Change ownership**.
+
+3. **Containers in network** :
+   - Un conteneur nommé **proxy-server** est connecté à ce réseau.
+   - Son adresse IPv4 est **172.21.0.2/16**.
+   - Son adresse MAC est **02:42:ac:15:00:02**.
+   - Une action possible pour ce conteneur est de le retirer du réseau en cliquant sur **Leave Network**.
+
+4. **Action sur le réseau** :
+   - Un bouton **Delete this network** est disponible pour supprimer ce réseau Docker, ce qui supprimera aussi les connexions des conteneurs liés à ce réseau.
+
+### Utilité :
+Cette interface permet de visualiser et de gérer les réseaux Docker et les conteneurs qui y sont connectés. Elle permet de contrôler l'accès au réseau, de voir les informations sur le sous-réseau et la passerelle, et d'ajouter ou retirer des conteneurs du réseau. Cela facilite la gestion de l'infrastructure réseau des conteneurs directement via une interface graphique intuitive, sans avoir besoin d'utiliser les commandes Docker.
 
 # Capture 31
 ![image](https://github.com/user-attachments/assets/1e58e113-9067-4da3-b6d7-b0530ec4b390)
