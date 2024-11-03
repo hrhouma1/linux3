@@ -255,3 +255,125 @@ ping 192.168.2.115    # Windows
 Avec cette configuration, le Master Node peut accéder aux Worker Nodes via SSH sur le **Bridge Adapter**. Vous êtes maintenant prêt à exécuter Ansible pour automatiser les tâches sur votre réseau Master-Worker.
 
 [Retour en haut](#sommaire)
+
+
+
+
+
+
+
+-------------------
+# Annexe - DEBIAN 12 (FINAL)
+-------------------
+
+
+
+### Étape 1 : Ouvrir le Fichier de Configuration Réseau
+
+1. Ouvrez le terminal.
+2. Tapez la commande suivante pour ouvrir le fichier de configuration réseau avec l’éditeur `nano` :
+   ```bash
+   sudo nano /etc/network/interfaces
+   ```
+   - **Explication** : La commande `sudo` permet d'exécuter des commandes avec des privilèges d'administrateur, et `nano` est l'éditeur de texte. Le chemin `/etc/network/interfaces` est le fichier où nous allons ajouter la configuration réseau.
+
+---
+
+### Étape 2 : Ajouter la Configuration de l'Interface Réseau
+
+1. Dans le fichier qui s'ouvre, vous verrez probablement quelque chose comme ceci :
+
+   ```plaintext
+   # This file describes the network interfaces available on your system
+   # and how to activate them. For more information, see interfaces(5).
+
+   source /etc/network/interfaces.d/*
+
+   # The loopback network interface
+   auto lo
+   iface lo inet loopback
+   ```
+
+2. Descendez à la fin du fichier en utilisant les flèches de votre clavier et ajoutez les lignes suivantes pour configurer l'interface réseau (ici, nous utilisons `enp0s3` comme nom d'interface) :
+
+   ```plaintext
+   # Configuration de l'interface réseau principale
+   auto enp0s3
+   iface enp0s3 inet static
+       address 10.0.0.113
+       netmask 255.255.255.0
+       gateway 10.0.0.1
+       dns-nameservers 8.8.8.8
+   ```
+
+   - **Explication des lignes** :
+     - `auto enp0s3` : Active l'interface `enp0s3` au démarrage.
+     - `iface enp0s3 inet static` : Configure l'interface `enp0s3` avec une IP statique.
+     - `address 10.0.0.113` : Spécifie l'adresse IP que vous souhaitez utiliser.
+     - `netmask 255.255.255.0` : Définit le masque de sous-réseau.
+     - `gateway 10.0.0.1` : Définit la passerelle par défaut pour accéder à Internet.
+     - `dns-nameservers 8.8.8.8` : Définit le serveur DNS (ici, Google DNS).
+
+3. **Vérifiez bien l'indentation** : Assurez-vous que les lignes `address`, `netmask`, `gateway`, et `dns-nameservers` sont indentées avec des espaces pour éviter les erreurs.
+
+---
+
+### Étape 3 : Enregistrer et Fermer le Fichier
+
+1. **Enregistrer les modifications** : Appuyez sur `Ctrl + O` (lettre « O ») pour enregistrer le fichier.
+   - Lorsque Nano vous demande de confirmer le nom du fichier, appuyez sur `Entrée` pour confirmer.
+
+2. **Fermer l’éditeur** : Appuyez sur `Ctrl + X` pour quitter Nano.
+
+---
+
+### Étape 4 : Redémarrer le Service Réseau
+
+1. Pour appliquer les changements, redémarrez le service réseau avec la commande suivante :
+   ```bash
+   sudo systemctl restart networking
+   ```
+
+---
+
+### Étape 5 : Vérifier que l'Adresse IP est Correctement Configurée
+
+1. Utilisez la commande suivante pour vérifier que l'interface `enp0s3` a bien l'adresse IP `10.0.0.113` :
+   ```bash
+   ip addr show enp0s3
+   ```
+
+2. Recherchez `10.0.0.113` dans la sortie de la commande. Si vous la voyez, cela signifie que la configuration a été appliquée avec succès ! 🎉
+
+
+# si vous voyez encore l'ancienne adresse , il faut procéder ainsi :
+
+
+La commande `reboot` est utilisée pour redémarrer le système. Elle demande au système de redémarrer immédiatement.
+
+### Utilisation de la Commande `reboot`
+
+1. **Ouvrez le terminal.**
+2. Tapez la commande suivante :
+   ```bash
+   sudo reboot
+   ```
+
+3. **Appuyez sur Entrée** pour lancer la commande.
+
+---
+
+
+**Note** : Vous pouvez également utiliser `sudo shutdown -r now`, qui a le même effet en redémarrant immédiatement la machine.
+
+
+3. Utilisez la commande suivante pour vérifier que l'interface `enp0s3` a bien l'adresse IP `10.0.0.113` :
+   ```bash
+   ip addr show enp0s3
+   ```
+
+4. Recherchez `10.0.0.113` dans la sortie de la commande. Si vous la voyez, cela signifie que la configuration a été appliquée avec succès ! 🎉
+
+
+
+
