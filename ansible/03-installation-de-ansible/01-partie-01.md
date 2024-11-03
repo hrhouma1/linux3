@@ -152,3 +152,86 @@ Ce guide vous a montré comment :
 - 🎯 **Exécuter** une commande de test pour valider la configuration.
 
 🎉 **Félicitations !** Vous êtes maintenant prêt(e) à utiliser Ansible pour automatiser vos tâches d'administration de systèmes. ✨
+
+
+---------------------
+# 📄 Annexe : Résumé de l'Installation et de la Configuration d'Ansible
+---------------------
+
+
+Ce résumé couvre les étapes essentielles pour installer et configurer Ansible, créer un fichier d'inventaire, et exécuter les premières commandes pour tester la connectivité entre les hôtes.
+
+---
+
+# 📋 Il faut :
+
+1. **Un fichier de configuration Ansible**  
+   - 📁 **Chemin** : `/etc/ansible/ansible.cfg`
+   - ⚙️ **Modification** : Ajouter une configuration pour désactiver la vérification des clés hôtes.
+
+2. **Un fichier d'inventaire**  
+   - 📁 **Chemin** : Créer un répertoire pour les exercices (`mkdir exercices-ansible`), puis créer le fichier `inventory`.
+   - 📝 **Contenu du fichier `inventory`** :
+     ```ini
+     master ansible_connection=local
+     node1 ansible_host=<adresse_ip_de_node1> ansible_connection=ssh ansible_user=eleve ansible_ssh_pass=eleve
+     ```
+   - 📌 Remplacer `<adresse_ip_de_node1>` par l'adresse IP réelle de `node1`.
+
+---
+
+# 🛠️ Commandes Principales
+
+Voici les principales commandes exécutées :
+
+1. **Installation et mise à jour d’Ansible** :
+   ```bash
+   sudo apt update
+   sudo apt install ansible
+   ```
+
+2. **Tester la connectivité locale** (pour vérifier l’installation) :
+   ```bash
+   ansible localhost -m ping
+   ```
+
+3. **Création du répertoire et du fichier d'inventaire** :
+   ```bash
+   cd
+   mkdir exercices-ansible
+   cd exercices-ansible
+   nano inventory
+   ```
+
+4. **Exécuter un test de connectivité sur tous les nœuds de l'inventaire** :
+   ```bash
+   ansible all -m ping -i inventory
+   ```
+   - ⚠️ **Erreur possible** : Si cette commande échoue, il est nécessaire de désactiver la vérification des clés hôtes dans le fichier de configuration.
+
+5. **Modification de la configuration d'Ansible pour désactiver la vérification des clés hôtes** :
+   ```bash
+   nano /etc/ansible/ansible.cfg
+   ```
+   - Ajouter la configuration suivante dans `ansible.cfg` :
+     ```ini
+     [defaults]
+     host_key_checking = false
+     ```
+
+6. **Retester la connectivité après configuration** :
+   ```bash
+   cd exercices-ansible
+   ansible all -m ping -i inventory
+   ```
+
+---
+
+# ✅ Résumé des Étapes Réalisées
+
+- 📌 Création et modification du fichier de configuration `ansible.cfg` pour éviter la vérification des clés hôtes.
+- 📌 Création d'un fichier d'inventaire `inventory` pour définir les nœuds.
+- 🛠️ Installation et vérification d'Ansible avec des commandes de test de connectivité (`ansible localhost -m ping` et `ansible all -m ping -i inventory`).
+- 🚨 Résolution de l'erreur de connexion avec l'ajout de la configuration `[defaults] host_key_checking = false`.
+
+Vous êtes maintenant prêt à utiliser Ansible pour gérer les nœuds définis dans l’inventaire ! 🎉
