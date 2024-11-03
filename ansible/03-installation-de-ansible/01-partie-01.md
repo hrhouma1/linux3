@@ -3,30 +3,58 @@
 Ce guide vous aidera à installer Ansible, à configurer un fichier d'inventaire et à exécuter votre première commande Ansible. 🚀
 
 ---
+# 1. 💾 Installation de Ansible
+---
 
-## 1. 💾 Installation de Ansible
-
-1. 🔍 **Supprimez** toute version existante d'Ansible (si installée) :
+1.1. 🔍 **Supprimez** toute version existante d'Ansible (si installée) :
    ```bash
    sudo apt remove ansible
    ```
-2. 📦 **Installez** les dépendances nécessaires :
+1.2. 📦 **Installez** les dépendances nécessaires :
    ```bash
    sudo apt install software-properties-common
    ```
-3. 🛠️ **Ajoutez le dépôt PPA** pour Ansible et mettez à jour :
+1.3. 🛠️ **Ajoutez le dépôt PPA** pour Ansible et mettez à jour :
    ```bash
    sudo apt-add-repository --yes --update ppa:ansible/ansible
    sudo apt update
    ```
-4. ✅ **Installez Ansible** :
+1.4. ✅ **Installez Ansible** :
    ```bash
    sudo apt install ansible
    ```
-5. 📝 **Vérifiez la version** pour confirmer l'installation :
+1.5. 📝 **Vérifiez la version** pour confirmer l'installation :
    ```bash
    ansible --version
    ```
+1.6. 📝 **Vérifiez si Ansible est installé et fonctionne correctement sur la machine locale** :
+   ```bash
+   ansible localhost -m 'ping'
+   ```
+
+La commande `ansible localhost -m ping` est une commande Ansible qui permet de vérifier si Ansible est installé et fonctionne correctement sur la machine locale (le serveur sur lequel la commande est exécutée).
+
+Voici un décryptage de chaque partie de la commande :
+
+- **`ansible`** : le programme Ansible que vous exécutez.
+- **`localhost`** : spécifie que vous voulez exécuter la commande sur la machine locale (celle où la commande est lancée).
+- **`-m ping`** : utilise le module `ping` d'Ansible pour vérifier la connectivité avec l'hôte spécifié (ici `localhost`). Ce `ping` n'est pas le même que la commande réseau `ping` ; c'est un module d'Ansible qui envoie une requête pour vérifier que l'hôte est accessible et que l'installation d'Ansible est correctement configurée.
+
+### Exemple de Résultat
+
+Si tout est bien configuré, vous devriez voir un message de type :
+
+```plaintext
+localhost | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+Cela signifie que la connexion avec l'hôte (`localhost`) est réussie et qu'Ansible fonctionne correctement.
+
+
+
 
 ---
 
