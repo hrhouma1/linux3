@@ -1,7 +1,15 @@
 # 🎩 Guide d'Installation et de Configuration de Ansible sur votre MASTER 🛠️
 
 Ce guide vous aidera à installer Ansible, à configurer un fichier d'inventaire et à exécuter votre première commande Ansible. 🚀
+## Objectif:
 
+- Faire fonctionner les 3 commandes suivantes (Nous avons besoin de deux machines , le master et un worker) 
+
+  ```bash
+  ansible --version
+  ansible localhost -m 'ping'
+  ansible all -m 'ping' -i inventory
+   ```
 ---
 ---
 ---
