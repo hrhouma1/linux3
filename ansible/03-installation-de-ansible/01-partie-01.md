@@ -90,8 +90,9 @@ Cela signifie que la connexion avec l'hôte (`localhost`) est réussie et qu'Ans
 
 Si tout est bien configuré, vous verrez une réponse de type `SUCCESS` pour tous les hôtes, confirmant que la connexion est réussie ! 🎉
 
-# ==> ERREUR !!!!!!!
-- Allez à l'étape suivante ;)
+# 💀💀💀 ⚠️ ERREUR 💀💀💀
+- Allez à l'étape suivante pour résoudre l'erreur 😉
+
 
 
 ---
