@@ -131,7 +131,8 @@ Si tout est bien configuré, vous verrez une réponse de type `SUCCESS` pour tou
 
 1. 📂 Accédez au répertoire où se trouve votre fichier d'inventaire :
    ```bash
-   cd exercices-ansibles
+   cd  ( + entrée)
+   cd exercices-ansibles (vérifiez que vous avez le fichier d'inventaire (inventory) )
    ```
 2. 🚀 Exécutez une **commande de test (ping)** sur tous les hôtes définis dans votre inventaire :
    ```bash
@@ -142,7 +143,9 @@ Si tout est bien configuré, vous verrez une réponse de type `SUCCESS` pour tou
 
    - ❌ **En cas d'échec** : 
      Vérifiez la configuration dans `ansible.cfg` et assurez-vous d'avoir ajouté `[defaults] host_key_checking = false`.
-     Pour des conseils supplémentaires, consultez la 🌐 [documentation sur Stack Overflow](https://stackoverflow.com) (lien suggéré pour résoudre les erreurs possibles).
+     Pour des conseils supplémentaires, consultez la 🌐 [documentation sur Stack Overflow](https://stackoverflow.com/questions/42462435/ansible-provisioning-error-using-a-ssh-password-instead-of-a-key-is-not-possibl) (lien suggéré pour résoudre les erreurs possibles).
+     - https://stackoverflow.com/questions/42462435/ansible-provisioning-error-using-a-ssh-password-instead-of-a-key-is-not-possibl
+     - https://stackoverflow.com/questions/23074412/how-to-set-host-key-checking-false-in-ansible-inventory-file
 
 3. 🔄 **Réessayez la commande** après avoir corrigé la configuration :
    ```bash
