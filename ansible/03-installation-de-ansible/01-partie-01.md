@@ -3,6 +3,9 @@
 Ce guide vous aidera à installer Ansible, à configurer un fichier d'inventaire et à exécuter votre première commande Ansible. 🚀
 
 ---
+---
+---
+
 # 1. 💾 Installation de Ansible
 ---
 
@@ -55,8 +58,46 @@ Cela signifie que la connexion avec l'hôte (`localhost`) est réussie et qu'Ans
 
 
 
+1.7. 🗂️ Configuration du Fichier d'Inventaire
+
+1.8. 📂 **Créez un répertoire pour les exercices Ansible** :
+   ```bash
+   cd
+   mkdir exercices-ansible
+   cd exercices-ansible
+   ```
+
+1.9. 📝 **Créez le fichier d'inventaire** :
+   ```bash
+   nano inventory
+   ```
+   - Dans le fichier `inventory`, ajoutez les informations suivantes :
+     ```ini
+     master ansible_connection=local
+     node1 ansible_host=<adresse_ip_de_node1> ansible_connection=ssh ansible_user=eleve ansible_ssh_pass=eleve
+     ```
+
+   Remplacez `<adresse_ip_de_node1>` par l'adresse IP de `node1`.
 
 ---
+
+## 3. 🔧 Tester la Commande Ping sur Tous les Hôtes
+
+1. 📡 **Exécutez la commande Ansible pour tester la connectivité avec tous les hôtes** :
+   ```bash
+   ansible all -m ping -i inventory
+   ```
+
+Si tout est bien configuré, vous verrez une réponse de type `SUCCESS` pour tous les hôtes, confirmant que la connexion est réussie ! 🎉
+
+# ==> ERREUR !!!!!!!
+- Allez à l'étape suivante ;)
+
+
+---
+---
+---
+
 
 ## 2. 📂 Configuration du Fichier d'Inventaire
 
