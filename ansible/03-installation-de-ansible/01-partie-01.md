@@ -161,9 +161,10 @@ Ce guide vous a montré comment :
 
 🎉 **Félicitations !** Vous êtes maintenant prêt(e) à utiliser Ansible pour automatiser vos tâches d'administration de systèmes. ✨
 
-
 ---------------------
-# 📄 Annexe : Résumé de l'Installation et de la Configuration d'Ansible
+---------------------
+---------------------
+# 📄 Annexe 1 : Résumé de l'Installation et de la Configuration d'Ansible
 ---------------------
 
 
@@ -243,3 +244,80 @@ Voici les principales commandes exécutées :
 - 🚨 Résolution de l'erreur de connexion avec l'ajout de la configuration `[defaults] host_key_checking = false`.
 
 Vous êtes maintenant prêt à utiliser Ansible pour gérer les nœuds définis dans l’inventaire ! 🎉
+
+
+
+
+
+
+
+
+
+---------------------
+---------------------
+---------------------
+# Annexe 02 : Modification du Nom d'Hôte (Hostname)
+
+
+
+Cette annexe explique comment renommer le nom d'hôte de votre machine pour refléter un nouveau nom, par exemple `worker01`.
+
+---
+
+## 🖥️ Étapes pour Renommer le Nom d'Hôte
+
+1. **Modification directe du fichier `hostname`** :
+   - Ouvrez le fichier `/etc/hostname` dans un éditeur de texte comme `nano` :
+     ```bash
+     sudo nano /etc/hostname
+     ```
+   - Remplacez le contenu par le nouveau nom, par exemple :
+     ```plaintext
+     worker01
+     ```
+   - Enregistrez et fermez le fichier.
+
+     ```bash
+     bash
+     ```
+
+2. **Utilisation de la commande `hostnamectl`** :
+   - Alternativement, vous pouvez utiliser `hostnamectl` pour définir le nom d'hôte sans modifier de fichier directement :
+     ```bash
+     sudo hostnamectl set-hostname worker01
+     bash
+     ```
+
+
+
+3. **Vérification du Changement** :
+   - Après avoir défini le nouveau nom d’hôte, vous pouvez vérifier le changement en utilisant la commande suivante :
+     ```bash
+     hostnamectl
+     ```
+
+---
+
+## Résumé des Commandes
+
+- **Ouvrir et modifier le fichier `hostname`** :
+  ```bash
+  sudo nano /etc/hostname
+  bash
+  ```
+  - Changez le contenu pour le nouveau nom d’hôte (par exemple, `worker01`).
+
+- **Définir le nom d’hôte avec `hostnamectl`** :
+  ```bash
+  sudo hostnamectl set-hostname worker01
+  bash
+  ```
+
+- **Vérifier le nom d’hôte actuel** :
+  ```bash
+  hostnamectl
+  ```
+
+---
+
+En suivant ces étapes, le nom d'hôte de votre machine sera maintenant mis à jour vers `worker01` ! 🎉
