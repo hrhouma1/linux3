@@ -1,4 +1,4 @@
-# 🎩 Guide d'Installation et de Configuration de Ansible 🛠️
+# 🎩 Guide d'Installation et de Configuration de Ansible sur votre MASTER 🛠️
 
 Ce guide vous aidera à installer Ansible, à configurer un fichier d'inventaire et à exécuter votre première commande Ansible. 🚀
 
@@ -82,4 +82,3 @@ Ce guide vous a montré comment :
 - 🎯 **Exécuter** une commande de test pour valider la configuration.
 
 🎉 **Félicitations !** Vous êtes maintenant prêt(e) à utiliser Ansible pour automatiser vos tâches d'administration de systèmes. ✨
-```
