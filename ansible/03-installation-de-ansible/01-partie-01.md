@@ -318,6 +318,22 @@ Cette annexe explique comment renommer le nom d'hôte de votre machine pour refl
   hostnamectl
   ```
 
+##### `bash` ????
+
+Exécuter la commande `bash` après avoir changé le nom d'hôte n'est pas strictement nécessaire, mais cela peut parfois être utile pour rafraîchir l'environnement de terminal sans redémarrer le système.
+
+### Pourquoi exécuter `bash` après avoir modifié le nom d’hôte ?
+
+1. **Rafraîchir l’Environnement** : Lorsque vous exécutez `bash`, vous démarrez une nouvelle session de shell. Cela peut aider à rafraîchir certaines variables d'environnement ou informations affichées dans le terminal, y compris le nom d'hôte.
+
+2. **Vérification Visuelle** : Si votre prompt de terminal inclut le nom d'hôte (ce qui est souvent le cas), lancer `bash` permet de mettre à jour le prompt pour afficher le nouveau nom sans avoir à ouvrir un nouveau terminal.
+
+3. **Alternative au Redémarrage** : Bien que le changement de nom d'hôte soit pris en compte immédiatement par le système, certaines applications ou sessions peuvent encore afficher l'ancien nom d'hôte jusqu'à ce qu'elles soient relancées. Exécuter `bash` est une méthode légère pour appliquer ce changement dans la session en cours.
+
+### En résumé
+Lancer `bash` après un changement de nom d’hôte permet simplement de « rafraîchir » l'environnement du terminal actuel. Ce n’est pas obligatoire, mais cela peut vous permettre de voir instantanément les modifications, notamment si le prompt utilise le nom d'hôte.
+
+
 ---
 
 En suivant ces étapes, le nom d'hôte de votre machine sera maintenant mis à jour vers `worker01` ! 🎉
