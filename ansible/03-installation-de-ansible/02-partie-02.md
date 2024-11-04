@@ -117,11 +117,83 @@ ansible node1 -m command -a "date" -i inventory
 
 
 
-exécuter les commandes time et date sur les machines locales.
+# exécuter les commandes time et date sur les machines locales.
 
 
 
 9. **ansible node1 -m command -a "uptime" -i inventory** : Exécute la commande `uptime` sur `node1` en utilisant le fichier `inventory`.
 
 Ces commandes permettent de gérer et vérifier l'inventaire, lister les hôtes par groupe et exécuter des commandes sur des nœuds spécifiques.
+
+
+# Partie 04
+
+
+
+```plaintext
+ansible allservers -i inventory --list-hosts
+ansible ungrouped -i inventory --list-hosts
+wc -l /etc/ansible/ansible.cfg
+ansible node1 -m command -a "uptime"
+ansible node1 -m command -a "uptime" -i inventory
+ansible node2 -m command -a "uptime" -i inventory
+ansible node2 -m command -a "time" -i inventory
+ansible node2 -m command -a "date" -i inventory
+ansible node1 -m command -a "date" -i inventory
+ansible-doc -l | wc -l
+```
+
+### Explication des Commandes
+
+1. **Lister les hôtes du groupe `allservers`** :
+   ```bash
+   ansible allservers -i inventory --list-hosts
+   ```
+
+2. **Lister les hôtes non regroupés** :
+   ```bash
+   ansible ungrouped -i inventory --list-hosts
+   ```
+
+3. **Compter les lignes dans le fichier `ansible.cfg`** :
+   ```bash
+   wc -l /etc/ansible/ansible.cfg
+   ```
+
+4. **Exécuter la commande `uptime` sur `node1` sans spécifier d'inventaire (génère un avertissement)** :
+   ```bash
+   ansible node1 -m command -a "uptime"
+   ```
+
+5. **Exécuter la commande `uptime` sur `node1` en utilisant l'inventaire** :
+   ```bash
+   ansible node1 -m command -a "uptime" -i inventory
+   ```
+
+6. **Exécuter la commande `uptime` sur `node2` en utilisant l'inventaire** :
+   ```bash
+   ansible node2 -m command -a "uptime" -i inventory
+   ```
+
+7. **Essayer d'exécuter la commande `time` sur `node2` (échec car `time` n'est pas une commande valide dans ce contexte)** :
+   ```bash
+   ansible node2 -m command -a "time" -i inventory
+   ```
+
+8. **Exécuter la commande `date` sur `node2` en utilisant l'inventaire** :
+   ```bash
+   ansible node2 -m command -a "date" -i inventory
+   ```
+
+9. **Exécuter la commande `date` sur `node1` en utilisant l'inventaire** :
+   ```bash
+   ansible node1 -m command -a "date" -i inventory
+   ```
+
+10. **Lister tous les modules disponibles avec `ansible-doc` et compter les lignes de sortie** :
+    ```bash
+    ansible-doc -l | wc -l
+    ```
+
+Ces commandes montrent comment lister les hôtes dans les groupes, exécuter des commandes à distance sur des nœuds spécifiques et utiliser des outils pour consulter la configuration et les modules disponibles dans Ansible.
 
