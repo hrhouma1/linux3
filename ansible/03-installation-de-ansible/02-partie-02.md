@@ -114,6 +114,13 @@ ansible node1 -m command -a "date" -i inventory
 
 8. **ansible node1 -m command -a "uptime"** : Exécute la commande `uptime` sur `node1` sans spécifier d'inventaire, ce qui génère un avertissement.
 
+
+
+
+exécuter les commandes time et date sur les machines locales.
+
+
+
 9. **ansible node1 -m command -a "uptime" -i inventory** : Exécute la commande `uptime` sur `node1` en utilisant le fichier `inventory`.
 
 Ces commandes permettent de gérer et vérifier l'inventaire, lister les hôtes par groupe et exécuter des commandes sur des nœuds spécifiques.
