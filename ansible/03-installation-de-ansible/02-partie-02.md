@@ -76,3 +76,44 @@ root@master:~/exercices-ansible# ansible mail -i inventory --list-hosts
    - `ansible mail -i inventory --list-hosts` : Affiche la liste des hôtes dans le groupe `mail`, qui inclut `node2`.
 
 Ces commandes permettent de vérifier quels hôtes appartiennent à chaque groupe défini dans le fichier `inventory`.
+
+
+-----------
+
+
+# PARTIE 03
+
+```plaintext
+nano inventory
+ansible ungrouped -i inventory --list-hosts
+ansible web -i inventory --list-hosts
+ansible mail -i inventory --list-hosts
+ansible allservers -i inventory --list-hosts
+ansible ungrouped -i inventory --list-hosts
+wc -l /etc/ansible/ansible.cfg
+ansible node1 -m command -a "uptime"
+ansible node1 -m command -a "uptime" -i inventory
+``` 
+
+### Explication des Commandes
+
+1. **nano inventory** : Ouvre le fichier `inventory` avec l'éditeur `nano`.
+
+2. **ansible ungrouped -i inventory --list-hosts** : Affiche les hôtes non regroupés dans l'inventaire `inventory`.
+
+3. **ansible web -i inventory --list-hosts** : Liste les hôtes dans le groupe `web` du fichier `inventory`.
+
+4. **ansible mail -i inventory --list-hosts** : Liste les hôtes dans le groupe `mail` du fichier `inventory`.
+
+5. **ansible allservers -i inventory --list-hosts** : Liste les hôtes dans le groupe `allservers` du fichier `inventory`.
+
+6. **ansible ungrouped -i inventory --list-hosts** (répété) : Affiche à nouveau les hôtes non regroupés dans l'inventaire `inventory`.
+
+7. **wc -l /etc/ansible/ansible.cfg** : Compte le nombre de lignes dans le fichier de configuration `ansible.cfg`.
+
+8. **ansible node1 -m command -a "uptime"** : Exécute la commande `uptime` sur `node1` sans spécifier d'inventaire, ce qui génère un avertissement.
+
+9. **ansible node1 -m command -a "uptime" -i inventory** : Exécute la commande `uptime` sur `node1` en utilisant le fichier `inventory`.
+
+Ces commandes permettent de gérer et vérifier l'inventaire, lister les hôtes par groupe et exécuter des commandes sur des nœuds spécifiques.
+
