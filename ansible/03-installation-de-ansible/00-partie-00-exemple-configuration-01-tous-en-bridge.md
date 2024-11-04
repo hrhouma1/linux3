@@ -66,6 +66,22 @@ Pour vérifier la configuration de votre réseau, vous pouvez accéder à l'inte
 ---
 ---
 
+
+
+# 💀☠️📛
+
+- **💀 - voir ANNEXE01 - ssh eleve@IP sur chaque machine
+- **☠️ - voir ANNEXE01 - ssh eleve@IP sur chaque machine
+- **📛 - voir ANNEXE01 - ssh eleve@IP sur chaque machine
+
+
+**💀⚠️ Attention : voir ANNEXE01 ☠️** - - ssh eleve@IP sur chaque machine
+
+
+---
+---
+---
+
 # 4. Configuration de chaque machine (Master et Workers)
 
 ### Master Node (Ubuntu Server)
@@ -316,4 +332,50 @@ Remplacez `eleve` par le nom d'utilisateur approprié si nécessaire.
 ## 7. Conclusion
 
 Avec cette configuration, le **Master Node** peut accéder aux **Worker Nodes** via SSH en mode Bridge, chaque VM étant reconnue sur le réseau comme un appareil unique. Vous êtes maintenant prêt à exécuter Ansible pour automatiser les tâches sur votre réseau Master-Worker.
+
+
+-------------------
+-------------------
+-------------------
+-------------------
+# ANNEXE 01 -  Configuration initiale en DHCP et passage à une IP statique
+-------------------
+
+
+Au début, votre machine virtuelle obtient une adresse IP dynamique (DHCP) automatiquement attribuée par le routeur. Cette adresse peut être différente de celle que vous voulez définir comme IP statique pour votre architecture. Par exemple, si le DHCP attribue initialement l’adresse **10.0.0.125** à votre machine, vous êtes connecté en SSH via :
+
+```bash
+ssh eleve@10.0.0.125
+```
+
+### Passer à une IP statique
+
+Pour configurer une adresse IP statique, modifiez le fichier de configuration réseau comme suit :
+
+```yaml
+network:
+  version: 2
+  ethernets:
+    enp0s3:
+      addresses:
+        - 10.0.0.110/24
+      gateway4: 10.0.0.1
+      nameservers:
+        addresses:
+          - 8.8.8.8
+      dhcp4: no
+```
+
+- Ici, nous désactivons le DHCP (`dhcp4: no`) et définissons manuellement l’adresse IP statique **10.0.0.110**.
+
+### Attention : Déconnexion SSH
+
+Appliquer ces modifications avec `sudo netplan apply` peut vous déconnecter du SSH si vous étiez connecté avec l’adresse attribuée par DHCP (par exemple, **10.0.0.125**). Une fois que la nouvelle configuration est appliquée, l’adresse IP change pour **10.0.0.110**, et vous devez vous reconnecter en SSH en utilisant cette nouvelle adresse :
+
+```bash
+ssh eleve@10.0.0.110
+```
+
+**Résumé** : Après configuration et application de l’adresse IP statique, utilisez la nouvelle IP pour vos connexions SSH.
+
 
