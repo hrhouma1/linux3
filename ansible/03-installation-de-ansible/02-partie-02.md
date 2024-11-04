@@ -93,6 +93,7 @@ ansible ungrouped -i inventory --list-hosts
 wc -l /etc/ansible/ansible.cfg
 ansible node1 -m command -a "uptime"
 ansible node1 -m command -a "uptime" -i inventory
+ansible node1 -m command -a "date" -i inventory
 ``` 
 
 ### Explication des Commandes
