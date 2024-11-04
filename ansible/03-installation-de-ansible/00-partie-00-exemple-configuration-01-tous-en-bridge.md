@@ -42,6 +42,46 @@ Exemple de la table des adresses IP (configurées en bridge) :
 | **Node 2**           | node2        | 10.0.0.112    | Ubuntu Desktop    |
 | **Node 3**           | node3        | 10.0.0.113    | Debian 12         |
 
+
+
+
+Voici le schéma ASCII mis à jour sans la partie supplémentaire, avec le **Master** seul en haut et **Node 1, Node 2, et Node 3** au même niveau, tous connectés directement au modem :
+
+```
+                             +--------------------------+
+                             |    Modem/Routeur         |
+                             |  Adresse IP : 10.0.0.1   |
+                             +-----------+--------------+
+                                         |
+                                         |
+                                +--------+--------+
+                                |                 |
+                           +----+----+            |
+                           |  Master |            |
+                           | Ubuntu  |            |
+                           | Server  |            |
+                           | 10.0.0.110           |
+                           +---------+            |
+                                                 |
+                          +------------+----------+-----------+
+                          |            |                      |
+                   +------+-----+ +----+-----+          +-----+-----+
+                   |   Node 1   | |  Node 2   |          |  Node 3  |
+                   |  Ubuntu    | |  Ubuntu   |          |  Debian  |
+                   |  Server    | |  Desktop  |          |   12     |
+                   | 10.0.0.111 | | 10.0.0.112|          |10.0.0.113|
+                   +------------+ +-----------+          +----------+
+```
+
+
+
+
+*Tous les nœuds sont connectés au modem/routeur en mode Bridge, chacun apparaissant comme un appareil distinct sur le réseau domestique. Le Master va les contrôler sans agent — c’est la force d'Ansible avec son architecture agentless. Vous remarquerez qu'il n'y a pas de connexion directe entre le Master et les nœuds : la communication passe par l'inventaire d'Ansible.*
+
+# *💀⚠️ Attention : Ansible a été installé uniquement sur le master ☠️*
+
+
+
 ---
 ---
 ---
