@@ -54,12 +54,13 @@ Chaque machine aura une seule interface réseau configurée :
 
 ### Vérification de la configuration réseau
 
-Pour vérifier la configuration de votre réseau, vous pouvez accéder à l'interface administrateur de votre routeur. Dans cet exemple, l'interface est accessible via l'adresse **10.0.0.1** :
+Pour vérifier la configuration de votre réseau, vous pouvez accéder à l'interface administrateur de votre routeur domistique . Dans cet exemple, l'interface est accessible via l'adresse **10.0.0.1** sur monj navigateur windows local de ma machine host windows 11 (Je suis avec vidéotron):
 
 - **Nom d'utilisateur par défaut** : `admin`
 - **Mot de passe par défaut** : `password` (ou bien le mot de passe se trouve sous le modem)
 
-Chaque VM sera visible sur cette interface comme un appareil distinct, tout comme vos autres appareils connectés (téléphone, TV, etc.).
+- Chaque VM sera visible sur cette interface comme un appareil distinct, tout comme vos autres appareils connectés (téléphone, TV, etc.).
+- Je peux voir la liste de toutes les appreils connectés comme la télé , les téléphones, les tablettes et les vms en bridge. Le but est de vérifier les adresses IPs utilisées pour voir si 10.0.0.110 , 10.0.0.111, 10.0.0.112, et 10.0.0.113 sont libres !!! 
 
 ---
 ---
