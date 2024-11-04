@@ -70,9 +70,9 @@ Pour vérifier la configuration de votre réseau, vous pouvez accéder à l'inte
 
 # 💀☠️📛
 
-- **💀 - voir ANNEXE01 - ssh eleve@IP sur chaque machine
-- **☠️ - voir ANNEXE01 - ssh eleve@IP sur chaque machine
-- **📛 - voir ANNEXE01 - ssh eleve@IP sur chaque machine
+- **💀 - voir ANNEXE01 - ssh eleve@IP sur chaque machine depuis mon windows 11 pour faciliter la configuration et faire des copier /coller !
+- **☠️ - voir ANNEXE01 - ssh eleve@IP sur chaque machine , attention je em connecte depuis le cmd de mon ordinateur vers chaque VM.
+- **📛 - voir ANNEXE01 - ssh eleve@IP sur chaque machine, si vous êtes déconnecté.e, il faut se reconnecte avec la nouvelle adresse ssh eleve@NOUVELLE_@_IP
 
 
 **💀⚠️ Attention : voir ANNEXE01 ☠️** - - ssh eleve@IP sur chaque machine
@@ -87,7 +87,7 @@ Pour vérifier la configuration de votre réseau, vous pouvez accéder à l'inte
 ### Master Node (Ubuntu Server)
 
 1. **Installation d’Ubuntu Server** : Installez Ubuntu Server pour le Master Node.
-2. **Configurer l’interface réseau** : Modifiez le fichier `/etc/netplan/00-installer-config.yaml` :
+2. **Configurer l’interface réseau** : Modifiez le fichier `/etc/netplan/00-installer-config.yaml` avec nano :
 
    ```yaml
    network:
@@ -346,11 +346,22 @@ Au début, votre machine virtuelle obtient une adresse IP dynamique (DHCP) autom
 
 ```bash
 ssh eleve@10.0.0.125
+nan /etc/netplan/00-installer-config.yaml (copier coller le contenu yaml en bas)
+netplan apply
 ```
 
 ### Passer à une IP statique
 
+
+
 Pour configurer une adresse IP statique, modifiez le fichier de configuration réseau comme suit :
+
+```bash
+ssh eleve@10.0.0.125
+nan /etc/netplan/00-installer-config.yaml
+netplan apply
+```
+
 
 ```yaml
 network:
@@ -367,6 +378,11 @@ network:
 ```
 
 - Ici, nous désactivons le DHCP (`dhcp4: no`) et définissons manuellement l’adresse IP statique **10.0.0.110**.
+
+```bash
+ssh eleve@10.0.0.110
+```
+
 
 ### Attention : Déconnexion SSH
 
