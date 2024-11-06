@@ -1,16 +1,5 @@
 # Annexe - troubleshooting
 
-Lorsque vous créez un réseau Docker avec `docker network create ansible_network`, Docker attribue automatiquement un sous-réseau et une plage d'adresses IP à ce réseau, sauf si vous spécifiez manuellement une plage d’adresses. Par défaut, Docker utilise une plage d'adresses IP aléatoire pour chaque réseau, mais vous pouvez définir une adresse de sous-réseau spécifique pour faciliter la gestion des adresses IP des conteneurs.
-
-Pour définir une plage d’adresses lors de la création de votre réseau, utilisez l’option `--subnet`. Cela permet de savoir précisément quelles adresses IP sont attribuées aux conteneurs, rendant plus facile la configuration du fichier `inventory`.
-
-### Exemple de Création de Réseau avec Sous-réseau
-
-Voici comment spécifier une plage d'adresses pour le réseau `ansible_network` :
-
-```bash
-docker network create --subnet=172.20.0.0/24 ansible_network
-```
 
 Avec cette configuration, le réseau `ansible_network` utilisera le sous-réseau `172.20.0.0/24`, ce qui signifie que Docker assignera des adresses IP dans la plage `172.20.0.1` à `172.20.0.254` aux conteneurs.
 
