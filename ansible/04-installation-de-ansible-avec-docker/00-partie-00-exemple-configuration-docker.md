@@ -2,18 +2,6 @@
 #  Configurer Ansible et l'utiliser avec des conteneurs Docker pour une solution plus légère
 
 
-*Ce tutoriel vous permet de gérer facilement des conteneurs avec Ansible, en créant un environnement léger et flexible pour le déploiement de services comme Apache.*
-
-1. Installer Docker et Docker Compose pour gérer les conteneurs.
-2. Configurer Ansible pour gérer les conteneurs comme des nœuds gérés.
-3. Créer un playbook Ansible pour déployer un serveur web Apache dans un conteneur Docker.
-
-### 🛠 Prérequis
-
-- Avoir Docker et Docker Compose installés.
-- Avoir Ansible installé sur la machine de contrôle.
-
----
 
 ## 🌍 Étape 1 : Installer Docker et Docker Compose
 
@@ -36,57 +24,18 @@ apt-install docker-compose
 ```
 
 
-
-# Méthode 2 - Installation de Docker
-
-```bash
-# Mettez à jour le système
-sudo apt update
-
-# Installez les paquets nécessaires pour Docker
-sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
-
-# Ajoutez la clé GPG de Docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-# Ajoutez le dépôt Docker
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-
-# Installez Docker
-sudo apt update
-sudo apt install docker-ce -y
-```
-
-### Installation de Docker Compose
-
-```bash
-# Téléchargez Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-# Donnez les permissions nécessaires
-sudo chmod +x /usr/local/bin/docker-compose
-
-# Vérifiez l’installation
-docker-compose --version
-```
-
----
-
-## 🧑‍💻 Étape 2 : Configurer les conteneurs comme nœuds Ansible
-
-Nous allons créer un réseau Docker pour que les conteneurs puissent communiquer entre eux, puis démarrer des conteneurs que nous gérerons avec Ansible.
-
-### 1. Créer un réseau Docker
-
-```bash
-docker network create ansible_network
-```
-
 ### 2. Démarrer les conteneurs
 
-Nous allons créer deux conteneurs Docker Ubuntu et les configurer pour accepter les connexions SSH. Ansible se connectera à ces conteneurs pour les gérer.
+2.1. Nous allons créer deux conteneurs Docker Ubuntu et les configurer pour accepter les connexions SSH. Ansible se connectera à ces conteneurs pour les gérer.
 
-Créez un fichier `docker-compose.yml` avec le contenu suivant :
+```bash
+mkdir ansible1
+cd ansible1
+nano docker-compose.yaml
+```
+
+
+2.2. Créez un fichier `docker-compose.yaml` avec le contenu suivant :
 
 ```yaml
 version: '3'
