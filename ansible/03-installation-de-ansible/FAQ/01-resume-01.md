@@ -1,7 +1,3 @@
-Voici une version améliorée et plus structurée de votre tutoriel Ansible pour une architecture Master-Worker.
-
----
-
 # 🚀 **Guide d'Installation et de Configuration : Architecture Master-Worker avec Ansible** 🌐
 
 ## Sommaire
