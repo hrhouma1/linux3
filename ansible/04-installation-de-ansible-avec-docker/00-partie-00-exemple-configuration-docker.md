@@ -20,7 +20,7 @@
 
 Si Docker et Docker Compose ne sont pas déjà installés, voici les commandes pour les installer.
 
-# Méthode 1 - 
+# Méthode 1 - Installation de Docker
 
 ```bash
 su
