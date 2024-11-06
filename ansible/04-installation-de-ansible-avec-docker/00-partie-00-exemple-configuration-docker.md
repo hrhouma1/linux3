@@ -44,7 +44,8 @@ services:
     image: ubuntu:latest
     container_name: node1
     networks:
-      - ansible_network
+      ansible_network:
+        ipv4_address: 172.20.0.2
     volumes:
       - ./ansible_node1:/ansible_node
     command: /bin/bash -c "apt update && apt install -y openssh-server && service ssh start && tail -f /dev/null"
@@ -55,7 +56,8 @@ services:
     image: ubuntu:latest
     container_name: node2
     networks:
-      - ansible_network
+      ansible_network:
+        ipv4_address: 172.20.0.3
     volumes:
       - ./ansible_node2:/ansible_node
     command: /bin/bash -c "apt update && apt install -y openssh-server && service ssh start && tail -f /dev/null"
@@ -65,6 +67,9 @@ services:
 networks:
   ansible_network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
 ```
 
 Ensuite, exécutez :
