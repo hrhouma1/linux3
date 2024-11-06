@@ -205,3 +205,40 @@ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nod
 ```
 
 Accédez à `http://<IP_du_conteneur>` dans votre navigateur. Vous devriez voir le message “Bienvenue sur votre serveur web dans un conteneur Docker !”
+
+
+
+# Références : 
+
+
+
+*Pour enrichir votre compréhension de l'automatisation avec Ansible pour la configuration de Docker et le déploiement de conteneurs, voici une liste de ressources structurées, incluant des articles, tutoriels et vidéos explicatives :*
+
+---
+
+### 📘 Articles Techniques et Guides
+
+1. **[Automation Using Ansible to Configure Docker & Deploy](https://www.linkedin.com/pulse/automation-using-ansible-configure-docker-deploy-ashish-wakchaure/)**  
+   Cet article sur LinkedIn par Ashish Wakchaure explore comment automatiser la configuration de Docker et le déploiement de conteneurs à l'aide d'Ansible. Il couvre l'initialisation des scripts et l'intégration avec Docker.
+
+2. **[Install Docker and Portainer in a VM Using Ansible](https://dev.to/rimelek/install-docker-and-portainer-in-a-vm-using-ansible-21ib)**  
+   Ce guide sur Dev.to par Rimelek explique comment installer Docker et Portainer sur une machine virtuelle avec Ansible. Un bon point de départ pour une configuration rapide de Docker et de son interface de gestion.
+
+3. **[How to Use Ansible to Install and Set Up Docker on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04)**  
+   Un tutoriel de DigitalOcean qui détaille étape par étape l'installation de Docker sur Ubuntu avec Ansible. Il est parfait pour les débutants en infrastructure Ansible.
+
+4. **[Docker Containers with Ansible](https://medium.com/@Oskarr3/docker-containers-with-ansible-89e98dacd1e2)**  
+   Article sur Medium qui vous guide à travers la gestion de conteneurs Docker en utilisant Ansible. Il couvre plusieurs commandes Ansible pratiques pour manipuler Docker.
+
+5. **[Deploying Docker Container on Remote VM Using Ansible](https://www.linkedin.com/pulse/deploying-docker-container-remote-vm-using-ansible-nilesh-mathur/)**  
+   Une ressource sur LinkedIn par Nilesh Mathur pour le déploiement automatisé de conteneurs Docker sur une VM distante avec Ansible, un choix pertinent pour les infrastructures en cloud.
+
+---
+
+### 🎥 Vidéos et Démos Pratiques
+
+6. **[Automate Docker Installation and Configuration with Ansible (YouTube Video)](https://www.youtube.com/watch?v=-sLjgApgWOM&ab_channel=LinuxR)**  
+   Une vidéo de la chaîne LinuxR expliquant l'automatisation de l'installation et de la configuration de Docker avec Ansible. Elle est très utile pour visualiser les étapes et suivre une démonstration en temps réel.
+
+
+*Ces ressources combinées offrent une bonne couverture des concepts fondamentaux d'Ansible appliqué à Docker, depuis l'installation jusqu'à la gestion des conteneurs. Elles vous permettront de maîtriser progressivement l'automatisation des configurations de Docker dans divers environnements.*
