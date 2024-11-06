@@ -17,9 +17,27 @@
 
 ## 🌍 Étape 1 : Installer Docker et Docker Compose
 
+
 Si Docker et Docker Compose ne sont pas déjà installés, voici les commandes pour les installer.
 
-### Installation de Docker
+# Méthode 1 - 
+
+```bash
+su
+apt update
+git clone https://github.com/hrhouma/install-docker.git
+cd install-docker/
+chmod +x install-docker.sh
+./install-docker.sh
+#ou sh install-docker.sh
+docker version
+docker compose version
+apt-install docker-compose
+```
+
+
+
+# Méthode 2 - Installation de Docker
 
 ```bash
 # Mettez à jour le système
