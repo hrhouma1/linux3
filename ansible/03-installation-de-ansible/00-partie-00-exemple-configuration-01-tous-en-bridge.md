@@ -45,7 +45,7 @@ Exemple de la table des adresses IP (configurées en bridge) :
 
 
 
-Voici le schéma ASCII mis à jour sans la partie supplémentaire, avec le **Master** seul en haut et **Node 1, Node 2, et Node 3** au même niveau, tous connectés directement au modem :
+# Schéma - **Master**, **Node 1, Node 2, et Node 3** connectés au modem :
 
 ```
                              +--------------------------+
