@@ -111,8 +111,8 @@ Pour vérifier la configuration de votre réseau, vous pouvez accéder à l'inte
 # 💀☠️📛
 
 - 💀 - voir ANNEXE01 - ssh eleve@IP sur chaque machine depuis mon windows 11 pour faciliter la configuration et faire des copier /coller !
-- **☠️ - voir ANNEXE01 - ssh eleve@IP sur chaque machine , attention je em connecte depuis le cmd de mon ordinateur vers chaque VM.
-- **📛 - voir ANNEXE01 - ssh eleve@IP sur chaque machine, si vous êtes déconnecté.e, il faut se reconnecte avec la nouvelle adresse ssh eleve@NOUVELLE_@_IP
+- ☠️ - voir ANNEXE01 - ssh eleve@IP sur chaque machine , attention je em connecte depuis le cmd de mon ordinateur vers chaque VM.
+- 📛 - voir ANNEXE01 - ssh eleve@IP sur chaque machine, si vous êtes déconnecté.e, il faut se reconnecte avec la nouvelle adresse ssh eleve@NOUVELLE_@_IP
 
 
 **💀⚠️ Attention : voir ANNEXE01 ☠️** - - ssh eleve@IP sur chaque machine
