@@ -21,8 +21,6 @@
 
 
 
-Si Docker et Docker Compose ne sont pas déjà installés sur **Ubuntu Desktop**, suivez les étapes ci-dessous.
-
 ## 🌍 Étape 1 : Installer Docker et Docker-Compose
 
 
