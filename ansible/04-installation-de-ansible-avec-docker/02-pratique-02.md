@@ -1,4 +1,4 @@
-
+# Chapitre 2
 
 ## 📝 Étape 1 : Créer l'inventaire Ansible
 
