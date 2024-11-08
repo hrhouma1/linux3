@@ -1,4 +1,4 @@
-# 🎓 Chapitre 6 : Utilisation des Boucles dans Ansible
+# 🎓 Chapitre 5 : Utilisation des Boucles dans Ansible
 
 ### Introduction
 
