@@ -19,45 +19,43 @@
 
 # Configurer Ansible et l'utiliser avec des conteneurs Docker pour une solution plus légère
 
-## 🌍 Étape 1 : Installer Docker et Docker Compose
+
 
 Si Docker et Docker Compose ne sont pas déjà installés sur **Ubuntu Desktop**, suivez les étapes ci-dessous.
 
-### Méthode d'installation de Docker
+## 🌍 Étape 1 : Installer Docker et Docker-Compose
 
-1. **Mettre à jour les paquets** :
-   ```bash
-   sudo apt update
-   ```
 
-2. **Installer les dépendances nécessaires** :
-   ```bash
-   sudo apt install -y apt-transport-https ca-certificates curl gnupg lsb-release git
-   ```
+```bash
+su
+apt update
+sudo apt install -y apt-transport-https ca-certificates curl gnupg lsb-release git
+git clone https://github.com/hrhouma/install-docker.git
+cd install-docker/
+chmod +x install-docker.sh
+./install-docker.sh
+#ou sh install-docker.sh
+docker version
+docker compose version
+apt-install docker-compose
+```
 
-3. **Ajouter la clé GPG de Docker** :
-   ```bash
-   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-   ```
 
-4. **Ajouter le dépôt Docker aux sources APT** :
-   ```bash
-   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
-   https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | \
-   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-   ```
+### 2. Démarrer les conteneurs
 
-5. **Installer Docker et Docker Compose** :
-   ```bash
-   sudo apt update
-   sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-   ```
+2.1. Nous allons créer deux conteneurs Docker Ubuntu et les configurer pour accepter les connexions SSH. Ansible se connectera à ces conteneurs pour les gérer.
 
-6. **Vérifier l'installation** :
-   ```bash
-   docker version
-   docker compose version
-   ```
+```bash
+mkdir ansible1
+cd ansible1
+nano docker-compose.yaml
+```
+
+
+
+
+
+
 
 ---
 
@@ -262,9 +260,7 @@ Ajoutez le contenu suivant :
     - name: Update YUM package manager
       yum:
         name: '*'
-        state
-
-: latest
+        state: latest
 
     - name: Install httpd
       yum:
