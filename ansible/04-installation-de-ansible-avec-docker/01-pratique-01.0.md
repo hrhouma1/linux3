@@ -214,3 +214,9 @@ Accédez à `http://<IP_du_conteneur>` dans votre navigateur. Vous devriez voir 
 
 
 *Ces ressources combinées offrent une bonne couverture des concepts fondamentaux d'Ansible appliqué à Docker, depuis l'installation jusqu'à la gestion des conteneurs. Elles vous permettront de maîtriser progressivement l'automatisation des configurations de Docker dans divers environnements.*
+
+
+# Annexe: 
+- rm ~/.ssh/known_hosts
+- sudo rm /var/root/.ssh/known_hosts
+- ssh-keygen -R [hostname]
