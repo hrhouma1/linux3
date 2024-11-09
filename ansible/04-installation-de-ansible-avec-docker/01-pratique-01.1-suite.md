@@ -19,10 +19,7 @@
 
 # Configurer Ansible et l'utiliser avec des conteneurs Docker pour une solution plus légère
 
-
-
 ## 🌍 Étape 1 : Installer Docker et Docker-Compose
-
 
 ```bash
 su
@@ -35,27 +32,7 @@ chmod +x install-docker.sh
 #ou sh install-docker.sh
 docker version
 docker compose version
-apt-install docker-compose
 ```
-
-
-### 2. Démarrer les conteneurs
-
-2.1. Nous allons créer deux conteneurs Docker Ubuntu et les configurer pour accepter les connexions SSH. Ansible se connectera à ces conteneurs pour les gérer.
-
-```bash
-mkdir ansible1
-cd ansible1
-nano docker-compose.yaml
-```
-
-
-
-
-
-
-
----
 
 ## 🗄️ Étape 2 : Créer et démarrer les conteneurs
 
@@ -66,10 +43,10 @@ mkdir ansible_project
 cd ansible_project
 ```
 
-### 2.2. Créer le fichier `docker-compose.yaml`
+### 2.2. Créer le fichier `docker-compose.yml`
 
 ```bash
-nano docker-compose.yaml
+nano docker-compose.yml
 ```
 
 Ajoutez le contenu suivant pour configurer six conteneurs avec différentes distributions :
@@ -104,7 +81,7 @@ services:
     networks:
       ansible_network:
         ipv4_address: 172.20.0.4
-    command: /bin/bash -c "yum update -y && yum install -y openssh-server passwd && echo 'root:root' | chpasswd && /usr/sbin/sshd -D"
+    command: /bin/bash -c "yum update -y && yum install -y openssh-server passwd && echo 'root:root' | chpasswd && ssh-keygen -A && /usr/sbin/sshd -D"
     expose:
       - "22"
 
@@ -114,7 +91,7 @@ services:
     networks:
       ansible_network:
         ipv4_address: 172.20.0.5
-    command: /bin/bash -c "yum update -y && yum install -y openssh-server passwd && echo 'root:root' | chpasswd && /usr/sbin/sshd -D"
+    command: /bin/bash -c "yum update -y && yum install -y openssh-server passwd && echo 'root:root' | chpasswd && ssh-keygen -A && /usr/sbin/sshd -D"
     expose:
       - "22"
 
@@ -144,7 +121,6 @@ networks:
     ipam:
       config:
         - subnet: 172.20.0.0/24
-
 ```
 
 ### 2.3. Démarrer les conteneurs
@@ -176,7 +152,7 @@ for i in 1 2 5 6; do
 done
 ```
 
-Pour les conteneurs basés sur **AlmaLinux** et **CentOS** :
+Pour les conteneurs basés sur **AlmaLinux** :
 
 ```bash
 for i in 3 4; do
@@ -253,7 +229,7 @@ Ajoutez le contenu suivant :
         content: "<h1>Bienvenue sur votre serveur web Ubuntu/Debian dans un conteneur Docker !</h1>"
         dest: /var/www/html/index.html
 
-- name: Configure Apache on AlmaLinux and CentOS Containers
+- name: Configure Apache on AlmaLinux Containers
   hosts: node3,node4
   become: yes
   tasks:
@@ -275,7 +251,7 @@ Ajoutez le contenu suivant :
 
     - name: Create index.html
       copy:
-        content: "<h1>Bienvenue sur votre serveur web AlmaLinux/CentOS dans un conteneur Docker !</h1>"
+        content: "<h1>Bienvenue sur votre serveur web AlmaLinux dans un conteneur Docker !</h1>"
         dest: /var/www/html/index.html
 ```
 
