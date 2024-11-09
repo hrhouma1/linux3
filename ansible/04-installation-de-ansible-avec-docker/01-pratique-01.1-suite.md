@@ -11,7 +11,7 @@
         │        │        │        │        │        │        │
     ┌───┴───┐┌───┴───┐┌───┴───┐┌───┴───┐┌───┴───┐┌───┴───┐
     │ Node1 ││ Node2 ││ Node3 ││ Node4 ││ Node5 ││ Node6 │
-    │Ubuntu ││Debian ││AlmaLnx││CentOS ││Ubuntu ││Ubuntu │
+    │Ubuntu ││Debian ││AlmaLnx││AlmaLnx ││Ubuntu ││Ubuntu │
     └───────┘└───────┘└───────┘└───────┘└───────┘└───────┘
 ```
 
@@ -76,6 +76,7 @@ Ajoutez le contenu suivant pour configurer six conteneurs avec différentes dist
 
 ```yaml
 version: '3'
+
 services:
   node1:
     image: ubuntu:latest
@@ -108,7 +109,7 @@ services:
       - "22"
 
   node4:
-    image: centos:latest
+    image: almalinux:latest
     container_name: node4
     networks:
       ansible_network:
@@ -143,6 +144,7 @@ networks:
     ipam:
       config:
         - subnet: 172.20.0.0/24
+
 ```
 
 ### 2.3. Démarrer les conteneurs
