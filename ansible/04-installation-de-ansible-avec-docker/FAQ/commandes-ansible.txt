@@ -1,0 +1,200 @@
+network:
+  version: 2
+  ethernets:
+    enp0s3:                          
+      addresses:
+        - 10.0.0.111/24           
+      gateway4: 10.0.0.1           
+      nameservers:
+        addresses:
+          - 8.8.8.8                   
+      dhcp4: no
+
+
+
+
+
+apt update 
+apt install ansible
+ansible localhost -m 'ping'
+
+mkdir exercices-ansible
+cd exercices-ansible
+nano inventory
+ ===>
+	master ansible_connection=local
+	node1 ansible_host= ansible_connection=ssh ansible_user=eleve ansible_ssh_pass=eleve
+
+ansible all -m 'ping' -i inventory
+
+
+
+
+
+
+1) Installation de Ansible
+2) Création du fichier inventaire
+3) Tester notre première commande
+
+nano /etc/ansible/ansible.cfg
+cd /etc/ansible
+ansible --version 
+sudo apt remove ansible 
+sudo apt install software-properties-common
+sudo apt-add-repositories --yes --update ppa:ansible/ansible 
+sudo apt update 
+sudo apt install ansible 
+cd /etc/ansible
+ls 
+nano ansible.cfg 
+cd (entrée)
+cd exercices-ansibles
+ansible all -m 'ping' -i inventory (ÉCHEC)
+
+==> Il faut vérifier le lien sur stack-overflow 
+
+nano /etc/ansible/ansible.cfg
+ajout de : 
+[defaults]
+host_key_checking = false 
+
+                          ===========> dans ansible/ansible.cfg 
+
+ansible all -m 'ping' -i inventory (SUCCÈS)
+
+
+
+
+
+
+
+
+nano /etc/hostname ==> worker01 (ou hostnamectl set-hotsnamectl worker01)
+bash
+hostnamectl
+
+
+
+
+
+
+IL FAUT :
+UN FICHIER DE CONFIGURATION DE ANSIBLE  ==> /etc/ansible  ==> ansible.cfg
+UN FICHIER D'INVENTAIRE  ==> mkdir exercices , nano inventory (ajout des noeuds)
+
+Commandes visées : 
+1) ansible localhost -m 'ping'
+2) ansible all -m 'ping' -i inventory
+
+apt update 
+apt install ansible
+ansible localhost -m 'ping'
+
+cd
+mkdir exercices-ansible
+cd exercices-ansible
+
+
+nano inventory
+ ===>
+	master ansible_connection=local
+	node1 ansible_host= ansible_connection=ssh ansible_user=eleve ansible_ssh_pass=eleve
+
+
+ansible all -m 'ping' -i inventory ===> ERREUR
+
+nano /etc/ansible/ansible.cfg
+ajout de : 
+[defaults]
+host_key_checking = false 
+
+
+cd
+cd exercices-ansible
+
+ansible all -m 'ping' -i inventory
+
+
+
+
+
+
+-------------------
+On ajoute une autre machien à l'inventaire
+
+nano inventory
+ ===>
+	master ansible_connection=local
+	node1 ansible_host=10.0.0.111 ansible_connection=ssh ansible_user=eleve ansible_ssh_pass=eleve
+	node2 ansible_host=10.0.0.112 ansible_connection=ssh ansible_user=eleve ansible_ssh_pass=eleve
+
+
+ansible all -m 'ping' -i inventory ===> ERREUR
+ping 10.0.0.112 ????
+
+
+
+## Configuration de la carte dans Ubuntu Desktop
+nano /etc/netplan/00-installer-config.yaml
+
+network:
+  version: 2
+  ethernets:
+    enp0s3:                          
+      addresses:
+        - 10.0.0.112/24           
+      gateway4: 10.0.0.1           
+      nameservers:
+        addresses:
+          - 8.8.8.8                   
+      dhcp4: no
+
+netplan apply
+
+
+
+
+#### Machine Centos Debian 12
+
+Aller à la machine centos et pinguer le master ?
+ping 10.0.0.113 ????
+nmtui (debian12) => edit a connection ==> enp0s3 ==> cocher automatically connect ==> OK
+ip a 
+pinguer le serveur 
+
+
+
+
+nano /etc/netplan/00-installer-config.yaml
+netplan apply
+
+
+network:
+  version: 2
+  ethernets:
+    enp0s3:                          
+      addresses:
+        - 10.0.0.113/24           
+      gateway4: 10.0.0.1           
+      nameservers:
+        addresses:
+          - 8.8.8.8                   
+      dhcp4: no
+
+netplan apply
+
+
+
+
+
+
+nano inventory
+ ===>
+	master ansible_connection=local
+	node1 ansible_host=10.0.0.111 ansible_connection=ssh ansible_user=eleve ansible_ssh_pass=eleve
+	node2 ansible_host=10.0.0.112 ansible_connection=ssh ansible_user=eleve ansible_ssh_pass=eleve
+	node3 ansible_host=10.0.0.113 ansible_connection=ssh ansible_user=eleve ansible_ssh_pass=eleve
+
+
+ansible all -m 'ping' -i inventory ===> ERREUR
+ping 10.0.0.113 ????
