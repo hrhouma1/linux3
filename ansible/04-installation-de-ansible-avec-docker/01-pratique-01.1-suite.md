@@ -1,4 +1,25 @@
-# 🖥️ Schéma 
+# 🖥️ Déployer une Infrastructure Docker avec Ansible sans Erreur
+
+Ce tutoriel vous guidera à travers la configuration d'un environnement Docker contenant plusieurs conteneurs de différentes distributions Linux (Ubuntu, Debian, AlmaLinux) et l'utilisation d'Ansible pour automatiser l'installation et la configuration d'Apache sur ces conteneurs. Toutes les erreurs précédemment rencontrées ont été corrigées pour assurer un déploiement fluide.
+
+---
+
+## 📋 Table des Matières
+
+1. [Schéma de l'Infrastructure](#schema)
+2. [Étape 1 : Installer Docker et Docker Compose](#etape1)
+3. [Étape 2 : Créer et Démarrer les Conteneurs](#etape2)
+4. [Étape 3 : Configurer l'Accès SSH pour Ansible](#etape3)
+5. [Étape 4 : Créer l'Inventaire Ansible](#etape4)
+6. [Étape 5 : Écrire le Playbook Ansible](#etape5)
+7. [Étape 6 : Exécuter le Playbook](#etape6)
+8. [Étape 7 : Vérifier le Déploiement](#etape7)
+9. [Récapitulatif](#recapitulatif)
+
+---
+
+<a name="schema"></a>
+## 🖥️ Schéma de l'Infrastructure
 
 ```plaintext
                              Ubuntu Desktop
@@ -11,21 +32,19 @@
         │        │        │        │        │        │        │
     ┌───┴───┐┌───┴───┐┌───┴───┐┌───┴───┐┌───┴───┐┌───┴───┐
     │ Node1 ││ Node2 ││ Node3 ││ Node4 ││ Node5 ││ Node6 │
-    │Ubuntu ││Debian ││AlmaLnx││AlmaLnx ││Ubuntu ││Ubuntu │
+    │Ubuntu ││Debian ││AlmaLnx││AlmaLnx││Ubuntu ││Ubuntu │
     └───────┘└───────┘└───────┘└───────┘└───────┘└───────┘
 ```
 
 ---
 
-# Configurer Ansible et l'utiliser avec des conteneurs Docker pour une solution plus légère
+<a name="etape1"></a>
+## 🌍 Étape 1 : Installer Docker et Docker Compose
 
-# 🌍 Étape 1 : Installer Docker et Docker-Compose
-
-Sur votre machine de contrôle (Ubuntu Desktop) :
+Sur votre machine de contrôle (Ubuntu Desktop), exécutez les commandes suivantes pour installer Docker et Docker Compose :
 
 ```bash
-su
-apt update
+sudo apt update
 sudo apt install -y apt-transport-https ca-certificates curl gnupg lsb-release git
 git clone https://github.com/hrhouma/install-docker.git
 cd install-docker/
@@ -38,22 +57,29 @@ docker compose version
 
 ---
 
-# 🗄️ Étape 2 : Créer et démarrer les conteneurs
+<a name="etape2"></a>
+## 🗄️ Étape 2 : Créer et Démarrer les Conteneurs
 
-### 2.1. Créer un répertoire de travail
+### 2.1. Créer un Répertoire de Travail
+
+Créez un nouveau répertoire pour votre projet et accédez-y :
 
 ```bash
 mkdir ansible_project
 cd ansible_project
 ```
 
-### 2.2. Créer le fichier `docker-compose.yml`
+### 2.2. Créer le Fichier `docker-compose.yml`
+
+Créez le fichier `docker-compose.yml` qui définira les services Docker :
 
 ```bash
 nano docker-compose.yml
 ```
 
-Ajoutez le contenu suivant pour configurer six conteneurs avec différentes distributions :
+### 2.3. Contenu du Fichier `docker-compose.yml`
+
+Copiez et collez le contenu suivant dans le fichier, en veillant à ce que la configuration pour les conteneurs AlmaLinux soit correcte :
 
 ```yaml
 version: '3'
@@ -68,6 +94,7 @@ services:
     command: /bin/bash -c "apt update && apt install -y openssh-server && service ssh start && tail -f /dev/null"
     expose:
       - "22"
+      - "80"
 
   node2:
     image: debian:latest
@@ -78,6 +105,7 @@ services:
     command: /bin/bash -c "apt update && apt install -y openssh-server python3 && service ssh start && tail -f /dev/null"
     expose:
       - "22"
+      - "80"
 
   node3:
     image: almalinux:latest
@@ -85,9 +113,10 @@ services:
     networks:
       ansible_network:
         ipv4_address: 172.20.0.4
-    command: /bin/bash -c "yum update -y && yum install -y openssh-server passwd && echo 'root:root' | chpasswd && ssh-keygen -A && /usr/sbin/sshd -D"
+    command: /bin/bash -c "yum update -y && yum install -y openssh-server passwd httpd && echo 'root:root' | chpasswd && ssh-keygen -A && /usr/sbin/sshd && /usr/sbin/httpd -D FOREGROUND"
     expose:
       - "22"
+      - "80"
 
   node4:
     image: almalinux:latest
@@ -95,9 +124,10 @@ services:
     networks:
       ansible_network:
         ipv4_address: 172.20.0.5
-    command: /bin/bash -c "yum update -y && yum install -y openssh-server passwd && echo 'root:root' | chpasswd && ssh-keygen -A && /usr/sbin/sshd -D"
+    command: /bin/bash -c "yum update -y && yum install -y openssh-server passwd httpd && echo 'root:root' | chpasswd && ssh-keygen -A && /usr/sbin/sshd && /usr/sbin/httpd -D FOREGROUND"
     expose:
       - "22"
+      - "80"
 
   node5:
     image: ubuntu:latest
@@ -108,6 +138,7 @@ services:
     command: /bin/bash -c "apt update && apt install -y openssh-server && service ssh start && tail -f /dev/null"
     expose:
       - "22"
+      - "80"
 
   node6:
     image: ubuntu:latest
@@ -118,6 +149,7 @@ services:
     command: /bin/bash -c "apt update && apt install -y openssh-server && service ssh start && tail -f /dev/null"
     expose:
       - "22"
+      - "80"
 
 networks:
   ansible_network:
@@ -127,36 +159,54 @@ networks:
         - subnet: 172.20.0.0/24
 ```
 
-### 2.3. Démarrer les conteneurs
+**Explication des Modifications :**
+
+- **Pour node3 et node4 (AlmaLinux)** :
+  - Ajout de `httpd` à la commande d'installation.
+  - Démarrage du service SSHD avec `/usr/sbin/sshd`.
+  - Démarrage d'Apache en premier plan avec `/usr/sbin/httpd -D FOREGROUND`.
+  - Exposition du port `80` pour le trafic HTTP.
+
+### 2.4. Démarrer les Conteneurs
+
+Exécutez la commande suivante pour démarrer tous les conteneurs en arrière-plan :
 
 ```bash
 docker-compose up -d
 ```
 
----
-
-# 🔑 Étape 3 : Configurer l'accès SSH pour Ansible
-
-### 3.1. Générer une clé SSH (si elle n'existe pas)
+Vérifiez que les conteneurs sont en cours d'exécution :
 
 ```bash
-ssh-keygen -t rsa -b 2048
+docker ps
 ```
 
-Appuyez sur **Entrée** pour accepter les emplacements par défaut.
+---
 
-### 3.2. Copier la clé publique vers chaque conteneur
+<a name="etape3"></a>
+## 🔑 Étape 3 : Configurer l'Accès SSH pour Ansible
 
-Pour les conteneurs basés sur **Ubuntu** et **Debian** :
+### 3.1. Générer une Clé SSH (si elle n'existe pas)
+
+Générez une clé SSH sans phrase de passe :
+
+```bash
+ssh-keygen -t rsa -b 2048 -N "" -f ~/.ssh/id_rsa
+```
+
+### 3.2. Copier la Clé Publique vers Chaque Conteneur
+
+Pour les conteneurs basés sur **Ubuntu** et **Debian** (`node1`, `node2`, `node5`, `node6`) :
 
 ```bash
 for i in 1 2 5 6; do
   docker exec -it node$i mkdir -p /root/.ssh
   docker cp ~/.ssh/id_rsa.pub node$i:/root/.ssh/authorized_keys
+  docker exec -it node$i chmod 600 /root/.ssh/authorized_keys
 done
 ```
 
-Pour les conteneurs basés sur **AlmaLinux** :
+Pour les conteneurs basés sur **AlmaLinux** (`node3`, `node4`) :
 
 ```bash
 for i in 3 4; do
@@ -166,37 +216,35 @@ for i in 3 4; do
 done
 ```
 
-### 3.3. Vérifier la connexion SSH pour chaque conteneur
+### 3.3. Vérifier la Connexion SSH pour Chaque Conteneur
+
+Supprimez les anciennes entrées d'hôtes connus pour éviter les conflits :
+
+```bash
+rm -f ~/.ssh/known_hosts
+```
+
+Ensuite, vérifiez la connexion SSH :
 
 ```bash
 for i in {1..6}; do
-  IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' node$i)
+  IP=172.20.0.$((i+1))
   ssh -o StrictHostKeyChecking=no root@$IP exit
 done
 ```
-
-## troubleshooting
-
-```bash
-rm -rf /root/.ssh/known_hosts
-```
-ensuite
-
-```bash
-for i in {1..6}; do
-  IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' node$i)
-  ssh -o StrictHostKeyChecking=no root@$IP exit
-done
-```
-
 
 ---
 
-# 📜 Étape 4 : Créer l'inventaire Ansible
+<a name="etape4"></a>
+## 📜 Étape 4 : Créer l'Inventaire Ansible
 
-Créez un fichier `inventory.ini` dans votre dossier de travail avec les adresses IP des conteneurs.
+Créez un fichier `inventory.ini` dans votre répertoire de travail :
 
-Exemple d'inventaire :
+```bash
+nano inventory.ini
+```
+
+Ajoutez le contenu suivant :
 
 ```ini
 [node_containers]
@@ -210,9 +258,8 @@ node6 ansible_host=172.20.0.7 ansible_user=root
 
 ---
 
-# 🎯 Étape 5 : Écrire le playbook Ansible
-
-Nous allons écrire un playbook qui installe Apache et le démarre sur chaque conteneur.
+<a name="etape5"></a>
+## 🎯 Étape 5 : Écrire le Playbook Ansible
 
 Créez un fichier `playbook.yml` :
 
@@ -252,20 +299,10 @@ Ajoutez le contenu suivant :
   hosts: node3,node4
   become: yes
   tasks:
-    - name: Update YUM package manager
+    - name: Install net-tools (optional, for troubleshooting)
       yum:
-        name: '*'
-        state: latest
-
-    - name: Install httpd
-      yum:
-        name: httpd
+        name: net-tools
         state: present
-
-    - name: Start httpd in the background
-      command: /usr/sbin/httpd -DFOREGROUND
-      async: 1
-      poll: 0
 
     - name: Create index.html
       copy:
@@ -273,9 +310,15 @@ Ajoutez le contenu suivant :
         dest: /var/www/html/index.html
 ```
 
+**Remarques :**
+
+- **Pour les conteneurs AlmaLinux**, nous n'avons pas besoin d'installer ou de démarrer Apache via Ansible, car cela a déjà été fait lors du démarrage des conteneurs dans le `docker-compose.yml`.
+- Nous utilisons Ansible pour créer le fichier `index.html` avec le contenu souhaité.
+
 ---
 
-# 🚀 Étape 6 : Exécuter le playbook
+<a name="etape6"></a>
+## 🚀 Étape 6 : Exécuter le Playbook
 
 Lancez le playbook pour configurer Apache dans les conteneurs :
 
@@ -285,55 +328,110 @@ ansible-playbook -i inventory.ini playbook.yml
 
 ---
 
+<a name="etape7"></a>
+## 🔎 Étape 7 : Vérifier le Déploiement
 
-## 🔎 Vérifier le déploiement
+### 7.1. Obtenir les Adresses IP des Conteneurs
 
-Pour vérifier que le serveur web fonctionne, obtenez les IP de chaque conteneur et essayez de les atteindre via un navigateur :
-
-```bash
-for i in {1..6}; do
-  docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' node$i
-done
-```
-
-
-Pour obtenir les adresses IP de chaque conteneur, exécutez la commande suivante :
+Exécutez la commande suivante pour afficher les adresses IP de tous les conteneurs :
 
 ```bash
 for i in {1..6}; do
-  docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' node$i
+  IP=172.20.0.$((i+1))
+  echo "node$i IP: $IP"
 done
 ```
 
-Cette commande affichera les adresses IP de chaque conteneur. Vous pouvez ensuite ouvrir un navigateur et accéder à l'adresse IP de chaque conteneur en utilisant le port 80 (par exemple : `http://<IP_du_conteneur>`).
+### 7.2. Vérifier l'Accès aux Serveurs Web
 
+Vous pouvez utiliser `curl` pour vérifier que les serveurs web répondent correctement :
 
+```bash
+for i in {1..6}; do
+  IP=172.20.0.$((i+1))
+  echo "Testing node$i at $IP:"
+  curl http://$IP
+  echo -e "\n------------------------\n"
+done
+```
 
-- Accédez à `http://<IP_du_conteneur>` dans votre navigateur. Vous devriez voir le message correspondant au conteneur.
-- Vous devriez voir un message différent selon le type de conteneur :
+### 7.3. Accéder aux Serveurs Web via un Navigateur
 
-- **Pour les conteneurs Ubuntu et Debian (`node1`, `node2`, `node5`, `node6`)** :  
-  ```plaintext
-  Bienvenue sur votre serveur web Ubuntu/Debian dans un conteneur Docker !
+Ouvrez votre navigateur et accédez aux adresses suivantes :
+
+- **Pour node1 à node6** :
+
+  ```
+  http://172.20.0.2
+  http://172.20.0.3
+  http://172.20.0.4
+  http://172.20.0.5
+  http://172.20.0.6
+  http://172.20.0.7
   ```
 
-- **Pour les conteneurs AlmaLinux (`node3`, `node4`)** :  
-  ```plaintext
-  Bienvenue sur votre serveur web AlmaLinux dans un conteneur Docker !
+**Note Importante :** Assurez-vous que votre machine hôte peut accéder au réseau `172.20.0.0/24`. Si ce n'est pas le cas, vous devrez peut-être configurer le port forwarding ou utiliser les adresses IP de la machine hôte pour accéder aux conteneurs.
+
+### 7.4. Résultats Attendus
+
+- **Pour les conteneurs Ubuntu et Debian (`node1`, `node2`, `node5`, `node6`)** :
+
+  Vous devriez voir la page avec le message :
+
+  ```html
+  <h1>Bienvenue sur votre serveur web Ubuntu/Debian dans un conteneur Docker !</h1>
+  ```
+
+- **Pour les conteneurs AlmaLinux (`node3`, `node4`)** :
+
+  Vous devriez voir la page avec le message :
+
+  ```html
+  <h1>Bienvenue sur votre serveur web AlmaLinux dans un conteneur Docker !</h1>
   ```
 
 ---
 
-## Récapitulatif
+<a name="recapitulatif"></a>
+## 📝 Récapitulatif
 
-Avec ce tutoriel, vous avez :
+Avec ce tutoriel, vous avez réussi à :
 
-1. **Installé Docker et Docker Compose** sur votre machine de contrôle.
-2. **Créé plusieurs conteneurs Docker** avec des images Ubuntu, Debian, et AlmaLinux.
-3. **Configuré l'accès SSH** pour permettre à Ansible de gérer chaque conteneur.
-4. **Écrit et exécuté un playbook Ansible** pour installer et configurer Apache sur chaque conteneur.
-5. **Vérifié l'installation d'Apache** en accédant aux serveurs web à partir de leur adresse IP.
+1. **Installer Docker et Docker Compose** sur votre machine de contrôle Ubuntu.
+2. **Créer et démarrer plusieurs conteneurs Docker** avec différentes distributions Linux.
+3. **Configurer l'accès SSH** pour permettre à Ansible de se connecter à chaque conteneur.
+4. **Écrire un inventaire Ansible** pour gérer les conteneurs.
+5. **Écrire et exécuter un playbook Ansible** pour installer et configurer Apache sur les conteneurs.
+6. **Vérifier le déploiement** en accédant aux serveurs web sur chaque conteneur.
 
-Cette configuration vous permet d'utiliser Ansible pour automatiser la gestion de plusieurs types de conteneurs et d'y exécuter des services web.
+---
 
+## 🎉 Félicitations !
 
+Vous avez maintenant une infrastructure Docker fonctionnelle, automatisée avec Ansible, sans aucune erreur. Vous pouvez continuer à développer cet environnement en ajoutant plus de services, en explorant des rôles Ansible, ou en intégrant cette configuration dans des pipelines CI/CD.
+
+---
+
+## 🛠️ Conseils Supplémentaires
+
+- **Gestion des Services dans les Conteneurs Docker** : Dans un conteneur Docker, il est préférable d'exécuter un seul processus principal. Si vous avez besoin d'exécuter plusieurs services, envisagez d'utiliser des images de base conçues pour cela ou d'utiliser des gestionnaires de processus comme `supervisord`.
+- **Sécurité** : N'oubliez pas de sécuriser vos conteneurs en changeant les mots de passe par défaut et en utilisant des clés SSH sécurisées.
+- **Nettoyage** : Pour arrêter et supprimer les conteneurs et les réseaux créés, utilisez :
+
+  ```bash
+  docker-compose down
+  ```
+
+- **Logs et Dépannage** : Utilisez `docker logs <container_name>` pour consulter les journaux des conteneurs en cas de problème.
+
+---
+
+## 📚 Ressources Utiles
+
+- [Documentation Docker](https://docs.docker.com/)
+- [Documentation Ansible](https://docs.ansible.com/)
+- [Meilleures Pratiques pour les Conteneurs Docker](https://docs.docker.com/develop/dev-best-practices/)
+
+- https://stackoverflow.com/questions/42462435/ansible-provisioning-error-using-a-ssh-password-instead-of-a-key-is-not-possibl
+- https://stackoverflow.com/questions/23074412/how-to-set-host-key-checking-false-in-ansible-inventory-file
+- https://stackoverflow.com/questions/20840012/ssh-remote-host-identification-has-changed
