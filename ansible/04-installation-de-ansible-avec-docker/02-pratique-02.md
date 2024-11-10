@@ -317,6 +317,22 @@ Nous devons tenir compte des différences entre les distributions :
 
 Cependant, dans le groupe `web`, nous avons `node1` et `node5`, qui sont tous deux des conteneurs Ubuntu. Nous utiliserons donc `apache2`.
 
+
+
+**Installer Apache sur le Groupe `web` :**
+
+```bash
+ansible web -m apt -a "name=apache2 state=present" -i inventory.ini
+```
+
+**Démarrer et Activer le Service Apache :**
+
+```bash
+ansible web -m service -a "name=apache2 state=started enabled=yes" -i inventory.ini
+```
+
+**Redémarrer le Service Apache sur le Groupe `web`**
+
 ```bash
 ansible web -m service -a "name=apache2 state=restarted" -i inventory.ini
 ```
@@ -499,9 +515,4 @@ Nous avons réussi à :
 - **Installer les Paquets Nécessaires :** Assurez-vous que les commandes que vous voulez utiliser sont disponibles (par exemple, installer `procps` pour la commande `uptime` sur AlmaLinux).
 - **Gestion des Services :** Le nom du service Apache diffère selon la distribution (`apache2` vs `httpd`).
 
----
 
-## 📚 Ressources Utiles
-
-- [Documentation Ansible](https://docs.ansible.com/)
-- [
