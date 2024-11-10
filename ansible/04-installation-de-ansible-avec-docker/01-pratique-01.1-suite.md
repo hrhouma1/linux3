@@ -1,4 +1,4 @@
-## 🖥️ Schéma 
+# 🖥️ Schéma 
 
 ```plaintext
                              Ubuntu Desktop
@@ -19,7 +19,9 @@
 
 # Configurer Ansible et l'utiliser avec des conteneurs Docker pour une solution plus légère
 
-## 🌍 Étape 1 : Installer Docker et Docker-Compose
+# 🌍 Étape 1 : Installer Docker et Docker-Compose
+
+Sur votre machine de contrôle (Ubuntu Desktop) :
 
 ```bash
 su
@@ -29,12 +31,14 @@ git clone https://github.com/hrhouma/install-docker.git
 cd install-docker/
 chmod +x install-docker.sh
 ./install-docker.sh
-#ou sh install-docker.sh
+# ou sh install-docker.sh
 docker version
 docker compose version
 ```
 
-## 🗄️ Étape 2 : Créer et démarrer les conteneurs
+---
+
+# 🗄️ Étape 2 : Créer et démarrer les conteneurs
 
 ### 2.1. Créer un répertoire de travail
 
@@ -71,7 +75,7 @@ services:
     networks:
       ansible_network:
         ipv4_address: 172.20.0.3
-    command: /bin/bash -c "apt update && apt install -y openssh-server && service ssh start && tail -f /dev/null"
+    command: /bin/bash -c "apt update && apt install -y openssh-server python3 && service ssh start && tail -f /dev/null"
     expose:
       - "22"
 
@@ -131,7 +135,7 @@ docker-compose up -d
 
 ---
 
-## 🔑 Étape 3 : Configurer l'accès SSH pour Ansible
+# 🔑 Étape 3 : Configurer l'accès SSH pour Ansible
 
 ### 3.1. Générer une clé SSH (si elle n'existe pas)
 
@@ -171,9 +175,24 @@ for i in {1..6}; do
 done
 ```
 
+## troubleshooting
+
+```bash
+rm -rf /root/.ssh/known_hosts
+```
+ensuite
+
+```bash
+for i in {1..6}; do
+  IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' node$i)
+  ssh -o StrictHostKeyChecking=no root@$IP exit
+done
+```
+
+
 ---
 
-## 📜 Étape 4 : Créer l'inventaire Ansible
+# 📜 Étape 4 : Créer l'inventaire Ansible
 
 Créez un fichier `inventory.ini` dans votre dossier de travail avec les adresses IP des conteneurs.
 
@@ -191,7 +210,7 @@ node6 ansible_host=172.20.0.7 ansible_user=root
 
 ---
 
-## 🎯 Étape 5 : Écrire le playbook Ansible
+# 🎯 Étape 5 : Écrire le playbook Ansible
 
 Nous allons écrire un playbook qui installe Apache et le démarre sur chaque conteneur.
 
@@ -243,11 +262,10 @@ Ajoutez le contenu suivant :
         name: httpd
         state: present
 
-    - name: Start httpd Service
-      service:
-        name: httpd
-        state: started
-        enabled: true
+    - name: Start httpd in the background
+      command: /usr/sbin/httpd -DFOREGROUND
+      async: 1
+      poll: 0
 
     - name: Create index.html
       copy:
@@ -257,7 +275,7 @@ Ajoutez le contenu suivant :
 
 ---
 
-## 🚀 Étape 6 : Exécuter le playbook
+# 🚀 Étape 6 : Exécuter le playbook
 
 Lancez le playbook pour configurer Apache dans les conteneurs :
 
@@ -266,6 +284,7 @@ ansible-playbook -i inventory.ini playbook.yml
 ```
 
 ---
+
 
 ## 🔎 Vérifier le déploiement
 
@@ -277,4 +296,44 @@ for i in {1..6}; do
 done
 ```
 
-Accédez à `http://<IP_du_conteneur>` dans votre navigateur. Vous devriez voir le message correspondant au conteneur.
+
+Pour obtenir les adresses IP de chaque conteneur, exécutez la commande suivante :
+
+```bash
+for i in {1..6}; do
+  docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' node$i
+done
+```
+
+Cette commande affichera les adresses IP de chaque conteneur. Vous pouvez ensuite ouvrir un navigateur et accéder à l'adresse IP de chaque conteneur en utilisant le port 80 (par exemple : `http://<IP_du_conteneur>`).
+
+
+
+- Accédez à `http://<IP_du_conteneur>` dans votre navigateur. Vous devriez voir le message correspondant au conteneur.
+- Vous devriez voir un message différent selon le type de conteneur :
+
+- **Pour les conteneurs Ubuntu et Debian (`node1`, `node2`, `node5`, `node6`)** :  
+  ```plaintext
+  Bienvenue sur votre serveur web Ubuntu/Debian dans un conteneur Docker !
+  ```
+
+- **Pour les conteneurs AlmaLinux (`node3`, `node4`)** :  
+  ```plaintext
+  Bienvenue sur votre serveur web AlmaLinux dans un conteneur Docker !
+  ```
+
+---
+
+## Récapitulatif
+
+Avec ce tutoriel, vous avez :
+
+1. **Installé Docker et Docker Compose** sur votre machine de contrôle.
+2. **Créé plusieurs conteneurs Docker** avec des images Ubuntu, Debian, et AlmaLinux.
+3. **Configuré l'accès SSH** pour permettre à Ansible de gérer chaque conteneur.
+4. **Écrit et exécuté un playbook Ansible** pour installer et configurer Apache sur chaque conteneur.
+5. **Vérifié l'installation d'Apache** en accédant aux serveurs web à partir de leur adresse IP.
+
+Cette configuration vous permet d'utiliser Ansible pour automatiser la gestion de plusieurs types de conteneurs et d'y exécuter des services web.
+
+
