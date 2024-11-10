@@ -1,19 +1,39 @@
-# 🎓 Chapitre 3 : Pratique avancée avec les playbooks Ansible
+# 🎓 Chapitre 3 : Pratique Avancée avec les Playbooks Ansible
 
-### Introduction
-
-Dans cette pratique, vous allez apprendre à automatiser des tâches sur vos conteneurs Docker en utilisant **Ansible** avec des playbooks. Nous allons commencer par des tâches simples avant de passer à des opérations plus avancées. Assurez-vous d’avoir bien configuré Docker, Docker-Compose et Ansible avant de débuter.
+Dans ce chapitre, nous allons approfondir notre utilisation d'Ansible en écrivant des playbooks plus complexes, en réutilisant des tâches, et en utilisant des fonctionnalités avancées comme les tags pour l'exécution sélective. Nous nous assurerons également que toutes les configurations sont correctes et que les playbooks fonctionnent sans erreur.
 
 ---
 
-## 📂 Étape Préparatoire : Créer un dossier de travail pour ce projet
+## 📋 Table des Matières
+
+1. [Introduction](#introduction)
+2. [Étape Préparatoire : Créer un Dossier de Travail](#etape-preparatoire)
+3. [Configurer l'Inventaire Ansible](#configurer-inventaire)
+4. [Vérifier l'Inventaire et la Connectivité](#verifier-inventaire)
+5. [Partie 1 : Créer et Exécuter votre Premier Playbook](#partie1)
+6. [Partie 2 : Créer un Playbook Multi-Tâches](#partie2)
+7. [Partie 3 : Réutiliser des Tâches via l'Importation](#partie3)
+8. [Partie 4 : Utiliser les Tags pour l'Exécution Sélective](#partie4)
+9. [Conclusion](#conclusion)
+
+---
+
+<a name="introduction"></a>
+## 📝 Introduction
+
+Dans cette pratique, vous allez apprendre à automatiser des tâches sur vos conteneurs Docker en utilisant **Ansible** avec des playbooks. Nous commencerons par des tâches simples avant de passer à des opérations plus avancées. Assurez-vous d’avoir bien configuré Docker, Docker Compose et Ansible avant de débuter.
+
+---
+
+<a name="etape-preparatoire"></a>
+## 📂 Étape Préparatoire : Créer un Dossier de Travail
 
 1. **Créer un dossier pour le projet Ansible** :
-   
+
    ```bash
    mkdir ansible_project
    ```
-   
+
    Cela crée un dossier nommé `ansible_project` dans votre répertoire actuel. Ce dossier servira de conteneur pour tous vos fichiers et playbooks Ansible.
 
 2. **Naviguer dans le dossier nouvellement créé** :
@@ -21,26 +41,21 @@ Dans cette pratique, vous allez apprendre à automatiser des tâches sur vos con
    ```bash
    cd ansible_project
    ```
-   
-   Cette commande vous place dans le dossier `ansible_project` où vous allez effectuer toutes les prochaines étapes.
 
 ---
 
-## 🗂️ Étape Préparatoire : Configurer l'inventaire
+<a name="configurer-inventaire"></a>
+## 🗂️ Configurer l'Inventaire Ansible
 
-L'inventaire Ansible est un fichier essentiel pour définir les nœuds gérés par Ansible. Il est utilisé pour spécifier les adresses IP et d'autres détails des machines distantes. 
+L'inventaire Ansible est un fichier essentiel pour définir les hôtes gérés par Ansible. Il spécifie les adresses IP, les utilisateurs, et peut organiser les hôtes en groupes.
 
 1. **Créer un fichier `inventory.ini`** :
-   
+
    ```bash
    nano inventory.ini
    ```
-   
-   Cette commande ouvre un éditeur de texte dans le terminal, où vous pourrez ajouter les informations de chaque nœud.
 
 2. **Ajouter les informations des nœuds dans `inventory.ini`** :
-
-   Copiez et collez le texte suivant dans `inventory.ini` :
 
    ```ini
    [node_containers]
@@ -62,21 +77,24 @@ L'inventaire Ansible est un fichier essentiel pour définir les nœuds gérés p
    [mail]
    node4
    node6
-
-   [ungrouped]
-   node3
    ```
 
    **Explications** :
+
    - **[node_containers]** : Groupe principal contenant tous les conteneurs.
    - `ansible_host` : Spécifie l'adresse IP de chaque nœud.
    - `ansible_user` : Définit l’utilisateur pour l’accès SSH, ici `root` pour tous les nœuds.
-   - **[web]**, **[database]**, **[mail]**, **[ungrouped]** : Groupes permettant de structurer les nœuds selon leur fonction.
+   - **[web]**, **[database]**, **[mail]** : Groupes permettant de structurer les nœuds selon leur fonction.
 
 3. **Enregistrer et quitter l'éditeur** :
    - Appuyez sur `Ctrl + X`, puis `Y` et `Entrée`.
 
-### 🌐 Vérification de l’inventaire et test de la connectivité
+---
+
+<a name="verifier-inventaire"></a>
+## 🌐 Vérifier l'Inventaire et la Connectivité
+
+Avant d'exécuter des playbooks, il est important de vérifier que l'inventaire est correctement configuré et que la connectivité SSH est opérationnelle.
 
 1. **Lister les hôtes d'un groupe spécifique** :
 
@@ -84,7 +102,7 @@ L'inventaire Ansible est un fichier essentiel pour définir les nœuds gérés p
    ansible web -i inventory.ini --list-hosts
    ```
 
-2. **Lister tous les hôtes dans l’inventaire** :
+2. **Lister tous les hôtes dans l'inventaire** :
 
    ```bash
    ansible all -i inventory.ini --list-hosts
@@ -108,25 +126,30 @@ L'inventaire Ansible est un fichier essentiel pour définir les nœuds gérés p
    ansible node1 -m command -a "date" -i inventory.ini
    ```
 
-Ces commandes permettent de vérifier que l'inventaire est configuré et que tous les nœuds sont accessibles pour l'exécution des playbooks.
+**Note :** Si vous rencontrez des avertissements concernant l'interpréteur Python, vous pouvez spécifier l'interpréteur Python dans l'inventaire pour chaque hôte :
+
+```ini
+node1 ansible_host=172.20.0.2 ansible_user=root ansible_python_interpreter=/usr/bin/python3
+```
 
 ---
 
-## Partie 1 : Créer et exécuter votre premier playbook
+<a name="partie1"></a>
+## 📝 Partie 1 : Créer et Exécuter votre Premier Playbook
 
-### 📝 Étape 1 : Écrire un playbook de base pour la création de fichiers
+### Étape 1 : Écrire un Playbook de Base pour la Création de Fichiers
 
 1. **Créer un fichier nommé `first-playbook.yml`** :
-   
+
    ```bash
    nano first-playbook.yml
    ```
-   
+
 2. **Ajouter le contenu suivant** :
 
    ```yaml
    ---
-   - name: Premier Playbook de création de fichier
+   - name: Premier Playbook de Création de Fichier
      hosts: all
      become: yes
      tasks:
@@ -139,14 +162,16 @@ Ces commandes permettent de vérifier que l'inventaire est configuré et que tou
    ```
 
    **Explications** :
-   - `hosts: all` : S'exécute sur tous les hôtes.
-   - `become: yes` : Permet l'exécution avec des privilèges root.
-   - **tasks** : Liste de tâches. Ici, la tâche crée un fichier `/tmp/foo.conf` avec les permissions `0664` et l’utilisateur `root`.
+
+   - `hosts: all` : Le playbook s'exécute sur tous les hôtes définis dans l'inventaire.
+   - `become: yes` : Exécute les tâches avec les privilèges élevés (root).
+   - **tasks** : Liste des tâches à exécuter.
+   - Le module `file` est utilisé pour gérer les fichiers et répertoires.
 
 3. **Enregistrer et quitter l'éditeur** :
    - Appuyez sur `Ctrl + X`, puis `Y` et `Entrée`.
 
-### 🏃‍♂️ Exécution du playbook
+### Étape 2 : Exécuter le Playbook
 
 1. **Lancer le playbook** :
 
@@ -162,12 +187,13 @@ Ces commandes permettent de vérifier que l'inventaire est configuré et que tou
 
 ---
 
-## Partie 2 : Créer un playbook multi-tâches
+<a name="partie2"></a>
+## 📝 Partie 2 : Créer un Playbook Multi-Tâches
 
-### 📝 Étape 1 : Écrire un playbook avec plusieurs tâches
+### Étape 1 : Écrire un Playbook avec Plusieurs Tâches
 
 1. **Créer un fichier nommé `multi-tasks-playbook.yml`** :
-   
+
    ```bash
    nano multi-tasks-playbook.yml
    ```
@@ -176,7 +202,7 @@ Ces commandes permettent de vérifier que l'inventaire est configuré et que tou
 
    ```yaml
    ---
-   - name: Installation et archivage des logs
+   - name: Installation et Archivage des Logs
      hosts: all
      become: yes
      tasks:
@@ -184,26 +210,43 @@ Ces commandes permettent de vérifier que l'inventaire est configuré et que tou
          package:
            name: tmux
            state: present
+         tags: install_tmux
 
        - name: Créer une archive des logs système
          archive:
            path: /var/log
            dest: /tmp/logs.tar.gz
            format: gz
+           excludes:
+             - '/var/log/wtmp'
+             - '/var/log/btmp'
+         tags: archive_logs
 
    - name: Installation de Git sur les nœuds Ubuntu
      hosts: node1,node5,node6
      become: yes
      tasks:
+       - name: Mettre à jour le cache APT
+         apt:
+           update_cache: yes
+         tags: update_cache
+
        - name: Installer Git
          apt:
            name: git
            state: present
+         tags: install_git
    ```
+
+   **Explications** :
+
+   - Les tags ont été ajoutés pour permettre une exécution sélective des tâches.
+   - L'exclusion de certains fichiers lors de l'archivage des logs pour éviter d'inclure des fichiers sensibles ou volumineux.
+   - Mise à jour du cache APT avant l'installation de Git sur les nœuds Ubuntu.
 
 3. **Enregistrer et quitter l'éditeur**.
 
-### 🏃‍♂️ Exécution du playbook multi-tâches
+### Étape 2 : Exécuter le Playbook Multi-Tâches
 
 1. **Lancer le playbook** :
 
@@ -214,14 +257,27 @@ Ces commandes permettent de vérifier que l'inventaire est configuré et que tou
 2. **Vérifier que l’archive a bien été créée** :
 
    ```bash
-   ansible all -m command -a "file -s /tmp/logs.tar.gz" -i inventory.ini
+   ansible all -m command -a "ls -lh /tmp/logs.tar.gz" -i inventory.ini
+   ```
+
+3. **Vérifier que `tmux` est installé** :
+
+   ```bash
+   ansible all -m shell -a "tmux -V" -i inventory.ini
+   ```
+
+4. **Vérifier que `git` est installé sur les nœuds Ubuntu** :
+
+   ```bash
+   ansible node1,node5,node6 -m shell -a "git --version" -i inventory.ini
    ```
 
 ---
 
-## Partie 3 : Réutiliser des tâches via l’importation
+<a name="partie3"></a>
+## 📝 Partie 3 : Réutiliser des Tâches via l'Importation
 
-### 📝 Étape 1 : Créer un fichier de tâches réutilisables
+### Étape 1 : Créer un Fichier de Tâches Réutilisables
 
 1. **Créer un fichier nommé `group-tasks.yml`** :
 
@@ -233,11 +289,11 @@ Ces commandes permettent de vérifier que l'inventaire est configuré et que tou
 
    ```yaml
    ---
-   - name: Créer le groupe developpeurs
+   - name: Créer le groupe développeurs
      group:
        name: developpeurs
 
-   - name: Créer le groupe securite
+   - name: Créer le groupe sécurité
      group:
        name: securite
 
@@ -248,13 +304,13 @@ Ces commandes permettent de vérifier que l'inventaire est configuré et que tou
 
 3. **Enregistrer et quitter l'éditeur**.
 
-### 📝 Étape 2 : Importer les tâches dans un playbook principal
+### Étape 2 : Importer les Tâches dans un Playbook Principal
 
 1. **Modifier `first-playbook.yml` pour inclure `group-tasks.yml`** :
 
    ```yaml
    ---
-   - name: Premier Playbook de création de fichier et de groupes
+   - name: Premier Playbook de Création de Fichier et de Groupes
      hosts: all
      become: yes
      tasks:
@@ -265,7 +321,7 @@ Ces commandes permettent de vérifier que l'inventaire est configuré et que tou
            owner: root
            state: touch
 
-       - name: Créer des groupes utilisateurs
+       - name: Importer les tâches pour créer des groupes
          import_tasks: group-tasks.yml
    ```
 
@@ -275,11 +331,20 @@ Ces commandes permettent de vérifier que l'inventaire est configuré et que tou
    ansible-playbook -i inventory.ini first-playbook.yml
    ```
 
+3. **Vérifier que les groupes ont été créés** :
+
+   ```bash
+   ansible all -m command -a "getent group developpeurs securite finance" -i inventory.ini
+   ```
+
 ---
 
-## Partie 4 : Utiliser les tags pour l’exécution sélective
+<a name="partie4"></a>
+## 📝 Partie 4 : Utiliser les Tags pour l'Exécution Sélective
 
-1. **Taguer les tâches dans `multi-tasks-playbook.yml`** :
+Les tags permettent de cibler des tâches spécifiques lors de l'exécution d'un playbook.
+
+1. **Taguer les tâches dans `multi-tasks-playbook.yml`** (si ce n'est pas déjà fait) :
 
    ```yaml
    - name: Installer tmux sur tous les nœuds
@@ -289,16 +354,28 @@ Ces commandes permettent de vérifier que l'inventaire est configuré et que tou
      tags: install_tmux
 
    - name: Créer une archive des logs système
-
-
      archive:
        path: /var/log
        dest: /tmp/logs.tar.gz
        format: gz
+       excludes:
+         - '/var/log/wtmp'
+         - '/var/log/btmp'
      tags: archive_logs
+
+   - name: Mettre à jour le cache APT
+     apt:
+       update_cache: yes
+     tags: update_cache
+
+   - name: Installer Git
+     apt:
+       name: git
+       state: present
+     tags: install_git
    ```
 
-2. **Exécuter des tâches spécifiques par tag** :
+2. **Exécuter des Tâches Spécifiques par Tag** :
 
    - Pour installer uniquement `tmux` :
 
@@ -311,4 +388,54 @@ Ces commandes permettent de vérifier que l'inventaire est configuré et que tou
      ```bash
      ansible-playbook -i inventory.ini multi-tasks-playbook.yml --tags archive_logs
      ```
+
+   - Pour installer uniquement `git` sur les nœuds Ubuntu :
+
+     ```bash
+     ansible-playbook -i inventory.ini multi-tasks-playbook.yml --tags install_git
+     ```
+
+   - Pour exécuter toutes les tâches sauf celles d'un tag spécifique :
+
+     ```bash
+     ansible-playbook -i inventory.ini multi-tasks-playbook.yml --skip-tags install_tmux
+     ```
+
+---
+
+<a name="conclusion"></a>
+## 🎯 Conclusion
+
+Dans ce chapitre, vous avez appris à :
+
+- Écrire des playbooks Ansible avec des tâches simples et multiples.
+- Utiliser des modules Ansible appropriés pour gérer les paquets, les fichiers, et les archives.
+- Réutiliser des tâches via l'importation de fichiers de tâches.
+- Utiliser les tags pour exécuter sélectivement des parties de vos playbooks.
+
+Ces pratiques vous permettront d'automatiser efficacement la gestion de vos conteneurs Docker et de vos serveurs, tout en maintenant vos playbooks organisés et maintenables.
+
+---
+
+## 🛠️ Conseils Supplémentaires
+
+- **Utiliser les Rôles Ansible** : Pour des projets plus complexes, envisagez d'utiliser des rôles pour organiser vos playbooks et vos tâches.
+- **Variables et Templates** : Utilisez des variables pour rendre vos playbooks plus flexibles, et des templates Jinja2 pour générer des fichiers de configuration dynamiques.
+- **Gestion des Différences de Plateforme** : Utilisez des conditions `when` pour gérer les différences entre les systèmes d'exploitation.
+- **Vérification des Erreurs** : Toujours vérifier les messages d'erreur lors de l'exécution des playbooks pour corriger les problèmes potentiels.
+
+---
+
+## 📚 Ressources Utiles
+
+- [Documentation Ansible - Playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html)
+- [Ansible Best Practices](https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html)
+- [Ansible Module Index](https://docs.ansible.com/ansible/latest/collections/index_module.html)
+- [Ansible Tags](https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html)
+
+---
+
+## 🙌 Félicitations !
+
+Vous avez amélioré vos compétences en écriture de playbooks Ansible avancés, en réutilisant des tâches, et en utilisant des fonctionnalités puissantes comme les tags. Continuez à pratiquer et à explorer les fonctionnalités d'Ansible pour automatiser efficacement vos tâches d'administration système.
 
