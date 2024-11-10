@@ -198,6 +198,13 @@ Supprimez les anciennes entrées d'hôtes connus pour éviter les conflits :
 
 ```bash
 rm -f ~/.ssh/known_hosts
+ssh-keygen -R 172.20.0.2
+ssh-keygen -R 172.20.0.3
+ssh-keygen -R 172.20.0.4
+ssh-keygen -R 172.20.0.5
+ssh-keygen -R 172.20.0.6
+ssh-keygen -R 172.20.0.7
+
 ```
 
 Ensuite, vérifiez la connexion SSH :
