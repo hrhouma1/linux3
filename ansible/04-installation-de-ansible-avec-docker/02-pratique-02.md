@@ -353,6 +353,8 @@ ansible mail -m yum -a "name=procps-ng state=present" -i inventory.ini
 
 ```bash
 ansible mail -m command -a "uptime" -i inventory.ini
+ansible node4 -m command -a "uptime" -i inventory.ini
+ansible node6 -m command -a "uptime" -i inventory.ini
 ```
 
 ### 7.3. Vérifier l'Utilisation du Disque sur le Groupe `database`
