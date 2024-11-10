@@ -220,3 +220,62 @@ Accédez à `http://<IP_du_conteneur>` dans votre navigateur. Vous devriez voir 
 - rm ~/.ssh/known_hosts
 - sudo rm /var/root/.ssh/known_hosts
 - ssh-keygen -R [hostname]
+
+
+
+# Annexe 2 - Créer un Fichier d'inventaire `inventory.ini`
+
+Créer et configurer le fichier `inventory.ini` pour Ansible avec le contenu suivant :
+
+```ini
+[node_containers]
+node1 ansible_host=172.20.0.2 ansible_user=root
+node2 ansible_host=172.20.0.3 ansible_user=root
+
+[web]
+node1
+
+[mail]
+node2
+```
+
+### Commandes pour vérifier la configuration et exécuter des actions sur les nœuds :
+
+1. **Lister les hôtes dans le groupe `web` :**
+   ```bash
+   ansible web -i inventory.ini --list-hosts
+   ```
+
+2. **Lister les hôtes dans le groupe `mail` :**
+   ```bash
+   ansible mail -i inventory.ini --list-hosts
+   ```
+
+3. **Lister tous les hôtes :**
+   ```bash
+   ansible all -i inventory.ini --list-hosts
+   ```
+
+4. **Lister les hôtes spécifiques :**
+
+   - Pour `node1` :
+     ```bash
+     ansible node1 -i inventory.ini --list-hosts
+     ```
+
+   - Pour `node2` :
+     ```bash
+     ansible node2 -i inventory.ini --list-hosts
+     ```
+
+5. **Exécuter une commande sur `node1` pour afficher la date :**
+
+   - Utilisant l'inventaire par défaut (`inventory`) :
+     ```bash
+     ansible node1 -m command -a "date" -i inventory
+     ```
+
+   - Utilisant l'inventaire `inventory.ini` :
+     ```bash
+     ansible node1 -m command -a "date" -i inventory.ini
+     ```
