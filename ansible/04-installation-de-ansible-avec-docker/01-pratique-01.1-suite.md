@@ -1,6 +1,8 @@
-# 🖥️ Déployer une Infrastructure Docker avec Ansible 
+# 🖥️ Déployer une Infrastructure Docker avec Ansible - pratique 01
 
-Ce tutoriel vous guidera à travers la configuration d'un environnement Docker contenant plusieurs conteneurs de différentes distributions Linux (Ubuntu, Debian, AlmaLinux) et l'utilisation d'Ansible pour automatiser l'installation et la configuration d'Apache sur ces conteneurs. 
+---
+
+- Ce tutoriel vous guidera à travers la configuration d'un environnement Docker contenant plusieurs conteneurs de différentes distributions Linux (Ubuntu, Debian, AlmaLinux) et l'utilisation d'Ansible pour automatiser l'installation et la configuration d'Apache sur ces conteneurs. 
 ---
 
 ## 📋 Table des Matières
