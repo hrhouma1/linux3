@@ -285,3 +285,173 @@ node2
 - rm ~/.ssh/known_hosts
 - sudo rm /var/root/.ssh/known_hosts
 - ssh-keygen -R [hostname]
+
+# Annexe 2 - exercice - trouvez l'équivalent du fichier playbook en ligne de commande (comparez les deux)
+
+
+
+- *Pour installer et configurer Apache avec ces étapes en lignes de commande Linux, voici les commandes correspondantes :*
+
+```bash
+# Mettre à jour le gestionnaire de paquets APT
+sudo apt update
+
+# Installer Apache2
+sudo apt install -y apache2
+
+# Démarrer et activer le service Apache pour qu'il démarre au démarrage du système
+sudo systemctl start apache2
+sudo systemctl enable apache2
+
+# Créer un fichier index.html avec le contenu HTML de bienvenue
+echo "<h1>Bienvenue sur votre serveur web dans un conteneur Docker !</h1>" | sudo tee /var/www/html/index.html
+```
+
+Ces commandes réalisent les mêmes actions que les tâches dans le playbook Ansible.
+
+
+------
+## Explication du playbook
+
+Voici le playbook Ansible correspondant aux étapes décrites pour installer et configurer Apache dans des conteneurs Docker :
+
+```yaml
+- name: Configure Apache on Docker Containers
+  hosts: node_containers
+  become: yes
+  tasks:
+    - name: Update APT package manager
+      apt:
+        update_cache: yes
+
+    - name: Install Apache2
+      apt:
+        name: apache2
+        state: present
+
+    - name: Start Apache Service
+      service:
+        name: apache2
+        state: started
+        enabled: true
+
+    - name: Create index.html
+      copy:
+        content: "<h1>Bienvenue sur votre serveur web dans un conteneur Docker !</h1>"
+        dest: /var/www/html/index.html
+```
+
+### Explication de chaque section du playbook
+
+#### 1. Déclaration du playbook
+```yaml
+- name: Configure Apache on Docker Containers
+  hosts: node_containers
+  become: yes
+```
+
+- **name** : Donne un titre au playbook, ici "Configure Apache on Docker Containers".
+- **hosts** : Spécifie le groupe d'hôtes où le playbook sera exécuté, ici `node_containers`, ce qui implique qu'Ansible va exécuter les commandes sur tous les conteneurs Docker définis dans ce groupe d'hôtes de votre inventaire.
+- **become** : Définit les privilèges d'administrateur (sudo) pour exécuter les tâches, ici avec `yes`.
+
+#### 2. Mise à jour du gestionnaire de paquets APT
+```yaml
+- name: Update APT package manager
+  apt:
+    update_cache: yes
+```
+
+- **name** : Donne un nom à la tâche, ici "Update APT package manager".
+- **apt** : Ce module Ansible gère les paquets sur les systèmes basés sur Debian. `update_cache: yes` force la mise à jour de la liste des paquets, équivalent à la commande `sudo apt update` en ligne de commande.
+
+#### 3. Installation d'Apache2
+```yaml
+- name: Install Apache2
+  apt:
+    name: apache2
+    state: present
+```
+
+- **name** : Nom de la tâche, ici "Install Apache2".
+- **apt** : Le module installe le paquet `apache2` avec `name: apache2`, et `state: present` signifie que le paquet doit être installé (si déjà présent, il ne sera pas réinstallé).
+
+#### 4. Démarrage et activation du service Apache
+```yaml
+- name: Start Apache Service
+  service:
+    name: apache2
+    state: started
+    enabled: true
+```
+
+- **name** : Nom de la tâche, "Start Apache Service".
+- **service** : Module pour gérer les services. Ici, `name: apache2` cible le service Apache, `state: started` signifie qu'il doit être actif, et `enabled: true` s'assure qu'il sera démarré automatiquement au démarrage de la machine (équivalent à `sudo systemctl enable apache2`).
+
+#### 5. Création d'un fichier `index.html` personnalisé
+```yaml
+- name: Create index.html
+  copy:
+    content: "<h1>Bienvenue sur votre serveur web dans un conteneur Docker !</h1>"
+    dest: /var/www/html/index.html
+```
+
+- **name** : Nom de la tâche, ici "Create index.html".
+- **copy** : Module qui copie un contenu ou un fichier. `content` contient le HTML que nous voulons afficher sur la page d'accueil du serveur Apache, et `dest` indique l’emplacement cible, `/var/www/html/index.html`, où ce contenu sera écrit (remplaçant tout fichier existant du même nom).
+
+### Résumé
+Ce playbook configure un serveur Apache dans des conteneurs Docker en quatre étapes simples : mise à jour du gestionnaire de paquets, installation d'Apache, démarrage et activation du service, et création d'une page d'accueil.
+
+
+
+# Annexe 3 - commande tee vs >> 
+
+## 3.1
+La commande `tee` en Linux est utilisée pour lire l'entrée standard (souvent un texte que vous fournissez) et écrire ce contenu à la fois dans un fichier (ou plusieurs) et vers la sortie standard (habituellement affichée dans le terminal). Dans cet exemple, elle est utilisée pour :
+
+1. Écrire le contenu HTML dans le fichier `/var/www/html/index.html`.
+2. Afficher ce contenu dans le terminal en même temps.
+
+La syntaxe exacte dans cet exemple est :
+
+```bash
+echo "<h1>Bienvenue sur votre serveur web dans un conteneur Docker !</h1>" | sudo tee /var/www/html/index.html
+```
+
+Cela permet d'envoyer le texte fourni par `echo` au fichier spécifié avec `tee` sans perdre le texte de vue dans le terminal.
+
+## 3.2
+
+Voici la différence entre `>>` et `tee` en Linux :
+
+### 1. `>>` (Redirection vers un fichier en mode ajout)
+La redirection `>>` est utilisée pour ajouter du contenu à un fichier. Elle ne produit aucune sortie à l'écran et ne nécessite pas de droits superutilisateur (sauf si vous écrivez dans un fichier système avec `sudo`). Exemple :
+
+```bash
+echo "Texte supplémentaire" >> /chemin/vers/fichier
+```
+
+- **Fonctionnement** : Le texte est ajouté à la fin du fichier sans être affiché dans le terminal.
+- **Limite** : `>>` ne permet pas d'écrire simultanément dans un fichier et de voir le contenu dans le terminal.
+
+### 2. `tee`
+`tee` reçoit une entrée (pouvant être une chaîne de texte ou une sortie de commande) et écrit cette entrée à la fois dans le fichier spécifié et sur l’écran.
+
+Exemple avec `tee` :
+
+```bash
+echo "Texte supplémentaire" | tee -a /chemin/vers/fichier
+```
+
+- **Fonctionnement** : Le texte est affiché dans le terminal et ajouté au fichier (grâce à l’option `-a`, qui ajoute le texte au lieu d’écraser le fichier).
+- **Limite** : Nécessite `sudo tee` pour écrire dans des fichiers protégés (contrairement à `sudo echo` avec `>>`).
+
+### Comparaison Résumée
+
+| Fonction | `>>` (Append) | `tee` |
+|----------|---------------|-------|
+| Écrire dans un fichier uniquement | ✅ | ❌ (écrit et affiche) |
+| Ajouter au fichier (append) | ✅ | ✅ (avec `-a`) |
+| Afficher dans le terminal | ❌ | ✅ |
+| Peut nécessiter `sudo` pour fichiers protégés | ❌ (direct `sudo`) | ✅ (ex: `echo ... | sudo tee`) |
+
+`tee` est donc plus flexible quand on souhaite écrire dans des fichiers tout en visualisant l’écriture en direct.
