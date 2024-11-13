@@ -187,32 +187,36 @@ node1 ansible_host=172.20.0.2 ansible_user=root ansible_python_interpreter=/usr/
 
 ---
 
+
+
+
+
 <a name="partie2"></a>
-## 📝 Partie 2 : Créer un Playbook Multi-Tâches
+## 📝 Partie 2 : Créer un Playbook Multi-Tâches 🚀
 
-### Étape 1 : Écrire un Playbook avec Plusieurs Tâches
+### 🔥 Étape 1 : Écrire un Playbook avec Plusieurs Tâches
 
-1. **Créer un fichier nommé `multi-tasks-playbook.yml`** :
+👷 **1. Créer un fichier nommé `multi-tasks-playbook.yml` :**
 
    ```bash
    nano multi-tasks-playbook.yml
    ```
 
-2. **Ajouter le contenu suivant** :
+📝 **2. Ajouter le contenu suivant** :
 
    ```yaml
    ---
-   - name: Installation et Archivage des Logs
+   - name: 🚒 Installation et Archivage des Logs
      hosts: all
      become: yes
      tasks:
-       - name: Installer tmux sur tous les nœuds
+       - name: 🔧 Installer tmux sur tous les nœuds
          package:
            name: tmux
            state: present
          tags: install_tmux
 
-       - name: Créer une archive des logs système
+       - name: 📦 Créer une archive des logs système
          archive:
            path: /var/log
            dest: /tmp/logs.tar.gz
@@ -222,27 +226,84 @@ node1 ansible_host=172.20.0.2 ansible_user=root ansible_python_interpreter=/usr/
              - '/var/log/btmp'
          tags: archive_logs
 
-   - name: Installation de Git sur les nœuds Ubuntu
+   - name: 🔧 Installation de Git sur les nœuds Ubuntu
      hosts: node1,node5,node6
      become: yes
      tasks:
-       - name: Mettre à jour le cache APT
+       - name: 🔄 Mettre à jour le cache APT
          apt:
            update_cache: yes
          tags: update_cache
 
-       - name: Installer Git
+       - name: 📥 Installer Git
          apt:
            name: git
            state: present
          tags: install_git
    ```
 
-   **Explications** :
+💡 **Explications** :
 
-   - Les tags ont été ajoutés pour permettre une exécution sélective des tâches.
-   - L'exclusion de certains fichiers lors de l'archivage des logs pour éviter d'inclure des fichiers sensibles ou volumineux.
-   - Mise à jour du cache APT avant l'installation de Git sur les nœuds Ubuntu.
+   - ✅ Des tags ont été ajoutés pour permettre une exécution sélective des tâches.
+   - 📂 Exclusion de certains fichiers lors de l'archivage des logs pour éviter d'inclure des fichiers sensibles ou volumineux.
+   - 🔄 Mise à jour du cache APT avant l'installation de Git sur les nœuds Ubuntu.
+
+---
+
+### 😱 **Oups !!!** 🔥 **Erreur repérée ! On a besoin d'un pompier ici !** 👨‍🚒👩‍🚒
+
+---
+
+**Défi :** Trouvez l'erreur pour nous aider à maîtriser le feu dans ce Playbook ! 🔍
+
+---
+
+# 🏆 Solution (ne regardez pas si vous voulez relever le défi !)
+
+ ```yaml
+---
+- name: 🚒 Installation et Archivage des Logs
+  hosts: all
+  become: yes
+  tasks:
+    - name: 🔧 Installer tmux sur tous les nœuds
+      package:
+        name: tmux
+        state: present
+      tags: install_tmux
+
+    - name: 📦 Créer une archive des logs système
+      archive:
+        path: /var/log
+        dest: /tmp/logs.tar.gz
+        format: gz
+        exclusion_patterns:
+          - '/var/log/wtmp'
+          - '/var/log/btmp'
+      tags: archive_logs
+
+- name: 🔧 Installation de Git sur les nœuds Ubuntu
+  hosts: node1,node5,node6
+  become: yes
+  tasks:
+    - name: 🔄 Mettre à jour le cache APT
+      apt:
+        update_cache: yes
+      tags: update_cache
+
+    - name: 📥 Installer Git
+      apt:
+        name: git
+        state: present
+      tags: install_git
+ ```
+
+🎉 **Bravo !** Vous avez trouvé l'erreur : il fallait remplacer `excludes` par `exclusion_patterns` pour que tout fonctionne correctement ! 🚒 Notre premier pompier du jour est **Imane** ! 👏🏅
+
+
+
+
+
 
 3. **Enregistrer et quitter l'éditeur**.
 
