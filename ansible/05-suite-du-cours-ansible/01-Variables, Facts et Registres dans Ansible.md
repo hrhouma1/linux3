@@ -1,6 +1,6 @@
 # Chapitre 4 : Variables, Facts et Registres dans Ansible
 
-Ce chapitre explore en détail l'utilisation des **variables**, des **facts** et des **registres** dans Ansible. Voici une traduction complète et détaillée.
+Ce chapitre explore en détail l'utilisation des **variables**, des **facts** et des **registres** dans Ansible. 
 
 
 # Introduction
