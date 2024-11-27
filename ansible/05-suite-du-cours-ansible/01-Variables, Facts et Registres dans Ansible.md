@@ -780,3 +780,95 @@ ok: [node1] => {
 4. Ils sont accessibles via `ansible_local.<section>.<key>`.
 
 En suivant ces étapes, vous pouvez personnaliser vos configurations Ansible en fonction de vos besoins spécifiques !
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Diagramme pour représenter **la création et l'utilisation des facts personnalisés dans Ansible**.
+
+```plaintext
++------------------------------------------------+
+|          Machine de contrôle (Ansible)         |
++------------------------------------------------+
+|                                                |
+| 1. Créer un fichier custom.fact                |
+|                                                |
+| echo -e "[custom]\ncolor=blue\nmovie=Inception"|
+| > custom.fact                                  |
+|                                                |
+| (Fichier contient les facts personnalisés)     |
++------------------------------------------------+
+           |                               |
+           | 2. Playbook pour copier       | 3. Commande pour déployer
+           | custom.fact sur les hôtes     | le fichier sur les hôtes
+           |                               |
+           V                               V
++------------------------------------------------+
+|              Hôtes gérés (node1, ...)          |
++------------------------------------------------+
+|                                                |
+| 4. /etc/ansible/facts.d/                       |
+|    └── custom.fact                             |
+|                                                |
+| Contenu :                                      |
+| [custom]                                       |
+| color=blue                                     |
+| movie=Inception                                |
+|                                                |
++------------------------------------------------+
+           |
+           | 5. Lecture des facts personnalisés
+           | dans un playbook ou une commande.
+           V
++------------------------------------------------+
+|          Exemple d'accès aux facts :           |
++------------------------------------------------+
+| - ansible_local.custom.color → "blue"          |
+| - ansible_local.custom.movie → "Inception"     |
+|                                                |
+| 6. Utilisation dans un Playbook :              |
+|                                                |
+| debug:                                         |
+|   msg: "Couleur : {{ ansible_local.custom.color }}" |
++------------------------------------------------+
+```
+
+---
+
+### **Explication étape par étape (correspond au diagramme)** :
+
+1. **Créer le fichier `custom.fact` :**
+   Le fichier est créé sur la **machine de contrôle** et contient vos données personnalisées, comme des préférences ou des configurations.
+
+2. **Déployer avec un Playbook :**
+   Le fichier `custom.fact` est copié sur les hôtes gérés dans `/etc/ansible/facts.d/` via un playbook. Cela automatise le processus.
+
+3. **Structure sur les Hôtes :**
+   Une fois copié, le fichier est disponible localement dans le répertoire `/etc/ansible/facts.d/` sur chaque hôte géré.
+
+4. **Accès aux Facts :**
+   Les données personnalisées sont accessibles via la clé `ansible_local` dans Ansible. Par exemple :
+   - `ansible_local.custom.color` retourne `blue`.
+   - `ansible_local.custom.movie` retourne `Inception`.
+
+5. **Utilisation dans un Playbook :**
+   Les facts personnalisés peuvent être utilisés dans des tâches, comme afficher des messages ou configurer des services.
+
+---
+
+### **Ce Diagramme Simplifie :**
+- Les étapes de création.
+- La copie automatisée sur les hôtes.
+- L’accès aux données dans les playbooks.
+
+Cela  permet de **visualiser clairement le flux de données entre la machine de contrôle et les hôtes gérés**.
