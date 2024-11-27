@@ -186,7 +186,7 @@ Exemple :
 
 ---
 
-### 2.5. Variables par hôte et groupe
+### 2.5. Variables par hôte et groupe (allez à l'annexe 01 svp )
 
 #### Variables spécifiques aux hôtes
 1. Créez un répertoire `host_vars`.
@@ -296,3 +296,339 @@ Les **registres** stockent la sortie des commandes ou tâches. Exemple :
       debug:
         msg: "Adresse IPv4 : {{ ansible_facts.default_ipv4.address }}"
 ```
+
+-----------------
+------------------
+# Annexe 01 - Variables par Hôte et par Groupe dans Ansible : Explication
+
+Lorsqu'on utilise Ansible, on travaille souvent avec plusieurs serveurs (appelés "hôtes"). Chaque serveur peut avoir des rôles différents ou des besoins spécifiques. Par exemple, un serveur peut être un **proxy**, un autre un **serveur web**, et un autre encore une **base de données**. Les **variables par hôte et par groupe** permettent de personnaliser ce que fait Ansible sur chaque serveur ou groupe de serveurs, sans réécrire plusieurs fois les mêmes commandes.
+
+---
+
+### **1. Variables Spécifiques aux Hôtes**
+
+Les variables par hôte permettent d’attribuer des paramètres spécifiques à **un seul serveur**. Par exemple, si vous avez un serveur proxy nommé `node1`, vous pouvez lui assigner un message spécial ou une configuration qui lui est propre.
+
+#### **Étapes :**
+1. **Créer un répertoire pour les variables des hôtes :**
+   Dans votre projet Ansible, créez un répertoire nommé `host_vars` :
+   ```bash
+   mkdir host_vars
+   ```
+
+2. **Créer un fichier pour chaque hôte :**
+   Dans ce répertoire, créez un fichier avec le **nom exact** du serveur (par exemple, `node1.yml` pour un serveur nommé `node1`).
+   ```bash
+   echo "message: Je suis un serveur proxy" > host_vars/node1.yml
+   ```
+
+3. **Contenu du fichier :**
+   - Le fichier `host_vars/node1.yml` contient des variables spécifiques à `node1`. Par exemple :
+     ```yaml
+     message: Je suis un serveur proxy
+     ```
+
+4. **Résultat attendu :**
+   Lorsque vous exécutez un playbook, Ansible utilise ces variables uniquement pour `node1`. Par exemple, un playbook qui affiche la variable `message` affichera :
+   ```text
+   Je suis un serveur proxy
+   ```
+
+---
+
+### **2. Variables Spécifiques aux Groupes**
+
+Les variables par groupe permettent de définir des paramètres communs à **un groupe de serveurs**. Par exemple, tous les serveurs web peuvent nécessiter l’installation de **nginx**, tandis que les serveurs de base de données peuvent avoir besoin de **mariadb**.
+
+#### **Étapes :**
+1. **Créer un répertoire pour les variables des groupes :**
+   Dans votre projet Ansible, créez un répertoire nommé `group_vars` :
+   ```bash
+   mkdir group_vars
+   ```
+
+2. **Créer un fichier pour chaque groupe :**
+   Dans ce répertoire, créez un fichier avec le **nom exact** du groupe (par exemple, `webservers.yml` pour un groupe nommé `webservers`).
+   ```bash
+   echo "pkg: nginx" > group_vars/webservers.yml
+   ```
+
+3. **Contenu du fichier :**
+   - Le fichier `group_vars/webservers.yml` contient des variables applicables à tous les serveurs du groupe `webservers`. Par exemple :
+     ```yaml
+     pkg: nginx
+     ```
+
+4. **Résultat attendu :**
+   Lorsque vous exécutez un playbook, Ansible utilise cette variable pour **tous les serveurs du groupe `webservers`**. Par exemple, un playbook qui installe le paquet défini dans `pkg` installera automatiquement `nginx` sur tous les serveurs du groupe `webservers`.
+
+---
+
+### **Différence Entre Variables par Hôte et par Groupe**
+
+| **Type**        | **Quand l’utiliser ?**                                                                                   | **Exemple**                           |
+|------------------|---------------------------------------------------------------------------------------------------------|---------------------------------------|
+| **Par hôte**     | Si une variable ne concerne qu’**un seul serveur**.                                                     | `node1.yml` avec `message: proxy`     |
+| **Par groupe**   | Si une variable est partagée par **plusieurs serveurs d’un même type** (comme "serveurs web").          | `webservers.yml` avec `pkg: nginx`   |
+
+---
+
+### **Exemple Complet :**
+
+Supposons que vous avez quatre serveurs :
+- `node1` : serveur proxy
+- `node2` et `node3` : serveurs web
+- `node4` : serveur de base de données
+
+#### Étape 1 : Créer les répertoires et fichiers
+
+1. **Variables par hôte :**
+   ```bash
+   mkdir host_vars
+   echo "message: Je suis un serveur proxy" > host_vars/node1.yml
+   echo "message: Je suis un serveur de base de données" > host_vars/node4.yml
+   ```
+
+2. **Variables par groupe :**
+   ```bash
+   mkdir group_vars
+   echo "pkg: nginx" > group_vars/webservers.yml
+   echo "pkg: mariadb-server" > group_vars/dbservers.yml
+   ```
+
+#### Étape 2 : Exemple de Playbook
+
+Voici un playbook qui utilise ces variables :
+```yaml
+---
+- name: Configurer les serveurs
+  hosts: all
+  tasks:
+    - name: Afficher le message spécifique à chaque hôte
+      debug:
+        msg: "{{ message }}"
+    - name: Installer le paquet défini par le groupe
+      yum:
+        name: "{{ pkg }}"
+        state: present
+```
+
+#### Étape 3 : Exécution
+
+Lors de l’exécution, Ansible :
+1. Affichera les messages définis par **host_vars** (`node1` dira qu’il est un proxy, `node4` dira qu’il est un serveur de base de données).
+2. Installera les paquets définis par **group_vars** :
+   - `nginx` pour les serveurs du groupe `webservers`.
+   - `mariadb-server` pour les serveurs du groupe `dbservers`.
+
+---
+
+### **Conclusion**
+
+- Les **variables par hôte** permettent de personnaliser des actions pour des serveurs spécifiques.
+- Les **variables par groupe** simplifient la gestion de plusieurs serveurs ayant les mêmes besoins.
+- En combinant ces deux approches, vous rendez vos playbooks flexibles et puissants.
+
+
+
+-----------------------
+-----------------------
+# Annexe 02 -  mot-clé et une variable
+
+
+
+### **Qu'est-ce qu'un mot-clé ?**
+Un **mot-clé** est un terme spécifique qu'Ansible reconnaît pour effectuer une action ou définir une structure dans un fichier YAML. Il est "réservé" par Ansible, ce qui signifie que vous ne pouvez pas l'utiliser comme une variable ou pour autre chose.
+
+#### **Exemples de mots-clés :**
+- `hosts` : spécifie sur quels serveurs le playbook sera exécuté.
+- `tasks` : liste les actions à effectuer.
+- `vars` : déclare des variables spécifiques dans un playbook.
+- `name` : donne un titre ou une description à une tâche ou un playbook.
+
+---
+
+### **Qu'est-ce qu'une variable ?**
+Une **variable** est un conteneur qui stocke une valeur (texte, nombre, liste, etc.) que vous pouvez réutiliser dans votre playbook ou vos templates. Contrairement aux mots-clés, les noms de variables sont définis par l'utilisateur.
+
+#### **Exemples de variables :**
+- `pkg: nginx` : `pkg` est une variable qui contient la valeur `nginx`.
+- `message: "Je suis un serveur proxy"` : `message` est une variable contenant un texte.
+
+---
+
+### **Différence entre Mots-clés et Variables**
+
+| **Élément**      | **Mot-clé**                          | **Variable**                              |
+|-------------------|--------------------------------------|-------------------------------------------|
+| **Définition**    | Terme réservé par Ansible.           | Valeur définie par l'utilisateur.         |
+| **Rôle**          | Structure ou action dans le playbook.| Conteneur pour stocker une valeur réutilisable. |
+| **Exemples**      | `hosts`, `tasks`, `vars`, `name`     | `pkg`, `message`, `webserver_message`     |
+| **Usage**         | Obligation de respecter leur syntaxe.| Peut être nommé selon les besoins, mais sans espace ni caractère spécial. |
+
+---
+
+### **Table ASCII pour les Exemples**
+
+Voici une vue simplifiée pour comprendre l'interaction entre les mots-clés et les variables dans un playbook :
+
+```plaintext
++-------------------+---------------------------+
+|     MOT-CLÉ       |         VALEUR            |
++-------------------+---------------------------+
+| hosts             | all                       |
+| tasks             | - name: Installer Nginx   |
+| vars              | pkg: nginx                |
+| debug (afficher)  | msg: "{{ message }}"      |
+| template (fichier)| src: index.j2             |
+| name              | Créer index.html          |
++-------------------+---------------------------+
+```
+
+---
+
+### **Exemple Concret :**
+
+```yaml
+---
+- name: Exemple avec mots-clés et variables
+  hosts: webservers        # MOT-CLÉ : sur quels hôtes appliquer
+  vars:                    # MOT-CLÉ : déclaration des variables
+    pkg: nginx             # VARIABLE : paquet à installer
+    message: "Serveur Web prêt !"  # VARIABLE : message personnalisé
+
+  tasks:                   # MOT-CLÉ : définir les actions
+    - name: Installer un paquet
+      yum:
+        name: "{{ pkg }}"  # Utilisation de la VARIABLE
+        state: present
+
+    - name: Afficher un message
+      debug:
+        msg: "{{ message }}"  # Utilisation de la VARIABLE
+```
+
+#### Explication des éléments :
+- **Mots-clés** :
+  - `hosts` : spécifie les hôtes (ici `webservers`).
+  - `vars` : annonce les variables utilisées dans le playbook.
+  - `tasks` : définit la liste des tâches à exécuter.
+- **Variables** :
+  - `pkg` : stocke la valeur `nginx`.
+  - `message` : stocke la valeur `"Serveur Web prêt !"`.
+
+---
+
+### **Récapitulatif :**
+
+| **Concept**       | **Définition**                           | **Exemple**                               |
+|--------------------|------------------------------------------|-------------------------------------------|
+| **Mot-clé**        | Élément structurant du playbook.         | `tasks`, `vars`, `name`, `hosts`.         |
+| **Variable**       | Contient une valeur réutilisable.        | `pkg: nginx`, `message: "Bonjour"`.       |
+
+Les **mots-clés** sont essentiels pour structurer le playbook, tandis que les **variables** permettent de le rendre flexible et dynamique.
+
+
+----------------------
+----------------------
+# Annexe 03 - glossaire simplifié et clair pour comprendre les variables par hôte et par groupe dans Ansible.
+
+```plaintext
++-------------------+-------------------------------+-------------------------------------------+
+| TYPE              | UTILISATION                  | EXEMPLE                                   |
++-------------------+-------------------------------+-------------------------------------------+
+| **Variables par** | **Définir des paramètres     | Spécifiques à un seul hôte (serveur).     |
+| **HÔTE**          | spécifiques à un serveur.    |                                           |
++-------------------+-------------------------------+-------------------------------------------+
+| Exemple :         | - Créez le répertoire        | mkdir host_vars                           |
+|                   | - Ajoutez un fichier :       | echo "message: Je suis un proxy" >        |
+|                   |                               | host_vars/node1.yml                       |
++-------------------+-------------------------------+-------------------------------------------+
+| Fichier           | Nom du fichier = Nom du hôte | host_vars/node1.yml                       |
+|                   | Contenu :                    | message: Je suis un proxy                |
++-------------------+-------------------------------+-------------------------------------------+
+| Résultat attendu  | Lors de l’exécution du       | Ansible affichera pour `node1` :          |
+|                   | playbook, seules les         | "Je suis un proxy"                        |
+|                   | variables de cet hôte        |                                           |
+|                   | seront utilisées.            |                                           |
++-------------------+-------------------------------+-------------------------------------------+
+| **Variables par** | **Définir des paramètres     | Partagées entre plusieurs serveurs (par   |
+| **GROUPE**        | communs à un groupe d’hôtes. | exemple : serveurs web, base de données). |
++-------------------+-------------------------------+-------------------------------------------+
+| Exemple :         | - Créez le répertoire        | mkdir group_vars                          |
+|                   | - Ajoutez un fichier :       | echo "pkg: nginx" >                       |
+|                   |                               | group_vars/webservers.yml                 |
++-------------------+-------------------------------+-------------------------------------------+
+| Fichier           | Nom du fichier = Nom du      | group_vars/webservers.yml                 |
+|                   | groupe (exemple : webservers)| Contenu : pkg: nginx                     |
++-------------------+-------------------------------+-------------------------------------------+
+| Résultat attendu  | Tous les serveurs du groupe  | Ansible installera `nginx` sur les        |
+|                   | utiliseront la même variable | serveurs du groupe `webservers`.          |
++-------------------+-------------------------------+-------------------------------------------+
+| **Différences**   | **Par Hôte**                 | **Par Groupe**                            |
++-------------------+-------------------------------+-------------------------------------------+
+| Utilisation       | Personnalisation spécifique  | Paramètres communs à plusieurs serveurs.  |
+| Exemple           | node1.yml avec :             | webservers.yml avec :                     |
+|                   | message: "Je suis un proxy"  | pkg: "nginx"                              |
++-------------------+-------------------------------+-------------------------------------------+
+| Application       | Affecte uniquement un hôte   | Affecte tous les serveurs du groupe.      |
++-------------------+-------------------------------+-------------------------------------------+
+```
+
+---
+
+### **Exemple d'Utilisation Complète**
+
+#### **1. Structure des Répertoires**
+```plaintext
+host_vars/
+  ├── node1.yml  (message: "Je suis un proxy")
+  ├── node4.yml  (message: "Je suis une base de données")
+group_vars/
+  ├── webservers.yml  (pkg: "nginx")
+  ├── dbservers.yml    (pkg: "mariadb-server")
+```
+
+#### **2. Playbook**
+```yaml
+---
+- name: Configurer les serveurs avec variables par hôte et groupe
+  hosts: all
+  tasks:
+    - name: Afficher le message spécifique à chaque hôte
+      debug:
+        msg: "{{ message }}"
+    - name: Installer le paquet défini par le groupe
+      yum:
+        name: "{{ pkg }}"
+        state: present
+```
+
+#### **3. Exécution**
+```bash
+ansible-playbook -i inventory.yml playbook.yml
+```
+
+#### **Résultat Attendu**
+1. **Pour `node1`** :
+   - Message : "Je suis un proxy"
+   - Paquet installé : Aucun (pas dans `webservers` ou `dbservers`).
+
+2. **Pour `node2` et `node3` (groupe `webservers`)** :
+   - Message : Aucun message (pas dans `host_vars`).
+   - Paquet installé : `nginx`.
+
+3. **Pour `node4` (groupe `dbservers`)** :
+   - Message : "Je suis une base de données".
+   - Paquet installé : `mariadb-server`.
+
+---
+
+### **Résumé**
+
+| **Concept**          | **Clé à Retenir**                                                        |
+|-----------------------|-------------------------------------------------------------------------|
+| Variables par HÔTE    | Personnalisation **unique** pour un serveur spécifique (fichier dédié). |
+| Variables par GROUPE  | Paramètres **partagés** entre plusieurs serveurs d’un même type.        |
+
+En combinant ces deux approches, vos playbooks deviennent plus puissants, flexibles et organisés.
