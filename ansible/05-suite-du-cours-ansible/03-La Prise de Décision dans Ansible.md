@@ -220,3 +220,63 @@ Dans ce chapitre, vous avez appris à :
 - Créez un playbook `lab6.yml` qui :
   1. Installe le paquet `nfs-utils` uniquement sur les serveurs CentOS.
   2. Utilise `when` pour conditionner l'installation.
+ 
+
+
+
+
+### **Solution de l'Exercice : Installer `nfs-utils` uniquement sur CentOS**
+
+Voici un playbook qui répond à l'exercice demandé.
+
+```yaml
+---
+- name: Installer nfs-utils uniquement sur CentOS
+  hosts: all
+  tasks:
+    - name: Installer le paquet nfs-utils
+      yum:
+        name: nfs-utils
+        state: present
+      when: ansible_facts['distribution'] == "CentOS"
+```
+
+### **Explications :**
+1. **Tâche unique :** Cette tâche utilise le module `yum` pour installer le paquet `nfs-utils`.
+2. **Condition `when` :** La condition `ansible_facts['distribution'] == "CentOS"` vérifie si le système d’exploitation de l’hôte est CentOS.
+3. **Hôtes ciblés :** Le playbook s'exécute sur tous les hôtes (`hosts: all`), mais la tâche ne s'exécute que sur ceux qui remplissent la condition.
+
+#### **Exécution :**
+Pour exécuter ce playbook :
+```bash
+ansible-playbook lab6.yml
+```
+
+---
+
+### **Résumé du Chapitre**
+
+Ce chapitre vous a enseigné les bases essentielles pour rendre vos playbooks Ansible plus intelligents et adaptables. Voici ce que vous avez appris :
+
+1. **Exécuter des tâches conditionnellement (`when`) :**
+   - Basé sur les facts collectés par Ansible.
+   - En utilisant les registres pour prendre des décisions à partir des sorties de tâches.
+   - En combinant plusieurs conditions avec `and`, `or` et `not`.
+
+2. **Gérer les erreurs avec des Blocks :**
+   - Les sections `block` pour regrouper des tâches.
+   - Les sections `rescue` pour gérer les erreurs et les corriger.
+   - La section `always` pour exécuter des tâches systématiquement.
+
+3. **Handlers pour les modifications conditionnelles :**
+   - Déclencher des tâches spécifiques (comme redémarrer un service) uniquement lorsqu'une autre tâche provoque un changement.
+   - Garantir l'idempotence des tâches avec les handlers.
+
+### **Pratique Recommandée :**
+1. **Utilisation judicieuse des conditions :** Simplifiez vos playbooks en plaçant des conditions au bon endroit, plutôt que de dupliquer les tâches.
+2. **Testez les erreurs avec Blocks :** Pour des environnements complexes, intégrez des Blocks avec `rescue` et `always` afin de gérer proprement les défaillances.
+3. **Optimisez avec des handlers :** Utilisez des handlers pour gérer les services (redémarrer, recharger) uniquement lorsque cela est nécessaire.
+
+---
+
+Dans le **prochain chapitre**, vous découvrirez comment utiliser les **templates Jinja2** pour créer et gérer dynamiquement des fichiers de configuration. Cette étape est essentielle pour rendre vos déploiements encore plus flexibles et puissants.
