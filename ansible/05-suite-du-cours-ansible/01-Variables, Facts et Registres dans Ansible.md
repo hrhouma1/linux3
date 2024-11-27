@@ -228,7 +228,7 @@ Exemple pour afficher des facts spécifiques :
 
 ---
 
-### 2.7. Créer des Facts personnalisés
+### 2.7. Créer des Facts personnalisés (Annexe 04 SVP)
 
 #### Étapes :
 1. Créez un fichier `.fact` :
@@ -632,3 +632,151 @@ ansible-playbook -i inventory.yml playbook.yml
 | Variables par GROUPE  | Paramètres **partagés** entre plusieurs serveurs d’un même type.        |
 
 En combinant ces deux approches, vos playbooks deviennent plus puissants, flexibles et organisés.
+
+
+----------------------------
+----------------------------
+# Annexe 04 - Créer des Facts Personnalisés dans Ansible
+
+Les **facts** sont des informations qu'Ansible collecte sur les hôtes gérés, comme leur adresse IP, leur système d'exploitation, leur mémoire, etc. Cependant, il peut arriver que vous ayez besoin d'ajouter vos **propres informations personnalisées** sous forme de facts pour enrichir ces données. Cela s'appelle les **facts personnalisés**.
+
+---
+
+### **Qu’est-ce qu’un Fact Personnalisé ?**
+Un **fact personnalisé** est une donnée que vous définissez vous-même et qui sera accessible comme n'importe quel autre fact collecté par Ansible. Par exemple, vous pouvez vouloir ajouter :
+- La couleur préférée d’un serveur (`color: blue`).
+- Le film préféré de l’administrateur (`movie: Inception`).
+
+Ces facts sont stockés dans des fichiers au format INI ou JSON sur les hôtes gérés, dans le répertoire `/etc/ansible/facts.d`.
+
+---
+
+### **Étapes pour Créer des Facts Personnalisés**
+
+#### **1. Créer un Fichier de Facts**
+Un fichier `.fact` contient vos facts personnalisés sous forme de texte simple. Voici un exemple de contenu :
+```plaintext
+[custom]
+color=blue
+movie=Inception
+```
+
+Créez ce fichier sur votre machine de contrôle (Ansible) avec la commande suivante :
+```bash
+echo -e "[custom]\ncolor=blue\nmovie=Inception" > custom.fact
+```
+
+---
+
+#### **2. Copier le Fichier sur les Hôtes Gérés**
+
+Les fichiers `.fact` doivent être copiés dans le répertoire `/etc/ansible/facts.d/` de chaque hôte géré. Cela peut être fait manuellement ou de manière automatisée avec un playbook.
+
+---
+
+### **Exemple Complet avec un Playbook**
+
+#### **Playbook : Ajouter des Facts Personnalisés**
+
+Ce playbook :
+1. **Crée le répertoire `/etc/ansible/facts.d/`** sur les hôtes gérés.
+2. **Copie le fichier `custom.fact`** depuis la machine de contrôle vers les hôtes gérés.
+
+Voici le contenu du playbook :
+```yaml
+---
+- name: Ajouter des faits personnalisés
+  hosts: all  # Applique les tâches à tous les hôtes
+  tasks:
+    - name: Créer le répertoire facts.d
+      file:
+        path: /etc/ansible/facts.d
+        state: directory
+        mode: '0755'  # Donne les permissions nécessaires
+
+    - name: Copier le fichier de faits
+      copy:
+        src: custom.fact
+        dest: /etc/ansible/facts.d/custom.fact
+        mode: '0644'  # Permissions pour le fichier
+```
+
+---
+
+#### **3. Exécuter le Playbook**
+
+1. **Lancez le playbook** pour appliquer les modifications :
+   ```bash
+   ansible-playbook -i inventory.yml add-custom-facts.yml
+   ```
+
+2. **Vérifiez le contenu sur un hôte géré** pour vous assurer que le fichier a bien été copié :
+   ```bash
+   ansible all -m command -a "cat /etc/ansible/facts.d/custom.fact"
+   ```
+
+   Sortie attendue :
+   ```plaintext
+   [custom]
+   color=blue
+   movie=Inception
+   ```
+
+---
+
+### **4. Utiliser les Facts Personnalisés dans un Playbook**
+
+Une fois les facts personnalisés disponibles, Ansible peut les lire et les utiliser comme des facts classiques via `ansible_local`.
+
+#### **Exemple : Afficher les Facts Personnalisés**
+Voici un playbook qui lit les facts personnalisés et les affiche :
+```yaml
+---
+- name: Afficher les faits personnalisés
+  hosts: all
+  tasks:
+    - name: Afficher la couleur préférée
+      debug:
+        msg: "La couleur préférée de {{ inventory_hostname }} est {{ ansible_local.custom.color }}"
+
+    - name: Afficher le film préféré
+      debug:
+        msg: "Le film préféré de {{ inventory_hostname }} est {{ ansible_local.custom.movie }}"
+```
+
+#### **Exécutez ce playbook** :
+```bash
+ansible-playbook -i inventory.yml display-custom-facts.yml
+```
+
+#### **Résultat attendu :**
+```plaintext
+TASK [Afficher la couleur préférée] ******************************************
+ok: [node1] => {
+    "msg": "La couleur préférée de node1 est blue"
+}
+TASK [Afficher le film préféré] **********************************************
+ok: [node1] => {
+    "msg": "Le film préféré de node1 est Inception"
+}
+```
+
+---
+
+### **Résumé**
+
+| **Étape**               | **Commande/Action**                                                                 |
+|--------------------------|-------------------------------------------------------------------------------------|
+| **Créer un fichier fact**| `echo -e "[custom]\ncolor=blue\nmovie=Inception" > custom.fact`                     |
+| **Copier sur les hôtes** | Playbook avec `file` pour créer `/etc/ansible/facts.d` et `copy` pour copier le fichier. |
+| **Utiliser les facts**   | Accéder via `ansible_local.custom.color` et `ansible_local.custom.movie`.           |
+
+---
+
+### **Points Clés**
+1. Les **facts personnalisés** sont des données définies par l’utilisateur pour enrichir les facts standards d’Ansible.
+2. Ils sont stockés dans le répertoire `/etc/ansible/facts.d/` sur les hôtes gérés.
+3. Les **facts personnalisés** peuvent être créés manuellement ou déployés avec un **playbook**.
+4. Ils sont accessibles via `ansible_local.<section>.<key>`.
+
+En suivant ces étapes, vous pouvez personnaliser vos configurations Ansible en fonction de vos besoins spécifiques !
