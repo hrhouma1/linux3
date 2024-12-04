@@ -14,7 +14,7 @@ Ouvrez un terminal et exécutez les commandes suivantes pour mettre à jour votr
 
 ```bash
 sudo apt update
-sudo apt upgrade -y
+sudo apt upgrade -y (pas nécessaire, prend beaucoup de temps)
 ```
 
 **1.2. Installer Nginx**
@@ -22,7 +22,11 @@ sudo apt upgrade -y
 Installez le serveur web Nginx avec la commande suivante :
 
 ```bash
+sudo apt update
 sudo apt install nginx -y
+sudo systemctl start nginx.service
+sudo systemctl enable nginx.service
+sudo systemctl status nginx.service
 ```
 
 **1.3. Installer PHP et les extensions nécessaires**
