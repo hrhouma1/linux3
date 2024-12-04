@@ -34,11 +34,35 @@ sudo systemctl status nginx.service
 
 
 #### **1.3.1 Installation de PHP et des extensions nécessaires**  
-Exécutez les commandes suivantes pour installer PHP et ses extensions :  
+
+
 ```bash
 sudo apt update
-sudo apt install php libapache2-mod-php php-mysql php-fpm php-curl php-gd php-xml php-mbstring php-zip php-json -y
+sudo apt install php php-fpm php-mysql php-curl php-gd php-xml php-mbstring php-zip php-json -y
 ```
+
+---
+
+### **Explication des paquets :**
+- **`php`** : Le langage PHP.
+- **`php-fpm`** : PHP FastCGI Process Manager, nécessaire pour exécuter PHP avec Nginx.
+- **`php-mysql`** : Extension PHP pour interagir avec MySQL.
+- **`php-curl`, `php-gd`, `php-xml`, `php-mbstring`, `php-zip`, `php-json`** : Extensions courantes requises par de nombreuses applications, comme WordPress.
+
+---
+
+### **Pourquoi éviter `libapache2-mod-php` avec Nginx ?**
+- **`libapache2-mod-php`** est spécifique à Apache. Si vous installez ce module sur un serveur Nginx, il ne sera pas utilisé, et cela peut provoquer des conflits si vous décidez d’installer Apache plus tard.
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -582,3 +606,82 @@ Vous avez maintenant configuré un serveur local avec plusieurs sites WordPress 
 N'hésitez pas à explorer davantage les fonctionnalités de WordPress et de Nginx pour optimiser vos sites. Si vous avez des questions ou des difficultés, je suis là pour vous aider.
 
 Bon courage dans votre apprentissage !
+
+
+# Annexe  : 
+
+
+
+--------
+
+
+#### **1.3.1 Installation de PHP et des extensions nécessaires**  
+Exécutez les commandes suivantes pour installer PHP et ses extensions :  
+```bash
+sudo apt update
+sudo apt install php libapache2-mod-php php-mysql php-fpm php-curl php-gd php-xml php-mbstring php-zip php-json -y
+```
+
+---------
+
+
+Pour supprimer les paquets inutiles installés sur votre serveur Ubuntu 22.04 lorsque vous utilisez **Nginx** avec PHP, vous pouvez supprimer les modules spécifiques à Apache, comme **`libapache2-mod-php`**.
+
+---
+
+### **Étape 1 : Supprimer les paquets inutiles**
+Exécutez la commande suivante pour désinstaller `libapache2-mod-php` :
+
+```bash
+sudo apt remove --purge libapache2-mod-php -y
+```
+
+---
+
+### **Étape 2: Supprimer Apache (si installé et inutile)**
+
+Si vous avez installé Apache par inadvertance, vous pouvez également le désinstaller :
+
+```bash
+sudo apt remove --purge apache2 apache2-utils apache2-bin apache2.2-common -y
+```
+
+Ensuite, supprimez les fichiers de configuration restants :
+
+```bash
+sudo rm -rf /etc/apache2
+```
+
+---
+
+### **Étape 3 : Nettoyer les dépendances inutilisées**
+Après avoir supprimé les paquets, nettoyez les dépendances inutilisées pour libérer de l'espace disque :
+
+```bash
+sudo apt autoremove --purge -y
+```
+
+---
+
+### **Étape 4 : Vérifier PHP-FPM**
+Assurez-vous que PHP-FPM est bien installé et actif :
+
+1. **Vérifiez le statut :**
+
+   ```bash
+   sudo systemctl status php8.1-fpm
+   ```
+
+   (Remplacez `php8.1-fpm` par votre version si nécessaire.)
+
+2. **Redémarrez PHP-FPM pour vous assurer qu'il fonctionne correctement :**
+
+   ```bash
+   sudo systemctl restart php8.1-fpm
+   ```
+
+---
+
+### **Étape 5 : Tester votre configuration**
+Testez PHP avec un fichier `info.php` comme expliqué précédemment pour vérifier que PHP fonctionne correctement avec Nginx.
+
