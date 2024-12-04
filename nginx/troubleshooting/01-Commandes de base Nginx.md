@@ -91,5 +91,5 @@ Si Nginx ne démarre toujours pas après avoir essayé ces commandes, vérifiez 
 sudo journalctl -u nginx.service
 ```
 
-N'oubliez pas de redémarrer Nginx après avoir apporté des modifications à la configuration[1][2][3][4].
+N'oubliez pas de redémarrer Nginx après avoir apporté des modifications à la configuration.
 
