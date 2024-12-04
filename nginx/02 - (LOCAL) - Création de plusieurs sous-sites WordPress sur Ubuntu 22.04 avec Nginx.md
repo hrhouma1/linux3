@@ -42,48 +42,6 @@ sudo apt install php libapache2-mod-php php-mysql php-fpm php-curl php-gd php-xm
 
 
 
-
-#### **1.3.2. Installation et configuration de phpMyAdmin**
-
-**Installer phpMyAdmin et ses dépendances :**  
-   ```bash
-   sudo apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl -y
-   ```
-
-**Configurer phpMyAdmin :**  
-   - Ouvrez le fichier de configuration :  
-     ```bash
-     sudo nano /etc/apache2/conf-available/phpmyadmin.conf
-     ```  
-   - Assurez-vous que la ligne suivante est présente (ou ajoutez-la) :  
-     ```apache
-     Alias /phpmyadmin /usr/share/phpmyadmin
-     ```  
-   - Enregistrez et fermez le fichier.
-
-**Activer la configuration et redémarrer Apache :**  
-   ```bash
-   sudo a2enconf phpmyadmin
-   sudo systemctl restart apache2
-   ```
-
-**Accéder à phpMyAdmin :**  
-   Ouvrez votre navigateur à l'adresse suivante :  
-   ```
-   http://[Votre-IP-Serveur]/phpmyadmin
-   ```  
-   **Note :** Utilisez `/phpmyadmin` et non `/phpmyadmin.php`.
-
----
-
-### Explications :
-- **Section PHP :** Installe uniquement les paquets requis pour exécuter des applications PHP.
-- **Section phpMyAdmin :** Inclut phpMyAdmin et les extensions spécifiques nécessaires pour sa compatibilité avec PHP et MySQL.
-
-
-
-
-
 **1.4. Installer MySQL**
 
 Installez le serveur de base de données MySQL :
