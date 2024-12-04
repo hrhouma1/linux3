@@ -41,54 +41,7 @@ sudo apt install php libapache2-mod-php php-mysql php-fpm php-curl php-gd php-xm
 ```
 
 
-### Ajout de la vérification de PHP avec un fichier `info.php`
 
-Avant d'installer et de configurer phpMyAdmin, il est recommandé de vérifier que PHP est correctement installé et fonctionne. Voici comment créer un fichier `info.php` pour effectuer cette vérification :
-
----
-
-**Créer un fichier `info.php`**
-Exécutez la commande suivante pour créer le fichier :  
-```bash
-sudo nano /var/www/html/info.php
-```
-
----
-
-**Ajouter le contenu suivant dans le fichier**
-Collez le code suivant dans l'éditeur :  
-```php
-<?php
-phpinfo();
-?>
-```
-Enregistrez et fermez le fichier (dans Nano, appuyez sur `CTRL+O`, puis `Enter`, et enfin `CTRL+X`).
-
----
-
-**Vérifier l'installation de PHP**
-- Ouvrez votre navigateur et entrez l'adresse suivante :  
-  ```
-  http://[Votre-IP-Serveur]/info.php
-  ```
-- Vous devriez voir une page contenant toutes les informations sur la version de PHP et ses extensions installées.
-
----
-
-#### **Supprimer le fichier `info.php` après vérification**
-Pour des raisons de sécurité, supprimez le fichier une fois la vérification terminée :  
-```bash
-sudo rm /var/www/html/info.php
-```
-
-
-
-
-
-
-
-
----
 
 #### **1.3.2. Installation et configuration de phpMyAdmin**
 
