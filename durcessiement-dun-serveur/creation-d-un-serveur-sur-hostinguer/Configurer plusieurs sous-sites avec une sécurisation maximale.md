@@ -5,7 +5,7 @@
 
 Pour chaque domaine, ajoutez dans votre panel DNS :
 
-``ssh
+```ssh
 Type    Nom    Valeur         TTL
 A       @      [Votre_IP]     3600
 A       www    [Votre_IP]     3600
