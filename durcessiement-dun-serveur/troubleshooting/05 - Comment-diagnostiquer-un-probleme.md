@@ -1,5 +1,5 @@
 
-# 05-comment-diagnostiquer-un-probleme ?
+# comment-diagnostiquer-un-probleme ?
 
 - Comment diagnostiquer et corriger un problème par exemple un problème d'accès au site principal **http://elastic.local** ?
 
