@@ -1,10 +1,6 @@
 ![image](https://github.com/user-attachments/assets/4423bbe3-8814-4685-9a9f-40bcf7223495)
 
-- Ce rapport est directement lié aux en-têtes de sécurité dont nous avons parlé ! 
-- Voici une explication pour t'aider à comprendre ce que signifie chaque point dans le rapport et comment le corriger :
-
-
-Oui, ce rapport est directement lié aux **en-têtes de sécurité** dont nous avons parlé ! Voici une explication pour t'aider à comprendre ce que signifie chaque point dans le rapport et comment le corriger :
+- Ce rapport est directement lié aux en-têtes de sécurité ! 
 
 ---
 
