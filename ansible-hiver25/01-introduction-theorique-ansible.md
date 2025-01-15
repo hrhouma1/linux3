@@ -120,6 +120,11 @@ L'architecture d'Ansible est simple :
 Le fichier `inventory.ini` décrit les machines à gérer par Ansible. Voici un exemple basique :
 
 ```ini
+server1 ansible_host=192.168.1.10 ansible_user=ubuntu
+server2 ansible_host=192.168.1.11 ansible_user=ubuntu
+db1 ansible_host=192.168.1.20 ansible_user=admin
+db2 ansible_host=192.168.1.21 ansible_user=admin
+
 [web]
 server1 ansible_host=192.168.1.10 ansible_user=ubuntu
 server2 ansible_host=192.168.1.11 ansible_user=ubuntu
