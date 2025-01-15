@@ -59,8 +59,8 @@ docker-compose version
 Créez un nouveau répertoire pour votre projet et accédez-y :
 
 ```bash
-mkdir ansible_project
-cd ansible_project
+mkdir pratique2
+cd pratique2
 ```
 
 ### 2.2. Créer le Fichier `docker-compose.yml`
