@@ -191,15 +191,20 @@ node1 ansible_host=172.20.0.2 ansible_user=root ansible_python_interpreter=/usr/
    ansible-playbook -i inventory.ini first-playbook.yml
    ```
 
-2. **Vérifier que le fichier a bien été créé** :
+2. **Vérifier que le fichier a bien été créé (méthode 1: commande ad-hoc)** :
 
    ```bash
    ansible all -m command -a "ls -l /tmp/foo.conf" -i inventory.ini
    ```
 
+3. **Vérifier que le fichier a bien été créé (méthode 2: commande - connexion via ssh à un noeud)** :
 ---
 
-
+   ```bash
+   ssh root@172.20.0.2
+   cd /tmp
+   ls
+   ```
 
 
 
