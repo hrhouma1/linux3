@@ -1,15 +1,5 @@
 # Chapitre 1 - Introduction Théorique à Ansible et Pratique 01
 
-Dans ce chapitre, nous allons explorer l'utilisation d'Ansible pour automatiser des tâches de manière efficace. Cette introduction théorique vous permettra de :
-
-- **Comprendre les concepts fondamentaux** de l'automatisation avec Ansible
-- **Découvrir comment transformer** la gestion de votre infrastructure IT
-- **Maîtriser les bases** que vous soyez débutant ou expérimenté
-
-Ce guide rendra chaque concept simple et accessible, en vous guidant pas à pas dans votre apprentissage d'Ansible.
-
-
----
 
 ## 📋 Table des Matières 
 
@@ -25,6 +15,21 @@ Ce guide rendra chaque concept simple et accessible, en vous guidant pas à pas 
 10. [Ressources Complémentaires](#ressources-complementaires)
 11. [Annexe - exemple d'inventaire](#annexe) 
 ---
+
+
+## Introduction générale :
+
+Dans ce chapitre, nous allons explorer l'utilisation d'Ansible pour automatiser des tâches de manière efficace. Cette introduction théorique vous permettra de :
+
+- **Comprendre les concepts fondamentaux** de l'automatisation avec Ansible  
+- **Découvrir comment transformer** la gestion de votre infrastructure IT  
+- **Maîtriser les bases**, que vous soyez débutant ou expérimenté  
+
+Ce guide rendra chaque concept simple et accessible, en vous guidant pas à pas dans votre apprentissage d'Ansible.  
+
+### **Note importante :**  
+Aucune manipulation n'est requise dans ce chapitre. Les manipulations commencent à partir du **chapitre 2**. La seule manipulation obligatoire dans ce chapitre est la **pratique 1**, qui consiste à **installer Ansible** pour préparer votre environnement de travail. Veuillez suivre les instructions pour cette étape uniquement. Toutes les autres commandes mentionnées dans ce chapitre sont fournies à titre informatif.
+
 
 <a name="automatisation-informatique"></a>
 ## 1. Introduction à l'Automatisation Informatique  
