@@ -204,6 +204,7 @@ node1 ansible_host=172.20.0.2 ansible_user=root ansible_python_interpreter=/usr/
    ssh root@172.20.0.2
    cd /tmp
    ls
+   exit
    ```
 
 
