@@ -28,7 +28,7 @@ Dans ce chapitre, nous allons explorer l'utilisation d'Ansible pour automatiser 
 Ce guide rendra chaque concept simple et accessible, en vous guidant pas à pas dans votre apprentissage d'Ansible.  
 
 ### **Note importante :**  
-Aucune manipulation n'est requise dans ce chapitre. Les manipulations commencent à partir du **chapitre 2**. La seule manipulation obligatoire dans ce chapitre est la **pratique 1**, qui consiste à **installer Ansible** pour préparer votre environnement de travail. Veuillez suivre les instructions pour cette étape uniquement. Toutes les autres commandes mentionnées dans ce chapitre sont fournies à titre informatif.
+Aucune manipulation n'est requise dans ce chapitre. Les manipulations commencent à partir de la **pratique 2**. La seule manipulation obligatoire dans ce chapitre est la **pratique 1**, à la fin de ce document, qui consiste à **installer Ansible** pour préparer votre environnement de travail. Veuillez suivre les instructions pour cette étape uniquement. Toutes les autres commandes mentionnées dans ce chapitre sont fournies à titre informatif.
 
 
 <a name="automatisation-informatique"></a>
