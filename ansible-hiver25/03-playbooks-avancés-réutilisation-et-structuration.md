@@ -27,6 +27,14 @@ Dans ce chapitre, nous allons explorer l'utilisation des **playbooks** dans Ansi
 
 Dans cette pratique, vous allez apprendre à automatiser des tâches sur vos conteneurs Docker en utilisant **Ansible** avec des playbooks. Nous commencerons par des tâches simples avant de passer à des opérations plus avancées. Assurez-vous d’avoir bien configuré Docker, Docker Compose et Ansible avant de débuter.
 
+## Rappel de l'architecture :
+
+
+![image](https://github.com/user-attachments/assets/701a86e3-9fae-4a95-9e1e-5cf6424db345)
+
+- https://medium.com/@youssefchamrah/learning-iac-the-hard-way-an-implementation-journey-from-scratch-to-ansible-terraform-ff1e37cf8c43
+
+
 ---
 
 <a name="etape-preparatoire"></a>
