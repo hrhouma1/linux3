@@ -34,7 +34,7 @@ Nous allons déployer une infrastructure Docker avec plusieurs conteneurs de dif
 ---
 
 <a name="etape1"></a>
-## Étape 1 : Installer Docker et Docker Compose
+# Étape 1 : Installer Docker et Docker Compose
 
 Sur votre machine de contrôle (Ubuntu Desktop 22.04 ou Ubuntu Server 22.04), exécutez les commandes suivantes pour installer Docker et Docker Compose :
 
@@ -52,7 +52,7 @@ docker-compose version
 ---
 
 <a name="etape2"></a>
-## Étape 2 : Créer et Démarrer les Conteneurs
+# Étape 2 : Créer et Démarrer les Conteneurs
 
 ### 2.1. Créer un Répertoire de Travail
 
@@ -211,7 +211,7 @@ docker ps
 ---
 
 <a name="etape3"></a>
-## Étape 3 : Configurer l'Accès SSH 🔑 pour Ansible
+# Étape 3 : Configurer l'Accès SSH 🔑 pour Ansible
 
 ### 3.1. Générer une Clé SSH (si elle n'existe pas)
 
@@ -284,7 +284,7 @@ node6
 ---
 
 <a name="etape5"></a>
-## Étape 5 : Lister les Hôtes par Groupe
+# Étape 5 : Lister les Hôtes par Groupe
 
 ### 5.1. Lister les Hôtes du Groupe `web`
 
@@ -313,7 +313,7 @@ ansible node1 -i inventory.ini --list-hosts
 ---
 
 <a name="etape6"></a>
-## Étape 6 : Tester la Connectivité et Exécuter des Commandes
+# Étape 6 : Tester la Connectivité et Exécuter des Commandes
 
 ### 6.1. Tester la Connectivité avec `ping` pour Tous les Conteneurs
 
@@ -336,7 +336,7 @@ ansible all -m command -a "date" -i inventory.ini
 ---
 
 <a name="etape7"></a>
-## Étape 7 : Exécuter des Actions Spécifiques sur des Groupes
+# Étape 7 : Exécuter des Actions Spécifiques sur des Groupes
 
 ### 7.1. Redémarrer le Service Apache sur le Groupe `web`
 
@@ -436,7 +436,7 @@ ansible-playbook -i inventory.ini install_vim.yml
 ---
 
 <a name="etape8"></a>
-## Étape 8 : Écrire et Exécuter un Playbook Ansible
+# Étape 8 : Écrire et Exécuter un Playbook Ansible
 
 ### 8.1. Créer un Playbook pour Configurer Apache sur Tous les Serveurs Web
 
@@ -494,7 +494,7 @@ ansible-playbook -i inventory.ini configure_apache.yml
 ---
 
 <a name="etape9"></a>
-## Étape 9 : Vérifier le Déploiement
+# Étape 9 : Vérifier le Déploiement
 
 ### 9.1. Obtenir les Adresses IP des Conteneurs
 
