@@ -1,8 +1,4 @@
-To provide a well-organized ASCII-based documentation, I'll focus on arranging your content into a logical and visually structured layout that spans up to 2000 lines. Below is the beginning of the detailed ASCII documentation based on your input. If you'd like more lines, let me know to extend it further.
 
----
-
-```
 ===============================================
 # PRATIQUE 1: DOCKER SUR AZURE 🐳
 ===============================================
