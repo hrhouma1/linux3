@@ -379,6 +379,52 @@ Le conteneur `node4` (AlmaLinux) semble ne pas avoir la commande `uptime` instal
 ansible mail -m yum -a "name=procps-ng state=present" -i inventory.ini
 ```
 
+- Le paquet procps-ng est une collection d'utilitaires système liés aux processus. Il inclut des outils essentiels pour surveiller et gérer les processus sur une machine Linux. Cu-dessous, vous trouverez quelques commandes fournies par ce paquet :
+
+##### *Rôle du paquet `procps-ng`*
+
+| **Commande** | **Description**                                                                                  |
+|--------------|--------------------------------------------------------------------------------------------------|
+| `ps`         | Affiche des informations sur les processus en cours d'exécution.                                |
+| `top`        | Affiche en temps réel les processus les plus gourmands en ressources.                           |
+| `vmstat`     | Montre des statistiques sur l'utilisation de la mémoire, du CPU, et d'autres ressources.        |
+| `free`       | Affiche l'état de la mémoire.                                                                   |
+| `kill`       | Envoie des signaux aux processus (par exemple pour les arrêter).                                |
+| `uptime`     | Montre depuis combien de temps le système est actif.                                            |
+| `watch`      | Permet de surveiller l'exécution périodique d'une commande.                                     |
+
+
+
+##### *Challenge Exercice : Identifier l'origine de l'erreur Ansible*
+
+**Situation** : Vous exécutez la commande suivante pour installer le paquet `procps-ng` sur des nœuds définis dans `mail` :
+
+```bash
+ansible mail -m yum -a "name=procps-ng state=present" -i inventory.ini
+```
+
+- **Identifier** pourquoi un message d'erreur pourrait apparaître pour un des nœuds, spécifiquement **node4** ou **node6**.
+- **Hypothèse** : L'erreur survient parce que la distribution d'un des nœuds n'est pas compatible avec `yum` (par exemple, une distribution Debian/Ubuntu).
+- **Vérifiez les distributions des nœuds** :
+   Utilisez cette commande pour voir la famille de distribution de chaque nœud :
+   ```bash
+   ansible mail -m setup -a "filter=ansible_distribution" -i inventory.ini
+   ```
+- **Analysez les résultats** :
+   Comparez les distributions des nœuds. Si l'un des nœuds (par exemple, `node4` ou `node6`) utilise Debian/Ubuntu ou une autre distribution non compatible avec `yum`, cela explique l'erreur.
+
+- **Corrigez selon la distribution** :
+   - Pour les nœuds basés sur Debian/Ubuntu, utilisez le module `apt` :
+     ```bash
+     ansible mail -m apt -a "name=procps-ng state=present" -i inventory.ini
+     ```
+
+##### Défi
+- Exécutez ces étapes et identifiez si **node4** ou **node6** est la source de l'erreur. 
+- Expliquez pourquoi le paquet `procps-ng` n’est pas disponible pour cette distribution.
+- Bonus (Correction à venir dans le chapitre sur les facts et les conditions): Écrivez une tâche Ansible conditionnelle pour gérer à la fois les nœuds Red Hat et Debian/Ubuntu dans un playbook unique.
+
+
 #### 7.2.2. Vérifier l'Uptime
 
 ```bash
