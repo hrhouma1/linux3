@@ -1,4 +1,4 @@
-## Commandes Docker Fondamentales
+# Commandes Docker Fondamentales
 
 **Gestion des Conteneurs**
 ```ascii
@@ -139,10 +139,3 @@
 └──────────────────────────────────────────────┘
 ```
 
-Citations:
-[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/19265956/4f741222-ddc5-499e-b415-437d4df58dae/paste.txt
-[2] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/19265956/4ed005b5-aaf6-4067-bdc0-87da2974f164/paste-2.txt
-[3] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/19265956/e7bb04e0-aa0e-4591-ae05-014733c0d98f/paste-3.txt
-[4] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/19265956/4f741222-ddc5-499e-b415-437d4df58dae/paste.txt
-[5] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/19265956/4ed005b5-aaf6-4067-bdc0-87da2974f164/paste-2.txt
-[6] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/19265956/e7bb04e0-aa0e-4591-ae05-014733c0d98f/paste-3.txt
