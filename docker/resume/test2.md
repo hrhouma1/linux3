@@ -2,10 +2,10 @@
 # PRATIQUE 1 - Introduction aux commandes de base
 ---
 
-# Vue d'ensemble
+# Partie 1 : Commandes de base
+
 Ce guide pratique vous accompagne pas à pas dans les commandes de base de Docker.
 
-# Partie 1 : Commandes de base
 # Configuration initiale du système
 1. `sudo su -` # Passer en mode administrateur
 2. `apt-get update` # Mettre à jour les paquets
