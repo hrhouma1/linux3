@@ -1,7 +1,8 @@
 
-===============================================
-# PRATIQUE 1: DOCKER SUR AZURE 🐳
-===============================================
+---
+# PRATIQUE 1: DOCKER 🐳
+---
+
 
    __________________________________________________________
   |                                                          |
@@ -13,9 +14,10 @@
   sur les commandes de base, les conteneurs, Dockerfile, 
   et les volumes.
 
-===============================================
+---
 🔰 PARTIE 1 : COMMANDES DE BASE
-===============================================
+
+---
 
    __________________________________________________________
   | COMMANDES ESSENTIELLES                                    |
@@ -32,9 +34,12 @@
   5. `docker ps -a`             # Tous les conteneurs
   6. `docker run hello-world`   # Tester Docker
 
-===============================================
+
+
+---
 🚀 PARTIE 2 : INSTALLATION D'UN CONTENEUR UBUNTU
-===============================================
+
+---
 
    __________________________________________________________
   | CRÉATION DU CONTENEUR                                    |
@@ -57,7 +62,9 @@
 
   ---
   CONFIGURATION D'APACHE :
+  
   ---
+  
   4. Connectez-vous au conteneur :
      ```
      docker exec -it myapacheubuntu bash
@@ -74,9 +81,10 @@
      http://<Votre_IP>:81
      ```
 
-===============================================
+---
 🌐 MODIFICATION DE LA PAGE PAR DÉFAUT
-===============================================
+
+---
 
    __________________________________________________________
   | CHANGEMENT DU FICHIER HTML                               |
@@ -101,10 +109,11 @@
      ```
      http://<Votre_IP>:81
      ```
+---
 
-===============================================
 🗑️ SUPPRESSION DES RESSOURCES DOCKER
-===============================================
+
+---
 
    __________________________________________________________
   | CONTENEURS                                               |
@@ -127,7 +136,9 @@
 
   ---
   IMAGES :
+  
   ---
+  
   4. Listez toutes les images :
      ```
      docker images
@@ -138,9 +149,10 @@
      docker rmi $(docker images -q)
      ```
 
-===============================================
+---
 🔄 MANIPULATIONS SPÉCIALES
-===============================================
+
+---
 
    __________________________________________________________
   | SERVEUR FLASK AVEC DOCKERFILE                            |
@@ -164,10 +176,10 @@
     ```
     docker run -d -p 8080:8080 flask_server
     ```
-
-===============================================
+---
 📦 DOCKER VOLUMES
-===============================================
+
+---
 
    __________________________________________________________
   | PERSISTANCE DES DONNÉES                                  |
@@ -195,9 +207,11 @@
       -v /opt/data:/var/lib/mysql mysql
     ```
 
-===============================================
+---
+
 🚀 DOCKER COMPOSE
-===============================================
+
+---
 
    __________________________________________________________
   | EXEMPLE AVEC WORDPRESS & MYSQL                          |
@@ -233,9 +247,10 @@
      docker-compose down
      ```
 
-===============================================
+---
 RÉSUMÉ DES COMMANDES 📝
-===============================================
+
+----
 
 ```
 docker ps                      # Conteneurs actifs
@@ -247,10 +262,3 @@ docker rmi $(docker images -q) # Supprimer toutes les images
 docker-compose up              # Lancer avec Docker Compose
 docker-compose down            # Arrêter avec Docker Compose
 ```
-
-===============================================
-FIN DU DOCUMENT 📘
-===============================================
-```
-
-This structure includes an ASCII-styled layout and organizes your content for clarity and usability. Let me know if you want further modifications or additions!
