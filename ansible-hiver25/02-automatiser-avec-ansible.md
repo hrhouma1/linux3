@@ -235,20 +235,9 @@ done
 
 ### 3.3. Vérifier la Connexion SSH pour Chaque Conteneur
 
-Supprimez les anciennes entrées d'hôtes connus pour éviter les conflits :
+Supprimez les anciennes entrées d'hôtes connus pour éviter les conflits (optionnelle):
 
-```bash
-rm -f ~/.ssh/known_hosts
-ssh-keygen -R 172.20.0.2
-ssh-keygen -R 172.20.0.3
-ssh-keygen -R 172.20.0.4
-ssh-keygen -R 172.20.0.5
-ssh-keygen -R 172.20.0.6
-ssh-keygen -R 172.20.0.7
-
-```
-
-Ensuite, vérifiez la connexion SSH :
+Vérifiez la connexion SSH :
 
 ```bash
 for i in {1..6}; do
