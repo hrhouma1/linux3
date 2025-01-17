@@ -424,7 +424,7 @@ node6                      : ok=2    changed=1    unreachable=0    failed=0    s
 
 ---
 
-### **Conclusion pour les Étudiants**
+### **Conclusion**
 
 Même si vous voyez toutes les tâches dans les logs, seules celles correspondant au tag spécifié sont exécutées. Pour confirmer cela :
 
