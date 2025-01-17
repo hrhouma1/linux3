@@ -55,3 +55,9 @@ Ce guide pratique vous accompagne pas à pas dans les commandes de base de Docke
 32. `curl VOTRE_ADRESSE_IP:81` # Tester depuis la machine virtuelle
 33. `exit` # Quitter le mode administrateur
 34. `exit` # Quitter la machine virtuelle
+
+
+
+---
+# PRATIQUE 2 - Introduction aux commandes de base
+---
