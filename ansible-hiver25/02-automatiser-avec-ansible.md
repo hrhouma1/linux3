@@ -261,12 +261,12 @@ Ajoutez le contenu suivant :
 
 ```ini
 [node_containers]
-node1 ansible_host=172.20.0.2 ansible_user=root
-node2 ansible_host=172.20.0.3 ansible_user=root
-node3 ansible_host=172.20.0.4 ansible_user=root
-node4 ansible_host=172.20.0.5 ansible_user=root
-node5 ansible_host=172.20.0.6 ansible_user=root
-node6 ansible_host=172.20.0.7 ansible_user=root
+node1 ansible_host=172.20.0.2 ansible_user=root ansible_python_interpreter=/usr/bin/python3
+node2 ansible_host=172.20.0.3 ansible_user=root ansible_python_interpreter=/usr/bin/python3
+node3 ansible_host=172.20.0.4 ansible_user=root ansible_python_interpreter=/usr/bin/python3
+node4 ansible_host=172.20.0.5 ansible_user=root ansible_python_interpreter=/usr/bin/python3
+node5 ansible_host=172.20.0.6 ansible_user=root ansible_python_interpreter=/usr/bin/python3
+node6 ansible_host=172.20.0.7 ansible_user=root ansible_python_interpreter=/usr/bin/python3
 
 [web]
 node1
