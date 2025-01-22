@@ -80,8 +80,9 @@ Le projet {{ project_name }} version {{ version }} est actif : {{ is_active }}
 
 
 
+------------------------
 
-### **Exercice : Explorer et Filtrer les Facts Ansible**
+### **Exercice 7 : Explorer et Filtrer les Facts Ansible**
 
 Vous devrez trouver par vous-mêmes les filtres appropriés pour répondre aux questions ci-dessous. La commande de base est :
 
