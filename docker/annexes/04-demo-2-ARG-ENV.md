@@ -145,3 +145,53 @@ CMD /usr/games/cowsay "$MESSAGE"
 | **Méthode 3 : `ARG + ENV`**| Combiner les deux pour offrir une flexibilité maximale.     | Définir des valeurs par défaut tout en permettant des modifications dynamiques. |
 
 Ces trois approches montrent comment adapter les variables en fonction des besoins de l'application.
+
+--------------------
+# Annexe: **"Choix entre Crochets (`[]`) et Chaînes Simples (`""`) dans CMD"**
+-------------------
+
+En général, l'utilisation de **crochets (`[]`) ou chaînes simples (`""`) dans `CMD`** dépend du comportement souhaité et de la manière dont Docker interprète la commande. Voici la distinction :
+
+---
+
+### **1. Syntaxe en Liste :**
+```Dockerfile
+CMD ["/usr/games/cowsay", "$COWSAY_MESSAGE"]
+```
+- **Interprétation :** Chaque élément de la commande est un argument séparé.
+- **Avantage :** Pas de traitement par un shell, ce qui évite des problèmes comme l'expansion des variables ou l'interprétation incorrecte des caractères spéciaux.
+- **Recommandé :** Lorsque vous voulez éviter des comportements inattendus dus à l'expansion du shell ou pour une meilleure portabilité.
+
+---
+
+### **2. Syntaxe en Chaîne :**
+```Dockerfile
+CMD /usr/games/cowsay "$COWSAY_MESSAGE"
+```
+- **Interprétation :** Utilise un shell pour exécuter la commande.
+- **Avantage :** Permet l'expansion des variables d'environnement comme `$COWSAY_MESSAGE`.
+- **Limite :** Moins sécurisé et légèrement moins performant car un shell est invoqué.
+
+---
+
+### **Quand Utiliser l'une ou l'autre ?**
+- **Syntaxe en Liste (`[]`)** :
+  - Si la commande n’a pas besoin d’un shell pour fonctionner.
+  - Si vous souhaitez une exécution plus rapide et sécurisée.
+  - Exemple : Commandes simples ou scripts.
+- **Syntaxe en Chaîne (`""`)** :
+  - Si vous avez besoin d'un shell pour traiter les variables d'environnement ou les opérateurs shell.
+  - Exemple : Commandes nécessitant une expansion comme `$COWSAY_MESSAGE`.
+
+---
+
+### **Conclusion pour votre Cas :**
+Si vous avez besoin de l’expansion de la variable `COWSAY_MESSAGE`, il est préférable d’utiliser la **syntaxe en chaîne (`""`)** comme suit :
+```Dockerfile
+CMD /usr/games/cowsay "$COWSAY_MESSAGE"
+```
+
+Cependant, si vous passez une valeur fixe ou voulez éviter l’utilisation d’un shell, préférez la **syntaxe en liste (`[]`)** :
+```Dockerfile
+CMD ["/usr/games/cowsay", "Bonjour, Docker avec ARG !"]
+```
