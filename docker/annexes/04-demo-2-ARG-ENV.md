@@ -147,7 +147,7 @@ CMD /usr/games/cowsay "$MESSAGE"
 Ces trois approches montrent comment adapter les variables en fonction des besoins de l'application.
 
 --------------------
-# Annexe: **Choix entre Crochets (`[]`) et Chaînes Simples (`""`) dans CMD**
+# Annexe: **Choix entre Crochets (`[]`) et Chaînes Simples (`""`) dans CMD dans votre Dockerfile**
 -------------------
 
 En général, l'utilisation de **crochets (`[]`) ou chaînes simples (`""`) dans `CMD`** dépend du comportement souhaité et de la manière dont Docker interprète la commande. Voici la distinction :
