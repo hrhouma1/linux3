@@ -241,41 +241,173 @@ Le mot de passe est stocké en clair dans `/etc/shadow`, ce qui pose un risque d
 ---
 
 ## 🔍 **Solution 2 : Générer un Hash Sécurisé**
-Une meilleure approche consiste à pré-générer un mot de passe chiffré en utilisant `mkpasswd` :
+Une meilleure approche consiste à utiliser la méthode password_hash('sha512', secure_salt) 
 
-### ✅ **Playbook avec mot de passe sécurisé**
+Le playbook Ansible ci-dessous montre comment :
+1. **Génère un sel sécurisé** pour le hachage des mots de passe.
+2. **Vérifie si l'UID est déjà utilisé** avant de créer un utilisateur.
+3. **Crée des utilisateurs** en évitant les conflits d'UID.
+
+
+### ✅ **Playbook Complet de la solution 2**
 ```yaml
----
-- name: Ajouter Plusieurs Utilisateurs
-  hosts: database
-  become: yes
-  vars:
-    db_users:
-      - username: "alice"
-        password: "{{ 'password1' | password_hash('sha512', 'random_salt') }}"
-        uid: 1001
-      - username: "bob"
-        password: "{{ 'password2' | password_hash('sha512', 'random_salt') }}"
-        uid: 1002
-      - username: "charlie"
-        password: "{{ 'password3' | password_hash('sha512', 'random_salt') }}"
-        uid: 1003
+- name: Générer des utilisateurs avec des mots de passe hashés
+  hosts: all
   tasks:
-    - name: Créer les Utilisateurs avec un mot de passe chiffré
-      user:
+    - name: Générer un sel sécurisé
+      ansible.builtin.set_fact:
+        secure_salt: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=16') }}"
+
+    - name: Vérifier si l'UID existe déjà sur le système
+      shell: "id -u {{ item.uid }} || echo 'not found'"
+      register: uid_check
+      changed_when: false
+      failed_when: false
+      loop:
+        - { username: "alice1", uid: 1001 }
+        - { username: "bob1", uid: 1002 }
+        - { username: "charlie1", uid: 1003 }
+
+    - name: Afficher les UID existants
+      debug:
+        msg: "UID {{ item.item.uid }} déjà utilisé : {{ item.stdout }}"
+      loop: "{{ uid_check.results }}"
+      when: item.stdout is not search('not found')
+
+    - name: Créer des utilisateurs avec des mots de passe hashés
+      ansible.builtin.user:
         name: "{{ item.username }}"
-        uid: "{{ item.uid }}"
         password: "{{ item.password }}"
-        shell: "/bin/bash"
-        state: present
-      loop: "{{ db_users }}"
+        uid: "{{ item.uid }}"
+      loop: 
+        - { username: "alice1", password: "{{ 'password1' | password_hash('sha512', secure_salt) }}", uid: 1001 }
+        - { username: "bob1", password: "{{ 'password2' | password_hash('sha512', secure_salt) }}", uid: 1002 }
+        - { username: "charlie1", password: "{{ 'password3' | password_hash('sha512', secure_salt) }}", uid: 1003 }
+      when: 
+        - "item.uid not in uid_check.results | map(attribute='stdout') | list"
 ```
 
-✅ **Pourquoi cette méthode ?**  
-- Le mot de passe est stocké de manière sécurisée.
-- `password_hash('sha512', 'random_salt')` garantit un bon chiffrement.
+---
 
-Voici une version améliorée et plus fluide de votre texte :
+###  **Explication**
+1. **Génération d'un sel sécurisé** (`set_fact`)  
+   - Un sel aléatoire est généré pour le hachage des mots de passe.
+
+2. **Vérification des UID existants** (`shell: id -u ...`)  
+   - Vérifie si chaque UID est déjà utilisé.
+   - Stocke le résultat dans `uid_check`.
+
+3. **Affichage des UID en conflit** (`debug`)  
+   - Affiche une alerte si un UID est déjà pris.
+
+4. **Création des utilisateurs** (`ansible.builtin.user`)  
+   - Crée les utilisateurs **seulement si leur UID n'existe pas déjà** (`when: item.uid not in uid_check.results`).
+
+---
+
+### ✅ **Avantages**
+✔ **Évite les conflits d'UID** en **vérifiant avant de créer** les utilisateurs.  
+✔ **Utilisation sécurisée des mots de passe** grâce à `password_hash`.  
+✔ **Meilleure gestion des erreurs** avec des messages explicites.  
+
+---
+
+### **Recommandation**
+Pour éviter **tout conflit d'UID** (si celui-ci est déjà créé), utilisez le playbook ci-dessous qui réalise ces opérations: 
+
+✅ Vérifie si un UID est déjà utilisé
+✅ Génère dynamiquement un nouvel UID si le précédent est pris
+✅ Crée les utilisateurs avec un mot de passe sécurisé
+
+
+
+Voici le **playbook Ansible amélioré** qui :  
+✅ **Vérifie si un UID est déjà utilisé**  
+✅ **Génère dynamiquement un nouvel UID** si le précédent est pris  
+✅ **Crée les utilisateurs avec un mot de passe sécurisé**
+
+---
+
+### ✅ **Playbook Final : UID Dynamique en Cas de Conflit**
+```yaml
+- name: Générer des utilisateurs avec des mots de passe hashés
+  hosts: all
+  tasks:
+    - name: Générer un sel sécurisé
+      ansible.builtin.set_fact:
+        secure_salt: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=16') }}"
+
+    - name: Vérifier si l'UID existe déjà sur le système
+      shell: "id -u {{ item.uid }} || echo 'not found'"
+      register: uid_check
+      changed_when: false
+      failed_when: false
+      loop:
+        - { username: "alice1", uid: 1001 }
+        - { username: "bob1", uid: 1002 }
+        - { username: "charlie1", uid: 1003 }
+
+    - name: Générer un UID unique si nécessaire
+      shell: "shuf -i 2000-65000 -n 1"
+      register: unique_uid
+      when: item.stdout is not search('not found')
+      loop: "{{ uid_check.results }}"
+    
+    - name: Associer les UID dynamiques aux utilisateurs
+      set_fact:
+        user_list: >-
+          [{% for item in uid_check.results %}
+            {
+              "username": "{{ item.item.username }}",
+              "password": "{{ ('password' ~ loop.index) | password_hash('sha512', secure_salt) }}",
+              "uid": "{{ unique_uid.results[loop.index0].stdout if item.stdout is not search('not found') else item.item.uid }}"
+            }
+            {% if not loop.last %},{% endif %}
+          {% endfor %}
+          ]
+      loop: "{{ uid_check.results }}"
+      loop_control:
+        extended: true
+
+    - name: Créer des utilisateurs avec UID dynamiques si nécessaire
+      ansible.builtin.user:
+        name: "{{ item.username }}"
+        password: "{{ item.password }}"
+        uid: "{{ item.uid }}"
+      loop: "{{ user_list }}"
+```
+
+---
+
+### **Explication**
+1. **Vérification des UID existants**  
+   - `shell: id -u {{ item.uid }} || echo 'not found'`  
+   - Stocke les résultats dans `uid_check`.
+
+2. **Génération d'un UID unique si nécessaire**  
+   - Si l'UID est déjà pris (`not found` absent), un nouvel **UID aléatoire** entre `2000-65000` est généré via `shuf`.
+
+3. **Création d'une liste avec les UID corrigés**  
+   - On **remplace l'UID existant** par un **UID aléatoire** si nécessaire.
+   - `user_list` est une nouvelle liste d'utilisateurs avec **UID corrigés**.
+
+4. **Création des utilisateurs**  
+   - `ansible.builtin.user` crée les utilisateurs avec leurs **UID mis à jour**.
+
+---
+
+### ✅ **Avantages**
+✔ **Empêche tout conflit d'UID**  
+✔ **Génère un UID unique dynamiquement si nécessaire**  
+✔ **Utilise des mots de passe sécurisés avec un sel dynamique**  
+
+---
+
+###  **Recommandation**
+- 💡 Si vous ne voulez **aucun problème d’UID** et que l'UID statique **n’est pas obligatoire**, vous pouvez aussi supprimer `uid` du `ansible.builtin.user` et laisser le système gérer.
+- 💡 Avec ce playbook, les utilisateurs sont créés proprement avec un UID garanti unique !
+
+
 
 ---
 
