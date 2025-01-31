@@ -268,3 +268,110 @@ ansible all -i inventory.ini -m shell -a "ls -l /home/loopuser1 /home/loopuser2 
    ansible all -i inventory.ini -m shell -a "uptime"
    ```
 
+
+---------
+# Annexe2 - 
+-----
+
+- Pour entrer directement dans les **conteneurs Docker** et vérifier manuellement, voici les commandes essentielles.
+
+
+
+### **1. Lister les conteneurs en cours d'exécution**
+```bash
+docker ps
+```
+✅ **Attendu** : Affiche la liste des conteneurs avec leur ID, nom et statut.
+
+---
+
+### **2. Ouvrir un shell dans un conteneur spécifique**
+- Remplace `<container_id>` par l'ID ou le nom du conteneur concerné.
+```bash
+docker exec -it <container_id> /bin/bash
+```
+ou si le conteneur utilise `sh` au lieu de `bash` :
+```bash
+docker exec -it <container_id> /bin/sh
+```
+✅ **Attendu** : Ouvre un terminal interactif à l’intérieur du conteneur.
+
+---
+
+### **3. Vérifier manuellement les installations et configurations**
+Une fois à l'intérieur du conteneur, exécute les commandes suivantes pour vérifier :
+
+#### **✔️ Paquets installés**
+```bash
+which vim git curl
+```
+✅ **Attendu** : Affiche les chemins des binaires (`/usr/bin/vim`, etc.).
+
+#### **✔️ Paramètres SSH**
+```bash
+cat /etc/ssh/sshd_config | grep -E 'MaxSessions|UseDNS|ClientAliveInterval'
+```
+✅ **Attendu** : Affiche les lignes :
+```
+MaxSessions 10
+UseDNS no
+ClientAliveInterval 300
+```
+
+#### **✔️ Utilisateurs créés**
+```bash
+id loopuser1 && id loopuser2 && id loopuser3
+```
+✅ **Attendu** : Affiche les UID et GID des utilisateurs.
+
+#### **✔️ Fichiers copiés**
+```bash
+ls -l /tmp/
+```
+✅ **Attendu** : Les fichiers `.txt` copiés depuis `files/*.txt` doivent être visibles.
+
+#### **✔️ Répertoires et fichiers imbriqués**
+```bash
+ls -l /home/loopuser1 /home/loopuser2 /home/loopuser3
+```
+✅ **Attendu** : Chaque utilisateur doit avoir `notes.txt` et `README.md`.
+
+---
+
+### **4. Quitter le conteneur**
+Pour sortir du conteneur après la vérification :
+```bash
+exit
+```
+
+---
+
+### **5. Vérifier les logs d’un conteneur (en cas de problème)**
+```bash
+docker logs <container_id>
+```
+✅ **Utile pour** voir les erreurs liées au service SSH, aux installations ou aux scripts exécutés.
+
+---
+
+**💡 Astuce :** Si tu veux **accéder directement à un conteneur sans chercher son ID**, utilise :
+```bash
+docker exec -it $(docker ps -q | head -n 1) /bin/bash
+```
+Cela ouvrira un terminal dans le **premier conteneur actif** trouvé.
+
+---
+
+### **Résumé**
+| Objectif | Commande |
+|----------|---------|
+| Lister les conteneurs | `docker ps` |
+| Entrer dans un conteneur | `docker exec -it <container_id> /bin/bash` |
+| Vérifier paquets installés | `which vim git curl` |
+| Vérifier SSH config | `cat /etc/ssh/sshd_config | grep -E 'MaxSessions|UseDNS|ClientAliveInterval'` |
+| Vérifier utilisateurs | `id loopuser1 && id loopuser2 && id loopuser3` |
+| Vérifier fichiers `/tmp/` | `ls -l /tmp/` |
+| Vérifier répertoires `/home/` | `ls -l /home/loopuser1 /home/loopuser2 /home/loopuser3` |
+| Vérifier logs conteneur | `docker logs <container_id>` |
+| Sortir du conteneur | `exit` |
+
