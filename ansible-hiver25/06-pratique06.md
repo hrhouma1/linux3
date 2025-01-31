@@ -196,8 +196,12 @@ Cette **pratique** vous montre comment exploiter les boucles **`with_*`** dans A
 En adaptant cette approche à votre propre infrastructure, vous gagnerez en **clarté**, en **efficacité** et en **maintenabilité** pour vos playbooks Ansible. Bon apprentissage !
 
 ------------------------
-### Annexe 1 - Liste de **commandes AdHoc** à exécuter après chaque tâche pour vérifier que tout fonctionne correctement
 ------------------------
+------------------------
+# Annexe 1 - Vérifications
+------------------------
+
+> Liste de **commandes AdHoc** à exécuter après chaque tâche pour vérifier que tout fonctionne correctement
 
 ### **1. Vérifier l'installation des paquets (`with_items`)**
 ```bash
@@ -269,9 +273,11 @@ ansible all -i inventory.ini -m shell -a "ls -l /home/loopuser1 /home/loopuser2 
    ```
 
 
----------
+------------------------
+------------------------
+------------------------
 # Annexe2 - 
------
+------------------------
 
 - Pour entrer directement dans les **conteneurs Docker** et vérifier manuellement, voici les commandes essentielles.
 
