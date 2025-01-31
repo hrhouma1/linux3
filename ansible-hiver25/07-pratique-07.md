@@ -229,3 +229,139 @@ Ces concepts rendent vos playbooks plus dynamiques, modulaires, et puissants pou
 - [Documentation Ansible sur les Boucles](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)
 - [Filtres Jinja2 pour Manipuler les Données](https://jinja.palletsprojects.com/en/3.0.x/templates/)
 
+
+
+--------------------
+# Annexe 1 
+---------------------
+
+### ✅ **Commandes AdHoc pour Vérifier Chaque Étape du Playbook**
+
+Voici les commandes AdHoc à exécuter après chaque tâche pour s'assurer que les configurations ont bien été appliquées.
+
+
+
+## **1️⃣ Vérification de l'installation des paquets (`with_items`)**
+### **Commande**
+```bash
+ansible all -i inventory.ini -m shell -a "which vim git curl"
+```
+### **Résultat attendu**
+Les chemins vers `vim`, `git`, et `curl` doivent s'afficher, prouvant leur installation.
+
+---
+
+## **2️⃣ Vérification des paramètres SSH (`with_dict`)**
+### **Commande**
+```bash
+ansible all -i inventory.ini -m shell -a "grep -E 'MaxSessions|MaxStartups|AllowTcpForwarding' /etc/ssh/sshd_config"
+```
+### **Résultat attendu**
+Le terminal doit afficher :
+```
+MaxSessions 10
+MaxStartups 3
+AllowTcpForwarding yes
+```
+### **Redémarrer SSH si nécessaire**
+```bash
+ansible all -i inventory.ini -m service -a "name=sshd state=restarted"
+```
+
+---
+
+## **3️⃣ Vérification de la création des utilisateurs (`with_sequence`)**
+### **Commande**
+```bash
+ansible all -i inventory.ini -m shell -a "cat /etc/passwd | grep user"
+```
+### **Résultat attendu**
+Chaque utilisateur `user1`, `user2`, ..., `user5` doit apparaître avec son UID.
+
+---
+
+## **4️⃣ Vérification de la copie des fichiers (`with_fileglob`)**
+### **Commande**
+```bash
+ansible all -i inventory.ini -m shell -a "ls -l /tmp/"
+```
+### **Résultat attendu**
+Tous les fichiers `.txt` spécifiés dans `/path/to/files/` doivent être présents dans `/tmp/` des conteneurs.
+
+---
+
+## **5️⃣ Vérification des fichiers imbriqués (`with_nested`)**
+### **Commande**
+```bash
+ansible all -i inventory.ini -m shell -a "ls -l /home/user1 /home/user2"
+```
+### **Résultat attendu**
+Les fichiers suivants doivent être présents :
+```
+/home/user1/file1.txt
+/home/user1/file2.txt
+/home/user2/file1.txt
+/home/user2/file2.txt
+```
+
+---
+
+## **🔍 Vérification Manuelle en Entrant dans un Conteneur**
+Si tu veux entrer dans un conteneur et faire les vérifications directement :
+
+1. **Lister les conteneurs**  
+   ```bash
+   docker ps
+   ```
+   ✅ **Attendu :** Voir les IDs et noms des conteneurs en cours d'exécution.
+
+2. **Se connecter à un conteneur**  
+   ```bash
+   docker exec -it <container_id> /bin/bash
+   ```
+   Remplace `<container_id>` par l'ID réel.
+
+3. **Vérifier les paquets installés**  
+   ```bash
+   which vim git curl
+   ```
+
+4. **Vérifier les utilisateurs créés**  
+   ```bash
+   cat /etc/passwd | grep user
+   ```
+
+5. **Vérifier les fichiers copiés**  
+   ```bash
+   ls -l /tmp/
+   ```
+
+6. **Vérifier les répertoires et fichiers imbriqués**  
+   ```bash
+   ls -l /home/user1 /home/user2
+   ```
+
+7. **Quitter le conteneur**  
+   ```bash
+   exit
+   ```
+
+---
+
+## **📌 Vérification Automatisée sur Tous les Conteneurs**
+Si tu veux automatiser la vérification sur **tous les conteneurs**, exécute :
+
+```bash
+for id in $(docker ps -q); do 
+    echo "=== Vérification dans $id ==="; 
+    docker exec -it $id ls -l /tmp/;
+    docker exec -it $id grep -E 'MaxSessions|MaxStartups|AllowTcpForwarding' /etc/ssh/sshd_config;
+    docker exec -it $id cat /etc/passwd | grep user;
+    echo "===========================";
+done
+```
+✅ **Attendu :** Un résumé des vérifications pour chaque conteneur.
+
+---
+
+### 🚀 **Avec ces commandes, nous pouvons valider chaque étape de ton playbook et t'assurer qu'Ansible a bien appliqué les configurations !**
