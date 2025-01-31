@@ -434,18 +434,30 @@ Ces techniques vous permettent de rendre vos playbooks plus dynamiques et effica
 Vous avez amélioré vos compétences en Ansible en apprenant à utiliser les boucles pour automatiser des tâches répétitives. Continuez à explorer ces fonctionnalités pour rendre vos playbooks encore plus puissants et efficaces.
 
 
+
+
+
+
+
 ---
-# Annexe 1 - résolution d'un problème
+
+# 🛠️ Annexe 1 - Résolution d'un problème
 ---
 
-- Je vous propose une **approche incrémenatle progressive** en trois playbooks pour vous montrer comment résoudre l'erreur liée à l'absence du module `passlib`. 
-- Exécutez ces 3 playbooks
+L'objectif est de démontrer **progressivement** comment résoudre les erreurs rencontrées lors de la création d'utilisateurs avec Ansible, notamment :  
+- **L'absence du module `passlib`** empêche le hashage des mots de passe.  
+- **L'absence de `pip3`** empêche l'installation automatique de `passlib`.  
 
+Nous allons exécuter **six playbooks** pour identifier et corriger ces erreurs.
 
-### **1️⃣ Playbook 1 : Provoquer l'erreur (avec le hash)**
-Ce playbook tentera d'ajouter des utilisateurs avec un mot de passe hashé en SHA-512, mais il échouera car `passlib` n'est pas installé.
+---
 
-#### 🔹 **Créer un fichier `add-users-error.yml`**
+## 🎯 **Première partie : Problème de hashage des mots de passe (`passlib` manquant)**
+
+### **🔴 1️⃣ Playbook 1 : Observer l'erreur liée au hashage (`passlib` manquant)**
+Ce premier playbook déclenche volontairement une **erreur** en tentant de hasher un mot de passe avec `password_hash('sha512')`, alors que le module `passlib` n'est pas installé.
+
+#### **Création du fichier `add-users-error.yml`**
 ```yaml
 ---
 - name: Ajouter Plusieurs Utilisateurs (Avec Erreur)
@@ -473,22 +485,22 @@ Ce playbook tentera d'ajouter des utilisateurs avec un mot de passe hashé en SH
       loop: "{{ db_users }}"
 ```
 
-#### **Exécuter ce playbook** :
+#### **Exécution**
 ```bash
 ansible-playbook -i inventory.ini add-users-error.yml
 ```
 
-🔴 **Erreur attendue** :  
+🔴 **Erreur attendue** :
 ```
 No module named 'passlib'. Unable to encrypt nor hash, passlib must be installed.
 ```
 
 ---
 
-### **2️⃣ Playbook 2 : Correction temporaire (Sans le hash)**
-Pour éviter l'erreur, nous allons **enlever la ligne de hashage** et ajouter les utilisateurs avec un mot de passe en clair (non sécurisé, mais utile pour tester).
+### **🟡 2️⃣ Playbook 2 : Contourner l'erreur en retirant le hashage**
+Dans ce playbook, **le hashage est temporairement supprimé** pour vérifier que l'erreur disparaît.
 
-#### 🔹 **Créer un fichier `add-users-no-hash.yml`**
+#### **Création du fichier `add-users-no-hash.yml`**
 ```yaml
 ---
 - name: Ajouter Plusieurs Utilisateurs (Sans Hash)
@@ -516,20 +528,20 @@ Pour éviter l'erreur, nous allons **enlever la ligne de hashage** et ajouter le
       loop: "{{ db_users }}"
 ```
 
-#### **Exécuter ce playbook** :
+#### **Exécution**
 ```bash
 ansible-playbook -i inventory.ini add-users-no-hash.yml
 ```
 
 🟢 **Résultat attendu** :  
-Les utilisateurs seront créés **mais sans hashage du mot de passe**, ce qui **n'est pas sécurisé**.
+Les utilisateurs sont créés **mais sans hashage**, ce qui **n'est pas sécurisé**.
 
 ---
 
-### **3️⃣ Playbook 3 : Solution complète (Installer `passlib` et Hasher le mot de passe)**
-Nous allons maintenant **installer `passlib` avec pip** avant de tenter à nouveau d'ajouter les utilisateurs avec un mot de passe hashé.
+### **🟢 3️⃣ Playbook 3 : Installation de `passlib` et hashage sécurisé**
+Ce playbook installe `passlib` avec `pip3`, puis ajoute les utilisateurs avec un mot de passe sécurisé.
 
-#### 🔹 **Créer un fichier `add-users-fixed.yml`**
+#### **Création du fichier `add-users-fixed.yml`**
 ```yaml
 ---
 - name: Ajouter Plusieurs Utilisateurs (Avec Hash après installation de passlib)
@@ -562,28 +574,126 @@ Nous allons maintenant **installer `passlib` avec pip** avant de tenter à nouve
       loop: "{{ db_users }}"
 ```
 
-#### **Exécuter ce playbook** :
+#### **Exécution**
 ```bash
 ansible-playbook -i inventory.ini add-users-fixed.yml
 ```
 
-🟢 **Résultat attendu** :  
-- Le module `passlib` sera installé avec `pip`.
-- Les utilisateurs seront créés avec un mot de passe **hashé en SHA-512**.
+🔴 **Nouvelle erreur possible** :  
+```
+Unable to find pip3
+```
 
 ---
 
-## 🎯 **Résumé de la progression pédagogique**
+## 🎯 **Deuxième partie : Problème d’installation de `pip3`**
+
+### **🔎 4️⃣ Playbook 4 : Vérifier si `pip3` est installé**
+Avant d’installer `passlib`, il est nécessaire de s’assurer que `pip3` est bien présent.
+
+#### **Création du fichier `check-pip.yml`**
+```yaml
+---
+- name: Vérifier la présence de pip3
+  hosts: database
+  become: yes
+  tasks:
+    - name: Vérifier si pip3 est installé
+      command: which pip3
+      register: pip3_check
+      ignore_errors: yes
+
+    - name: Afficher le résultat
+      debug:
+        msg: "{{ pip3_check.stdout if pip3_check.rc == 0 else 'pip3 non trouvé' }}"
+```
+
+#### **Exécution**
+```bash
+ansible-playbook -i inventory.ini check-pip.yml
+```
+
+🔴 **Si `pip3` est absent**, il faudra l’installer.
+
+---
+
+### **🛠 5️⃣ Playbook 5 : Installer `pip3` si nécessaire**
+Si `pip3` est absent, ce playbook l’installe.
+
+#### **Création du fichier `install-pip.yml`**
+```yaml
+---
+- name: Installer pip3 si nécessaire
+  hosts: database
+  become: yes
+  tasks:
+    - name: Installer les prérequis
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python3
+        - python3-pip
+
+    - name: Vérifier l'installation de pip3
+      command: which pip3
+      register: pip3_check
+
+    - name: Afficher le chemin de pip3
+      debug:
+        msg: "pip3 est installé à : {{ pip3_check.stdout }}"
+```
+
+#### **Exécution**
+```bash
+ansible-playbook -i inventory.ini install-pip.yml
+```
+
+---
+
+### **✅ 6️⃣ Playbook 6 : Installer `passlib` après `pip3`**
+Enfin, `passlib` peut être installé correctement.
+
+#### **Création du fichier `install-passlib.yml`**
+```yaml
+---
+- name: Installer passlib après installation de pip3
+  hosts: database
+  become: yes
+  tasks:
+    - name: Vérifier si pip3 est installé
+      command: which pip3
+      register: pip3_check
+      ignore_errors: yes
+
+    - name: Installer passlib avec pip3
+      pip:
+        name: passlib
+        executable: "{{ pip3_check.stdout | default('/usr/bin/pip3') }}"
+        state: present
+      when: pip3_check.rc == 0
+```
+
+#### **Exécution**
+```bash
+ansible-playbook -i inventory.ini install-passlib.yml
+```
+
+---
+
+## 📌 **Résumé de la progression**
+### **🔹 Partie 1 : Hashage des mots de passe**
 | 🔢 | Playbook | Résultat |
 |----|----------|----------|
-| **1️⃣** | `add-users-error.yml` | **Erreur** : `passlib` manquant |
-| **2️⃣** | `add-users-no-hash.yml` | **Succès** mais mot de passe en clair (non sécurisé) |
-| **3️⃣** | `add-users-fixed.yml` | **Succès** avec hashage après installation de `passlib` |
+| **4️** | `add-users-error.yml` | ❌ Erreur (`passlib` absent) |
+| **5️⃣** | `add-users-no-hash.yml` | ⚠️ Succès mais mot de passe non sécurisé |
+| **6️⃣** | `add-users-fixed.yml` | ❌ Erreur (`pip3` absent) |
 
----
+### **🔹 Partie 2 : Installation de `pip3` et `passlib`**
+| 🔢 | Playbook | Résultat |
+|----|----------|----------|
+| **7️⃣** | `check-pip.yml` | Vérifie la présence de `pip3` |
+| **8️⃣** | `install-pip.yml` | Installe `pip3` si absent |
+| **9️⃣** | `install-passlib.yml` | Installe `passlib` avec `pip3` |
 
-### **📚 Points Clés**
-1. **Comprendre les erreurs** : Lorsqu'on utilise des fonctions avancées (comme `password_hash`), il faut vérifier que les modules nécessaires sont installés.
-2. **Éviter les mots de passe en clair** : On a vu que `add-users-no-hash.yml` fonctionne, mais ce n'est pas une bonne pratique.
-3. **Automatiser la correction** : Grâce à `pip`, nous avons pu ajouter automatiquement le module manquant et corriger l'erreur sans intervention manuelle.
-
+🚀 **Cette approche assure une installation progressive et sans erreur.**
