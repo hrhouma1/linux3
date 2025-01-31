@@ -194,3 +194,77 @@ Cette **pratique** vous montre comment exploiter les boucles **`with_*`** dans A
 - **`with_nested`** : utile lorsque vous souhaitez créer des combinaisons multiples de répertoires, fichiers, ou paramètres (ex. pour générer un grand nombre de configurations).
 
 En adaptant cette approche à votre propre infrastructure, vous gagnerez en **clarté**, en **efficacité** et en **maintenabilité** pour vos playbooks Ansible. Bon apprentissage !
+
+------------------------
+### Annexe 1 - Liste de **commandes AdHoc** à exécuter après chaque tâche pour vérifier que tout fonctionne correctement
+------------------------
+
+### **1. Vérifier l'installation des paquets (`with_items`)**
+```bash
+ansible all -i inventory.ini -m shell -a "which vim && which git && which curl"
+```
+✅ **Attendu :** Les chemins vers `vim`, `git`, et `curl` s'affichent s'ils sont bien installés.
+
+---
+
+### **2. Vérifier la configuration des paramètres SSH (`with_dict`)**
+```bash
+ansible all -i inventory.ini -m command -a "grep -E 'MaxSessions|UseDNS|ClientAliveInterval' /etc/ssh/sshd_config"
+```
+✅ **Attendu :** Les lignes suivantes doivent apparaître :
+```
+MaxSessions 10
+UseDNS no
+ClientAliveInterval 300
+```
+⚠ **Optionnel** : Redémarrer SSH si nécessaire
+```bash
+ansible all -i inventory.ini -m service -a "name=sshd state=restarted"
+```
+
+---
+
+### **3. Vérifier les utilisateurs créés (`with_sequence`)**
+```bash
+ansible all -i inventory.ini -m shell -a "id loopuser1; id loopuser2; id loopuser3"
+```
+✅ **Attendu :** Chaque utilisateur a un `uid` commençant par `100X`.
+
+---
+
+### **4. Vérifier que les fichiers `.txt` ont été copiés (`with_fileglob`)**
+```bash
+ansible all -i inventory.ini -m shell -a "ls -l /tmp/"
+```
+✅ **Attendu :** Tous les fichiers `.txt` doivent être listés dans `/tmp/`.
+
+---
+
+### **5. Vérifier les répertoires et fichiers imbriqués (`with_nested`)**
+```bash
+ansible all -i inventory.ini -m shell -a "ls -l /home/loopuser1 /home/loopuser2 /home/loopuser3"
+```
+✅ **Attendu :**  
+- `/home/loopuser1/notes.txt`
+- `/home/loopuser1/README.md`
+- `/home/loopuser2/notes.txt`
+- `/home/loopuser2/README.md`
+- `/home/loopuser3/notes.txt`
+- `/home/loopuser3/README.md`
+
+---
+
+### **Commandes complémentaires de débogage**
+1. **Vérifier la connectivité avec tous les hôtes** :
+   ```bash
+   ansible all -i inventory.ini -m ping
+   ```
+2. **Afficher l'utilisation du disque** :
+   ```bash
+   ansible all -i inventory.ini -m shell -a "df -h"
+   ```
+3. **Vérifier le temps de fonctionnement des machines** :
+   ```bash
+   ansible all -i inventory.ini -m shell -a "uptime"
+   ```
+
