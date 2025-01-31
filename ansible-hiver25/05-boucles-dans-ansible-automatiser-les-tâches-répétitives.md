@@ -167,6 +167,9 @@ Dans ce chapitre, nous allons explorer l'utilisation des **boucles** dans Ansibl
    - **`password_hash('sha512')`** : Hash le mot de passe en utilisant l'algorithme SHA-512 pour la sécurité.
    - **`loop: "{{ db_users }}"`** : Itère sur chaque utilisateur dans la liste `db_users`.
 
+
+
+
 3. **Enregistrer et quitter l'éditeur**.
 
 4. **Exécuter le playbook** :
@@ -184,6 +187,11 @@ Dans ce chapitre, nous allons explorer l'utilisation des **boucles** dans Ansibl
    ```
 
    **Remarque :** La commande `getent passwd` affiche les entrées des utilisateurs spécifiés.
+
+# ❌ Annexe 1
+
+**❌ Erreur détectée ? ⚠️ Pas de panique, consulte l'annexe 1. ✅** 
+
 
 ---
 
@@ -424,4 +432,158 @@ Ces techniques vous permettent de rendre vos playbooks plus dynamiques et effica
 ## 🙌 Félicitations !
 
 Vous avez amélioré vos compétences en Ansible en apprenant à utiliser les boucles pour automatiser des tâches répétitives. Continuez à explorer ces fonctionnalités pour rendre vos playbooks encore plus puissants et efficaces.
+
+
+---
+# Annexe 1 - résolution d'un problème
+---
+
+- Je vous propose une **approche incrémenatle progressive** en trois playbooks pour vous montrer étudiants comment résoudre l'erreur liée à l'absence du module `passlib`. 
+- Exécutez ces 3 playbooks
+
+
+### **1️⃣ Playbook 1 : Provoquer l'erreur (avec le hash)**
+Ce playbook tentera d'ajouter des utilisateurs avec un mot de passe hashé en SHA-512, mais il échouera car `passlib` n'est pas installé.
+
+#### 🔹 **Créer un fichier `add-users-error.yml`**
+```yaml
+---
+- name: Ajouter Plusieurs Utilisateurs (Avec Erreur)
+  hosts: database
+  become: yes
+  vars:
+    db_users:
+      - username: "alice"
+        password: "password1"
+        uid: 1001
+      - username: "bob"
+        password: "password2"
+        uid: 1002
+      - username: "charlie"
+        password: "password3"
+        uid: 1003
+  tasks:
+    - name: Créer les Utilisateurs (Hashé) ❌
+      user:
+        name: "{{ item.username }}"
+        uid: "{{ item.uid }}"
+        password: "{{ item.password | password_hash('sha512') }}"
+        shell: "/bin/bash"
+        state: present
+      loop: "{{ db_users }}"
+```
+
+#### **Exécuter ce playbook** :
+```bash
+ansible-playbook -i inventory.ini add-users-error.yml
+```
+
+🔴 **Erreur attendue** :  
+```
+No module named 'passlib'. Unable to encrypt nor hash, passlib must be installed.
+```
+
+---
+
+### **2️⃣ Playbook 2 : Correction temporaire (Sans le hash)**
+Pour éviter l'erreur, nous allons **enlever la ligne de hashage** et ajouter les utilisateurs avec un mot de passe en clair (non sécurisé, mais utile pour tester).
+
+#### 🔹 **Créer un fichier `add-users-no-hash.yml`**
+```yaml
+---
+- name: Ajouter Plusieurs Utilisateurs (Sans Hash)
+  hosts: database
+  become: yes
+  vars:
+    db_users:
+      - username: "alice"
+        password: "password1"
+        uid: 1001
+      - username: "bob"
+        password: "password2"
+        uid: 1002
+      - username: "charlie"
+        password: "password3"
+        uid: 1003
+  tasks:
+    - name: Créer les Utilisateurs (Sans Hash) ✅
+      user:
+        name: "{{ item.username }}"
+        uid: "{{ item.uid }}"
+        password: "{{ item.password }}"
+        shell: "/bin/bash"
+        state: present
+      loop: "{{ db_users }}"
+```
+
+#### **Exécuter ce playbook** :
+```bash
+ansible-playbook -i inventory.ini add-users-no-hash.yml
+```
+
+🟢 **Résultat attendu** :  
+Les utilisateurs seront créés **mais sans hashage du mot de passe**, ce qui **n'est pas sécurisé**.
+
+---
+
+### **3️⃣ Playbook 3 : Solution complète (Installer `passlib` et Hasher le mot de passe)**
+Nous allons maintenant **installer `passlib` avec pip** avant de tenter à nouveau d'ajouter les utilisateurs avec un mot de passe hashé.
+
+#### 🔹 **Créer un fichier `add-users-fixed.yml`**
+```yaml
+---
+- name: Ajouter Plusieurs Utilisateurs (Avec Hash après installation de passlib)
+  hosts: database
+  become: yes
+  vars:
+    db_users:
+      - username: "alice"
+        password: "password1"
+        uid: 1001
+      - username: "bob"
+        password: "password2"
+        uid: 1002
+      - username: "charlie"
+        password: "password3"
+        uid: 1003
+  tasks:
+    - name: Installer `passlib` avec pip 🛠️
+      ansible.builtin.pip:
+        name: passlib
+        state: present
+
+    - name: Créer les Utilisateurs (Hashé) ✅
+      user:
+        name: "{{ item.username }}"
+        uid: "{{ item.uid }}"
+        password: "{{ item.password | password_hash('sha512') }}"
+        shell: "/bin/bash"
+        state: present
+      loop: "{{ db_users }}"
+```
+
+#### **Exécuter ce playbook** :
+```bash
+ansible-playbook -i inventory.ini add-users-fixed.yml
+```
+
+🟢 **Résultat attendu** :  
+- Le module `passlib` sera installé avec `pip`.
+- Les utilisateurs seront créés avec un mot de passe **hashé en SHA-512**.
+
+---
+
+## 🎯 **Résumé de la progression pédagogique**
+| 🔢 | Playbook | Résultat |
+|----|----------|----------|
+| **1️⃣** | `add-users-error.yml` | **Erreur** : `passlib` manquant |
+| **2️⃣** | `add-users-no-hash.yml` | **Succès** mais mot de passe en clair (non sécurisé) |
+| **3️⃣** | `add-users-fixed.yml` | **Succès** avec hashage après installation de `passlib` |
+
+---
+
+### **📚 Points Clés**
+1. **Comprendre les erreurs** : Lorsqu'on utilise des fonctions avancées (comme `password_hash`), il faut vérifier que les modules nécessaires sont installés.
+2. **Éviter les mots de passe en clair** : On a vu que `add-users-no-hash.yml` fonctionne, mais ce n'est pas une bonne pratique.
+3. **Automatiser la correction** : Grâce à `pip`, nous avons pu ajouter automatiquement le module manquant et corriger l'erreur sans intervention manuelle.
 
