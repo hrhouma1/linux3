@@ -251,9 +251,8 @@ Une autre approche consiste à explorer la **pratique 8**, qui vous aidera à vo
 
 ## 🚀 **Conclusion**  
 - ✅ **Solution 1** : Supprimer `password_hash` fonctionne, mais ce n'est pas sécurisé.  
-- ✅ **Solution 2** : Utiliser `password_hash` avec un sel est une approche plus sécurisée.  
-- ✅ **Solution 3** : Générer les mots de passe avec `mkpasswd` permet d’éviter de stocker des données sensibles en clair (*hors du périmètre de ce cours*).  
-- ✅ **Solution 4** : Consultez la **pratique 8** pour approfondir vos compétences en résolution de problèmes.
+- ✅ **Solution 2** : Générer les mots de passe avec `mkpasswd` permet d’éviter de stocker des données sensibles en clair (*hors du périmètre de ce cours*).  
+- ✅ **Solution 3** : Consultez la **pratique 8** pour approfondir vos compétences en résolution de problèmes.
 
 💡 **Recommandation** : Utilisez `mkpasswd` pour générer des mots de passe sécurisés et **ne stockez jamais de mots de passe en clair** dans vos fichiers Ansible.
 
