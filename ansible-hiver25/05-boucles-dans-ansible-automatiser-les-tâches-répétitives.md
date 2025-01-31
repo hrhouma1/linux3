@@ -697,3 +697,80 @@ ansible-playbook -i inventory.ini install-passlib.yml
 | **9️⃣** | `install-passlib.yml` | Installe `passlib` avec `pip3` |
 
 🚀 **Cette approche assure une installation progressive et sans erreur.**
+
+
+
+# Annexe 2
+
+
+
+```yaml
+---
+- name: Ajouter Plusieurs Utilisateurs
+  hosts: all
+  become: yes
+  vars:
+    db_users:
+      - username: "alice"
+        password: "password1"
+        uid: 1001
+      - username: "bob"
+        password: "password2"
+        uid: 1002
+      - username: "charlie"
+        password: "password3"
+        uid: 1003
+
+  tasks:
+    - name: Installer python3-passlib sur Ubuntu/Debian
+      apt:
+        name: python3-passlib
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Installer python3-passlib sur AlmaLinux
+      dnf:
+        name: python3-passlib
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Créer les Utilisateurs sur Ubuntu/Debian
+      user:
+        name: "{{ item.username }}"
+        uid: "{{ item.uid }}"
+        password: "{{ item.password | password_hash('sha512') }}"
+        shell: "/bin/bash"
+        state: present
+      loop: "{{ db_users }}"
+      when: ansible_os_family == "Debian"
+
+    - name: Créer les Utilisateurs sur AlmaLinux
+      user:
+        name: "{{ item.username }}"
+        uid: "{{ item.uid }}"
+        password: "{{ item.password | password_hash('sha512') }}"
+        shell: "/bin/bash"
+        state: present
+      loop: "{{ db_users }}"
+      when: ansible_os_family == "RedHat"
+```
+
+Cette version du playbook :
+
+1. Installe d'abord `python3-passlib` selon le système d'exploitation
+2. Utilise des conditions `when` pour exécuter les tâches appropriées selon la famille du système d'exploitation
+3. Gère séparément les systèmes basés sur Debian (Ubuntu/Debian) et RedHat (AlmaLinux)
+
+Pour l'utiliser :
+
+1. Créez un fichier inventory.ini avec vos nœuds
+2. Exécutez le playbook avec :
+```bash
+ansible-playbook -i inventory.ini add-users.yml
+```
+
+Pour vérifier que les utilisateurs ont été créés correctement :
+```bash
+ansible all -i inventory.ini -m shell -a "getent passwd alice bob charlie"
+```
