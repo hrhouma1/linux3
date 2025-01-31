@@ -188,9 +188,114 @@ Dans ce chapitre, nous allons explorer l'utilisation des **boucles** dans Ansibl
 
    **Remarque :** La commande `getent passwd` affiche les entrées des utilisateurs spécifiés.
 
-# ❌ Annexe 1
 
-**❌ Erreur détectée ? ⚠️ Pas de panique, consulte l'annexe 1. ✅** 
+
+
+**❌ Erreur détectée ? Pas de panique, analysez le message d'erreur et appliquez la correction adaptée.**  
+
+L'erreur provient de l'utilisation de `password_hash('sha512')` pour le hashage du mot de passe. Ansible ne parvient pas à générer correctement un hash avec cette méthode, ce qui empêche la création des utilisateurs.
+
+## 🔍 **Solution 1 : Retirer `password_hash('sha512')`**
+Une première solution consiste à retirer `| password_hash('sha512')` dans la ligne du mot de passe :
+
+### ✅ **Playbook corrigé : Suppression du hashage**
+```yaml
+---
+- name: Ajouter Plusieurs Utilisateurs
+  hosts: database
+  become: yes
+  vars:
+    db_users:
+      - username: "alice"
+        password: "password1"
+        uid: 1001
+      - username: "bob"
+        password: "password2"
+        uid: 1002
+      - username: "charlie"
+        password: "password3"
+        uid: 1003
+  tasks:
+    - name: Créer les Utilisateurs
+      user:
+        name: "{{ item.username }}"
+        uid: "{{ item.uid }}"
+        password: "{{ item.password }}"
+        shell: "/bin/bash"
+        state: present
+      loop: "{{ db_users }}"
+```
+
+
+## ✅ **Exécuter et Vérifier**
+Une fois le playbook mis à jour, exécutez les commandes suivantes :
+
+```bash
+ansible-playbook -i inventory.ini add-users.yml
+ansible database -m command -a "getent passwd alice bob charlie" -i inventory.ini
+```
+
+⚠️ **Problème avec cette solution** :  
+Le mot de passe est stocké en clair dans `/etc/shadow`, ce qui pose un risque de sécurité. Il est recommandé d'utiliser un mot de passe chiffré.
+
+---
+
+## 🔍 **Solution 2 : Générer un Hash Sécurisé**
+Une meilleure approche consiste à pré-générer un mot de passe chiffré en utilisant `mkpasswd` :
+
+### ✅ **Playbook avec mot de passe sécurisé**
+```yaml
+---
+- name: Ajouter Plusieurs Utilisateurs
+  hosts: database
+  become: yes
+  vars:
+    db_users:
+      - username: "alice"
+        password: "{{ 'password1' | password_hash('sha512', 'random_salt') }}"
+        uid: 1001
+      - username: "bob"
+        password: "{{ 'password2' | password_hash('sha512', 'random_salt') }}"
+        uid: 1002
+      - username: "charlie"
+        password: "{{ 'password3' | password_hash('sha512', 'random_salt') }}"
+        uid: 1003
+  tasks:
+    - name: Créer les Utilisateurs avec un mot de passe chiffré
+      user:
+        name: "{{ item.username }}"
+        uid: "{{ item.uid }}"
+        password: "{{ item.password }}"
+        shell: "/bin/bash"
+        state: present
+      loop: "{{ db_users }}"
+```
+
+✅ **Pourquoi cette méthode ?**  
+- Le mot de passe est stocké de manière sécurisée.
+- `password_hash('sha512', 'random_salt')` garantit un bon chiffrement.
+
+Voici une version améliorée et plus fluide de votre texte :
+
+---
+
+## 🔍 **Solution 3 : Génération du Hash à l’Exécution**  
+Une approche alternative consiste à générer les mots de passe hashés avant d’exécuter le playbook en utilisant `mkpasswd`. Cette méthode permet d'éviter de stocker les mots de passe en clair dans les fichiers Ansible.  
+*(Cette solution dépasse le cadre de ce cours.)*
+
+## 🔍 **Solution 4 : Pratique 8 – Approche de Résolution de Problèmes**  
+Une autre approche consiste à explorer la **pratique 8**, qui vous aidera à vous familiariser avec des stratégies efficaces pour résoudre ce type de problème.
+
+---
+
+## 🚀 **Conclusion**  
+- ✅ **Solution 1** : Supprimer `password_hash` fonctionne, mais ce n'est pas sécurisé.  
+- ✅ **Solution 2** : Utiliser `password_hash` avec un sel est une approche plus sécurisée.  
+- ✅ **Solution 3** : Générer les mots de passe avec `mkpasswd` permet d’éviter de stocker des données sensibles en clair (*hors du périmètre de ce cours*).  
+- ✅ **Solution 4** : Consultez la **pratique 8** pour approfondir vos compétences en résolution de problèmes.
+
+💡 **Recommandation** : Utilisez `mkpasswd` pour générer des mots de passe sécurisés et **ne stockez jamais de mots de passe en clair** dans vos fichiers Ansible.
+
 
 
 ---
