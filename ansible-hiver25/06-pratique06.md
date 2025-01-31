@@ -289,6 +289,9 @@ docker ps
 ```
 ✅ **Attendu** : Affiche la liste des conteneurs avec leur ID, nom et statut.
 
+
+
+
 ---
 
 ### **2. Ouvrir un shell dans un conteneur spécifique**
@@ -301,6 +304,15 @@ ou si le conteneur utilise `sh` au lieu de `bash` :
 docker exec -it <container_id> /bin/sh
 ```
 ✅ **Attendu** : Ouvre un terminal interactif à l’intérieur du conteneur.
+
+
+
+
+
+
+
+
+
 
 ---
 
@@ -342,6 +354,29 @@ ls -l /home/loopuser1 /home/loopuser2 /home/loopuser3
 ```
 ✅ **Attendu** : Chaque utilisateur doit avoir `notes.txt` et `README.md`.
 
+
+
+
+
+
+### Résumé point 3 - Vérifier l'installation des paquets**
+```bash
+which vim git curl
+```
+ou
+```bash
+dpkg -l | grep -E "vim|git|curl"  # Pour Debian/Ubuntu
+rpm -qa | grep -E "vim|git|curl"  # Pour CentOS/RHEL
+```
+✅ **Attendu :** Les paquets doivent être installés.
+
+
+
+
+
+
+
+
 ---
 
 ### **4. Quitter le conteneur**
@@ -366,6 +401,50 @@ docker exec -it $(docker ps -q | head -n 1) /bin/bash
 ```
 Cela ouvrira un terminal dans le **premier conteneur actif** trouvé.
 
+
+
+
+
+### Vérifier le fichier de configuration SSH
+```bash
+cat /etc/ssh/sshd_config | grep -E 'MaxSessions|UseDNS|ClientAliveInterval'
+```
+✅ **Attendu :**
+```
+MaxSessions 10
+UseDNS no
+ClientAliveInterval 300
+```
+
+---
+
+### Vérifier les utilisateurs créés
+```bash
+cat /etc/passwd | grep loopuser
+```
+✅ **Attendu :**  
+Chaque utilisateur (`loopuser1`, `loopuser2`, `loopuser3`) doit apparaître dans `/etc/passwd`.
+
+---
+
+### Vérifier les fichiers copiés dans `/tmp`
+```bash
+ls -l /tmp/
+```
+✅ **Attendu :** Tous les fichiers `.txt` doivent être présents.
+
+---
+
+
+### Vérifier les fichiers imbriqués dans `/home`
+```bash
+ls -l /home/loopuser1
+ls -l /home/loopuser2
+ls -l /home/loopuser3
+```
+✅ **Attendu :** `notes.txt` et `README.md` doivent être dans chaque dossier utilisateur.
+
+
 ---
 
 ### **Résumé**
@@ -380,4 +459,49 @@ Cela ouvrira un terminal dans le **premier conteneur actif** trouvé.
 | Vérifier répertoires `/home/` | `ls -l /home/loopuser1 /home/loopuser2 /home/loopuser3` |
 | Vérifier logs conteneur | `docker logs <container_id>` |
 | Sortir du conteneur | `exit` |
+
+
+
+
+### **Script rapide pour tester sur tous les conteneurs**
+Si tu veux tester **directement dans tous les conteneurs**, tu peux exécuter :
+```bash
+for id in $(docker ps -q); do 
+    echo "=== Vérification dans $id ==="; 
+    docker exec -it $id ls -l /tmp;
+    docker exec -it $id cat /etc/ssh/sshd_config | grep -E 'MaxSessions|UseDNS|ClientAliveInterval';
+    docker exec -it $id cat /etc/passwd | grep loopuser;
+    echo "===========================";
+done
+```
+✅ **Attendu :** Un résumé des vérifications sur tous les conteneurs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
