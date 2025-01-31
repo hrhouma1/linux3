@@ -965,12 +965,7 @@ Le Playbook ci-dessous :
       user:
         name: "{{ item.username }}"
         uid: "{{ item.uid }}"
-        password: >-
-          {{
-            item.password | password_hash('sha512')
-            if passlib_check.rc == 0
-            else item.password
-          }}
+        password: "{{ item.password | password_hash('sha512') if passlib_check.rc == 0 else item.password }}"
         shell: "/bin/bash"
         state: present
       loop: "{{ db_users }}"
