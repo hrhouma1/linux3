@@ -438,7 +438,7 @@ Vous avez amélioré vos compétences en Ansible en apprenant à utiliser les bo
 # Annexe 1 - résolution d'un problème
 ---
 
-- Je vous propose une **approche incrémenatle progressive** en trois playbooks pour vous montrer étudiants comment résoudre l'erreur liée à l'absence du module `passlib`. 
+- Je vous propose une **approche incrémenatle progressive** en trois playbooks pour vous montrer comment résoudre l'erreur liée à l'absence du module `passlib`. 
 - Exécutez ces 3 playbooks
 
 
