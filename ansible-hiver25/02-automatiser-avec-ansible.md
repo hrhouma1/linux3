@@ -594,3 +594,19 @@ Nous avons réussi à :
 - **Gestion des Services :** Le nom du service Apache diffère selon la distribution (`apache2` vs `httpd`).
 
 
+------------------
+# Annexe:
+--------------------
+
+En cas de problèmes de connectivité : 
+
+1 - exécutez 
+
+```bash
+rm -f ~/.ssh/known_hosts
+```
+
+2 - Ensuite, refaire les manipulations pour vous connecter via ssh 
+
+3 - Voir le dossier troubleshooting
+
