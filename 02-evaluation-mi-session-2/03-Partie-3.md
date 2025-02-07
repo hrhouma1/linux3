@@ -2,7 +2,7 @@
 # Partie 3
 ---
 
-**Trouvez l'erreur !** 
+**Trouvez les erreurs !** 
 
 - Ce **playbook Ansible** contient **10 erreurs** qui pourraient empêcher son exécution correcte ou entraîner des comportements inattendus. 
 - Votre mission est de les identifier une par une, d'expliquer pourquoi elles posent problème et de proposer une correction adaptée. 
