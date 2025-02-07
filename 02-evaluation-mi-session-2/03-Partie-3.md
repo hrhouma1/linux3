@@ -34,14 +34,14 @@ Votre mission :
       state: present
 
     - name: Démarrer Apache
-      service_wrong:
+      service_gp_update:
         name: apache2
         state: started
 
     - name: Exécuter une commande shell
       shell: echo "Déploiement terminé
 
-    - name: Copier un fichier avec une variable inexistante
+    - name: Copier un fichier 
       copy:
         src: "{{ chemin_source }}"
         dest: "/etc/config.conf"
