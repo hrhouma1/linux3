@@ -188,11 +188,37 @@ sudo certbot certonly --standalone -d [votre_domaine]
 
 Ensuite, configurez Cockpit pour utiliser ce certificat.  
 
-### **8.2. Gestion des accès utilisateurs**  
+
+
+### **8.2. Il vous faut un utilisateur**
+```bash
+sudo -s
+sudo adduser cockpitadmin # Ajoutez admin comme mot de passe
+sudo usermod -aG sudo cockpitadmin
+echo "cockpitadmin ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/cockpitadmin
+```
+
+
+### **8.3. Gestion des accès utilisateurs**  
 Pour accorder l’accès Cockpit uniquement à certains utilisateurs, ajoutez-les au groupe **cockpit** :  
 
 ```bash
-sudo usermod -aG cockpit [nom_utilisateur]
+sudo usermod -aG cockpit [nom_utilisateur] 
+```
+
+# Dans notre cas cockpitadmin
+```bash
+sudo usermod -aG sudo cockpitadmin
+```
+
+### **8.4. Ajoutez l'utilisateur cockpitadmin aux groupe des sudoers**
+```bash
+echo "[nom_utilisateur] ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/cockpitadmin 
+```
+# Dans notre cas cockpitadmin
+
+```bash
+echo "cockpitadmin ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/cockpitadmin 
 ```
 
 ---
