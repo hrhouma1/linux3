@@ -73,6 +73,9 @@ Vous pouvez vérifier l’état du service avec la commande suivante :
 
 ```bash
 sudo systemctl status cockpit
+sudo systemctl start cockpit
+sudo systemctl enable cockpit
+sudo systemctl status cockpit
 ```
 
 Si Cockpit est bien actif, vous verrez un message indiquant qu'il est **active (running)**.  
