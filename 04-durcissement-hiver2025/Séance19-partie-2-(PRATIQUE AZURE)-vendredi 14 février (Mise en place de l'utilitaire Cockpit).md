@@ -1,7 +1,12 @@
 ### **Déploiement de Cockpit sur Azure avec Ubuntu 22.04**
+
+- Ce guide fournit une approche détaillée pour comprendre et exploiter **Cockpit** efficacement sur **Azure**.
+
+
 Dans cette version, nous allons déployer **Cockpit** sur une **machine virtuelle Ubuntu 22.04** hébergée sur **Microsoft Azure**. L’installation se fera en deux étapes :
 1. Création de l’infrastructure Azure (groupe de ressources, réseau, sous-réseaux, règles de sécurité).
 2. Déploiement d’une machine virtuelle et installation de Cockpit.
+
 
 ---
 
@@ -224,4 +229,57 @@ Cockpit est une solution puissante pour l’administration des serveurs Linux su
 - **Surveiller plusieurs serveurs depuis une seule interface Cockpit.**
 - **Intégrer Cockpit avec Prometheus pour des analyses avancées.**
 
-Ce guide fournit une approche détaillée pour comprendre et exploiter **Cockpit** efficacement sur **Azure**.
+
+
+
+
+---
+## Annexe: Suppression des ressources Azure
+---
+
+### *Méthode 1  (via la console portail Azure)*
+
+- ouvrez le portail Azure
+- cliquez sur le groupe de ressources WebServer
+- cliquez sur "Supprimer le groupe de ressources"
+- entrez le nom du groupe de ressources (WebServer)
+- cliquez sur "Supprimer"
+
+### *Méthode 2  (via le shell Azure)*
+
+```bash
+az group delete --name WebServer --yes --no-wait
+```
+
+*ou*
+
+```bash
+RESOURCE_GROUP="WebServer"
+az group delete --name $RESOURCE_GROUP --yes --no-wait
+```
+
+### *Méthode 3 (via un script)*
+
+```bash
+# Copier le script 07-script7_cleanup.sh
+touch 07-script7_cleanup.sh
+nano 07-script7_cleanup.sh
+chmod +x 07-script7_cleanup.sh
+./07-script7_cleanup.sh
+```
+
+
+# 📜 Script correspondant : `07-script7_cleanup.sh`
+
+
+```bash
+#!/bin/bash
+
+# Configuration des variables
+RESOURCE_GROUP="WebServer"
+
+# Suppression du groupe de ressources et de toutes les ressources associées
+az group delete --name $RESOURCE_GROUP --yes --no-wait
+
+echo "Azure resources are being deleted..."
+```
