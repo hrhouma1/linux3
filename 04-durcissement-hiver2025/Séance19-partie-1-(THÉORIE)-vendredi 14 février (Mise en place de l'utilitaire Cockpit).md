@@ -137,3 +137,14 @@ Cockpit est orienté **supervision et gestion en direct**, alors qu’Ansible es
 Cockpit est un **outil puissant et moderne** permettant une gestion simplifiée des serveurs Linux via une interface web intuitive. Son objectif est de **rendre l’administration accessible** tout en offrant des fonctionnalités avancées pour les administrateurs expérimentés. Sa **légèreté, sa sécurité et son extensibilité** en font un excellent choix pour gérer **des infrastructures Linux physiques et cloud**.
 
 En résumé, **Cockpit est un véritable tableau de bord Linux, centralisant toutes les commandes essentielles sans nécessiter d’interface graphique lourde**.
+
+
+# Références:
+
+- https://medium.com/@maheshwar.ramkrushna/monitoring-ubuntu-servers-with-cockpit-a-comprehensive-guide-882192dd5740
+- https://roman-academy.medium.com/how-to-install-cockpit-for-linux-ba41ee59e975
+- https://blog.raduzaharia.com/managing-virtual-machines-using-cockpit-5f8f7154dbf1
+- https://www.youtube.com/watch?v=h_LCEj0vD0M&ab_channel=LearnLinuxTV
+- https://www.youtube.com/watch?v=1HEO7qXa6jo&ab_channel=ChristianLempa
+
+
