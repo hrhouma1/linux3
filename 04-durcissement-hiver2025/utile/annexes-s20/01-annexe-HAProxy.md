@@ -106,4 +106,5 @@ HAProxy est un outil essentiel pour gérer efficacement le trafic réseau, assur
 Il permet de garantir que les services restent accessibles même en cas de panne, et optimise la distribution des connexions pour éviter la surcharge des serveurs.
 
 # Références: 
-- https://www.linkedin.com/pulse/understanding-difference-between-proxy-reverse-servers-rehouma-jgwde/
+- ROUND ROBIN: https://medium.com/@Ian_carson/load-balancers-and-the-fundamental-algorithms-it-uses-44278f68fae0
+- REVERSE PROXY: https://www.linkedin.com/pulse/understanding-difference-between-proxy-reverse-servers-rehouma-jgwde/
