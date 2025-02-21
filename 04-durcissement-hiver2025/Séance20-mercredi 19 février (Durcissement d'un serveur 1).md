@@ -534,3 +534,78 @@ sudo sysctl -p
 - Simuler des attaques pour vérifier l’efficacité des règles.
 - Automatiser la protection avec des scripts.
 
+
+---
+# Annexe 3 - Est-ce que UFW et iptables représentent la même chose ?
+---
+
+**Non, UFW et iptables ne sont pas la même chose.** UFW (*Uncomplicated Firewall*) est une **interface simplifiée** pour gérer iptables, tandis que **iptables** est un outil plus bas niveau permettant un contrôle détaillé du pare-feu sous Linux.
+
+---
+
+## **🔹 Différences entre UFW et iptables**
+
+| Critère | UFW (**Uncomplicated Firewall**) | iptables |
+|---------|----------------------------------|----------|
+| **Complexité** | Facile à utiliser (commandes simples) | Plus complexe, nécessite une bonne compréhension des chaînes et tables |
+| **Interface** | Abstraction simplifiée d’iptables | Interface brute pour manipuler directement les règles de filtrage |
+| **Syntaxe** | `ufw allow 22/tcp` (simple) | `iptables -A INPUT -p tcp --dport 22 -j ACCEPT` (plus technique) |
+| **Persistance** | Par défaut, les règles persistent après un redémarrage | Nécessite de sauvegarder et restaurer les règles manuellement |
+| **Gestion des règles** | Utilisation d’un fichier de configuration `/etc/ufw/` | Doit être configuré en ligne de commande ou via des scripts |
+| **Flexibilité** | Plus limité en termes de filtrage avancé | Permet des règles plus précises et complexes |
+| **Utilisation principale** | Pare-feu simple pour les serveurs et utilisateurs Linux | Configuration avancée de pare-feu pour la gestion fine du réseau |
+| **Compatibilité** | Basé sur iptables/nftables en arrière-plan | Directement intégré au noyau Linux |
+
+---
+
+## **🔹 Quand utiliser UFW ?**
+✅ **UFW est recommandé** si :
+- Vous voulez un pare-feu **simple** et rapide à configurer.
+- Vous gérez un **serveur personnel** ou un **petit projet**.
+- Vous n’avez pas besoin de règles complexes.
+
+### **🔹 Exemples d'utilisation de UFW**
+```bash
+sudo ufw enable  # Active le pare-feu
+sudo ufw disable  # Désactive le pare-feu
+sudo ufw status verbose  # Affiche l’état et les règles du pare-feu
+sudo ufw allow 22/tcp  # Autorise le port SSH
+sudo ufw deny 80/tcp  # Bloque le port HTTP
+sudo ufw delete allow 22/tcp  # Supprime la règle autorisant SSH
+sudo ufw reset  # Réinitialise les règles UFW
+```
+
+---
+
+## **🔹 Quand utiliser iptables ?**
+✅ **iptables est recommandé** si :
+- Vous avez besoin de **contrôler en détail** le filtrage du trafic réseau.
+- Vous administrez un serveur avec des règles avancées (ex : NAT, QoS, contrôle du trafic).
+- Vous voulez une gestion fine des paquets et des protocoles.
+
+### **🔹 Exemples d'utilisation d'iptables**
+```bash
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT  # Autorise SSH
+sudo iptables -A INPUT -p tcp --dport 80 -j DROP  # Bloque HTTP
+sudo iptables -L -v  # Liste les règles avec détails
+sudo iptables-save > /etc/iptables.rules  # Sauvegarde les règles
+sudo iptables-restore < /etc/iptables.rules  # Restaure les règles
+```
+
+---
+
+## **🔹 Faut-il utiliser UFW ou iptables ?**
+- **Pour les débutants et les configurations basiques** → **UFW** est recommandé.
+- **Pour les administrateurs systèmes et les besoins avancés** → **iptables** offre plus de contrôle.
+- **Sur Ubuntu/Debian**, UFW est installé par défaut et facilite la gestion du pare-feu.
+
+📢 **👉 Conseil** : Si vous utilisez UFW, évitez de configurer iptables manuellement, car UFW génère ses propres règles iptables en arrière-plan.
+
+---
+
+## **🚀 Conclusion**
+- **UFW** est un outil **simplifié** pour gérer iptables.
+- **iptables** est plus **puissant et flexible**, mais plus technique.
+- **Si vous voulez un pare-feu fonctionnel rapidement**, utilisez **UFW**.
+- **Si vous avez besoin d’un pare-feu avancé**, utilisez **iptables**.
+
