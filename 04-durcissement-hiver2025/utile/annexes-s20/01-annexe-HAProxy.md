@@ -104,3 +104,6 @@ Explication :
 HAProxy est un outil essentiel pour gérer efficacement le trafic réseau, assurer la haute disponibilité et améliorer les performances d’un site ou d’une application. Il est robuste, léger et très utilisé dans les grandes infrastructures, des petits sites web aux plateformes cloud complexes.  
 
 Il permet de garantir que les services restent accessibles même en cas de panne, et optimise la distribution des connexions pour éviter la surcharge des serveurs.
+
+# Références: 
+- https://www.linkedin.com/pulse/understanding-difference-between-proxy-reverse-servers-rehouma-jgwde/
