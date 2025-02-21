@@ -609,3 +609,117 @@ sudo iptables-restore < /etc/iptables.rules  # Restaure les règles
 - **Si vous voulez un pare-feu fonctionnel rapidement**, utilisez **UFW**.
 - **Si vous avez besoin d’un pare-feu avancé**, utilisez **iptables**.
 
+
+
+# Annexe 4 - Vulgarisation (version vulgarisée avec l'analogie de l'aéroport)
+
+
+# ✈️ **Filtrage de Paquets, Répartition de la Tâche et Haute Disponibilité - Version Aéroport**
+
+## **1. Introduction : L’aéroport et le contrôle des passagers**
+
+Imaginez un aéroport. Chaque jour, des milliers de passagers entrent et sortent, transportant des bagages. Mais pour éviter les dangers et garantir un bon fonctionnement, l’aéroport applique un **filtrage rigoureux** des entrées et sorties.
+
+Dans un réseau informatique, c’est la même chose ! Chaque "passager" représente un **paquet de données**, et les pare-feux (firewalls) jouent le rôle de la **sécurité aéroportuaire**.
+
+## **2. Les Contrôles de Sécurité (Filtrage de Paquets)**  
+
+Dans un aéroport, il y a plusieurs niveaux de filtrage :  
+
+- **Filtrage statique (simple contrôle d’identité) 🆔**  
+  - Un agent regarde si un passager a bien son passeport et un billet.  
+  - En informatique, cela revient à bloquer ou autoriser un paquet en fonction de l’adresse IP et du port.  
+
+- **Filtrage dynamique (contrôle des allées et venues) 🔄**  
+  - Si un passager est déjà passé par le premier contrôle et revient 10 minutes plus tard avec le même billet, on sait qu’il est déjà vérifié.  
+  - C'est comme un pare-feu qui reconnaît une connexion déjà existante et la laisse passer.  
+
+- **Inspection approfondie des bagages (Deep Packet Inspection - DPI) 🎒🔍**  
+  - Ici, la sécurité scanne non seulement le passeport, mais aussi ce qu’il y a dans le sac (interdiction des briquets, liquides, etc.).  
+  - En informatique, cela revient à analyser en détail le contenu des paquets pour détecter des virus ou du trafic suspect.  
+
+- **Contrôle par application (Passe VIP) 🌟**  
+  - Certains passagers ont un accès spécial (pilotes, diplomates).  
+  - En informatique, certaines applications sont autorisées alors que d’autres sont bloquées (exemple : bloquer YouTube sur un réseau d’entreprise).  
+
+## **3. Répartition de la Charge (Gestion des Files d’Attente dans l’Aéroport) 🏃‍♂️🏃‍♀️**  
+
+Imaginez qu’un seul agent doit contrôler 10 000 passagers... l’aéroport exploserait ! Pour éviter cela, il répartit la charge :  
+
+- **Plusieurs files d’attente avec plusieurs agents** 👮‍♂️👮‍♀️  
+  - Comme dans un réseau, le trafic est réparti sur plusieurs serveurs pour éviter la surcharge.  
+  - Un système comme **HAProxy** joue ce rôle en envoyant les passagers vers différents comptoirs de contrôle.  
+
+- **Couloir rapide pour les VIPs (Priorisation du trafic) 🚀**  
+  - Certains passagers prioritaires (ex : personnel de bord) ont une file rapide.  
+  - Sur un réseau, cela signifie que certains types de trafic (exemple : appels d’urgence) sont priorisés.  
+
+## **4. Haute Disponibilité (Prévoir les Pannes pour Garder l’Aéroport Ouvert) 🚨**  
+
+Un aéroport ne peut pas se permettre de fermer à cause d’un problème technique. Il met donc en place des **plans de secours** :  
+
+- **Deux tours de contrôle en cas de panne** 🏢➡️🏢  
+  - Si une tour a un problème, l’autre prend le relais.  
+  - Sur un réseau, un outil comme **Keepalived** attribue une adresse IP virtuelle à un serveur de secours en cas de panne.  
+
+- **Générateurs d’urgence** ⚡🔄  
+  - En cas de coupure de courant, un générateur prend le relais.  
+  - Sur un réseau, cela correspond aux **backups et redondances des serveurs**.  
+
+- **Basculement automatique (Failover) 🔄**  
+  - Si un tapis roulant tombe en panne, les passagers sont automatiquement redirigés vers un autre.  
+  - En réseau, une machine secondaire prend immédiatement le relais si la principale échoue.  
+
+## **5. Exemple Pratique : Mise en Place d’un Aéroport Sécurisé (Firewall et Répartition de Charge)**  
+
+### **5.1 Contrôle de Sécurité de Base (iptables – Filtrage de paquets)**  
+
+```bash
+iptables -P INPUT DROP
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT  # Autoriser SSH
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT  # Autoriser HTTP
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT  # Connexions établies OK
+```
+👉 **Tout est bloqué par défaut sauf les connexions nécessaires** (comme refuser l’entrée aux passagers sans billet).  
+
+### **5.2 Répartition de la Charge (HAProxy – Gestion des files d’attente)**  
+
+```haproxy
+frontend http_front
+   bind *:80
+   default_backend web_servers
+
+backend web_servers
+   balance roundrobin
+   server web1 192.168.1.10:80 check
+   server web2 192.168.1.11:80 check
+```
+👉 **Les passagers sont envoyés alternativement vers deux contrôles de sécurité pour éviter la surcharge.**  
+
+### **5.3 Haute Disponibilité (Keepalived – Prévoir les Pannes)**  
+
+```bash
+vrrp_instance VI_1 {
+   state MASTER
+   interface eth0
+   virtual_router_id 51
+   priority 100
+   advert_int 1
+   virtual_ipaddress {
+       192.168.1.100
+   }
+}
+```
+👉 **Si un serveur tombe en panne, un autre prend immédiatement sa place !**  
+
+---
+
+## **Conclusion**  
+
+Un **réseau bien sécurisé et optimisé fonctionne comme un aéroport** :  
+
+✔️ **Filtrage efficace** pour empêcher les menaces d’entrer.  
+✔️ **Répartition de la charge** pour éviter la saturation.  
+✔️ **Haute disponibilité** pour assurer un service sans interruption.  
+
+Ainsi, en combinant un bon pare-feu, une répartition intelligente du trafic et des solutions de secours, on garantit un **réseau rapide, sécurisé et fiable** ! 🚀
