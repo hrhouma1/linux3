@@ -1,5 +1,7 @@
 # **Quiz : Filtrage de Paquets, Répartition de la Tâche et Haute Disponibilité**  
 
+*Ce quiz couvre les concepts fondamentaux du **filtrage de paquets**, de la **répartition de la charge** et de la **haute disponibilité** en réseau. Le but est de tester votre compréhension des mécanismes de sécurité et d’optimisation des performances des infrastructures informatiques.*
+
 ## **Partie 1 : Filtrage de Paquets**  
 
 ### **1. Concepts de base du filtrage de paquets**  
@@ -136,6 +138,4 @@
    c) Désactiver temporairement le site web  
    d) Modifier le nom de domaine  
 
----
 
-Ce quiz couvre les concepts fondamentaux du **filtrage de paquets**, de la **répartition de la charge** et de la **haute disponibilité** en réseau. Il permet aux étudiants de tester leur compréhension des mécanismes de sécurité et d’optimisation des performances des infrastructures informatiques.
