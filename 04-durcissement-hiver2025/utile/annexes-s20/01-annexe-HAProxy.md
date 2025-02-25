@@ -1,5 +1,10 @@
 ## **Annexe : Qu’est-ce que HAProxy ?**  
 
+# Références: 
+- ROUND ROBIN: https://medium.com/@Ian_carson/load-balancers-and-the-fundamental-algorithms-it-uses-44278f68fae0
+- REVERSE PROXY: https://www.linkedin.com/pulse/understanding-difference-between-proxy-reverse-servers-rehouma-jgwde/
+
+
 ### **Introduction**  
 
 HAProxy (High Availability Proxy) est un logiciel qui sert d’**équilibreur de charge** et de **proxy**. Il est couramment utilisé pour répartir le trafic réseau entre plusieurs serveurs afin d’améliorer la performance et la disponibilité des services web.  
