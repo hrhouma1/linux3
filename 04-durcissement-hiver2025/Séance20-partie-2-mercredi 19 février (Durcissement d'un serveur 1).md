@@ -206,6 +206,34 @@ sudo systemctl enable nftables
 4. **Ajouter une règle pour restreindre l’accès SSH à une IP spécifique.**
 5. **Mettre en place une règle nftables pour limiter le nombre de connexions simultanées sur un port.**
 
+## Correction:
+
+```bash
+iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT # Autoriser les connexions entrantes sur le port 443 (HTTPS)
+iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # Autoriser les connexions entrantes sur le port 22 (SSH)
+
+# Limiter le nombre de connexions simultanées sur le port 80 (HTTP)
+# Ici, si plus de 10 connexions TCP SYN arrivent sur le port 80, elles seront rejetées
+iptables -I INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 10 -j REJECT --rej>
+
+iptables -A INPUT -s -A INPUT -s 10.80.241.90 -j ACCEPT # Autoriser l'accès uniquement à partir de l'adresse IP 10.80.241.90
+iptables -A INPUT -j DROP # Bloquer toutes les autres connexions non spécifiées précédemment
+```
+
+
+
+🔹 **Explication :**
+- `-A INPUT` : Ajoute une règle à la chaîne `INPUT` (trafic entrant).
+- `-p tcp` : Applique la règle aux paquets TCP.
+- `-m tcp --dport XX` : Filtre les paquets destinés à un port spécifique.
+- `-j ACCEPT` : Accepte les paquets correspondant à la règle.
+- `-j REJECT --reject-with tcp-reset` : Rejette la connexion avec un signal `TCP RST` (utile pour éviter les attaques de déni de service).
+- `-s 10.80.241.90` : S'applique uniquement aux connexions provenant de cette adresse IP.
+- `-j DROP` : Supprime les paquets qui n'ont pas été autorisés.
+
+Cela garantit que seuls les services essentiels sont accessibles, tout en appliquant des restrictions pour limiter les connexions abusives.
+
+
 ---
 
 ## **9️⃣ Conclusion**
