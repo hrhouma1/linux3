@@ -206,7 +206,7 @@ sudo systemctl enable nftables
 4. **Ajouter une règle pour restreindre l’accès SSH à une IP spécifique.**
 5. **Mettre en place une règle nftables pour limiter le nombre de connexions simultanées sur un port.**
 
-## Correction:
+# Correction 1 - Correction version courte
 
 ```bash
 iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT # Autoriser les connexions entrantes sur le port 443 (HTTPS)
@@ -232,6 +232,93 @@ iptables -A INPUT -j DROP # Bloquer toutes les autres connexions non spécifiée
 - `-j DROP` : Supprime les paquets qui n'ont pas été autorisés.
 
 Cela garantit que seuls les services essentiels sont accessibles, tout en appliquant des restrictions pour limiter les connexions abusives.
+
+
+# Correction 2 - Correction version longue
+
+
+
+---
+
+### **1️⃣ Bloquer l'accès au port 8080 avec iptables**
+```bash
+iptables -A INPUT -p tcp --dport 8080 -j DROP
+```
+🔹 **Explication :**  
+- `-A INPUT` : Ajoute la règle dans la chaîne `INPUT` (trafic entrant).  
+- `-p tcp --dport 8080` : Filtre les paquets TCP destinés au port 8080.  
+- `-j DROP` : Bloque ces paquets (aucune réponse envoyée au client).
+
+---
+
+### **2️⃣ Migration d’une règle iptables vers nftables**
+#### 🔹 **Règle iptables d'origine :**
+```bash
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+```
+#### 🔹 **Équivalent en nftables :**
+```bash
+nft add rule ip filter input tcp dport 22 accept
+```
+🔹 **Explication :**  
+- `nft add rule ip filter input` : Ajoute une règle dans la table `filter` pour la chaîne `input`.  
+- `tcp dport 22 accept` : Accepte le trafic TCP entrant sur le port 22.
+
+---
+
+### **3️⃣ Configuration nftables bloquant tout sauf SSH et HTTP**
+```bash
+nft add table ip filter
+nft add chain ip filter input { type filter hook input priority 0 \; }
+nft add rule ip filter input tcp dport 22 accept
+nft add rule ip filter input tcp dport 80 accept
+nft add rule ip filter input ip daddr 127.0.0.1 accept  # Autoriser le trafic local
+nft add rule ip filter input ct state established,related accept
+nft add rule ip filter input drop
+```
+🔹 **Explication :**  
+- Crée une table `filter` et une chaîne `input`.  
+- Autorise SSH (port 22) et HTTP (port 80).  
+- Permet le trafic local et les connexions établies.  
+- Bloque tout le reste.
+
+---
+
+### **4️⃣ Restreindre l'accès SSH à une IP spécifique**
+```bash
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.100 -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j DROP
+```
+🔹 **Explication :**  
+- Seule l’IP `192.168.1.100` pourra se connecter en SSH.  
+- Les autres connexions SSH sont bloquées.
+
+✅ **Équivalent en nftables :**
+```bash
+nft add rule ip filter input ip saddr 192.168.1.100 tcp dport 22 accept
+nft add rule ip filter input tcp dport 22 drop
+```
+---
+
+### **5️⃣ Limiter le nombre de connexions simultanées sur un port avec nftables**
+```bash
+nft add rule ip filter input tcp dport 80 ct state new limit rate 10/second accept
+nft add rule ip filter input tcp dport 80 drop
+```
+🔹 **Explication :**  
+- Accepte **10 nouvelles connexions par seconde** sur le port 80.  
+- Les connexions au-delà de cette limite sont **bloquées**.
+
+---
+
+### 🎯 **Résumé**
+| Exercice | iptables | nftables |
+|----------|---------|---------|
+| Bloquer le port 8080 | ✅ | ✅ |
+| Migration iptables → nftables | ✅ | ✅ |
+| Bloquer tout sauf SSH et HTTP | ✅ | ✅ |
+| Restreindre SSH à une IP | ✅ | ✅ |
+| Limiter les connexions sur un port | ✅ | ✅ |
 
 
 ---
