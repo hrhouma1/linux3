@@ -236,7 +236,7 @@ nft flush ruleset
 
 ---
 
-## **📌 Étapes suivantes**
+## **📌 Étapes suivantes pour aller loin ;) mais pas dans ce cours**
 - **Configurer un pare-feu avancé avec nftables** incluant NAT et QoS.
 - **Intégrer nftables avec fail2ban** pour bloquer les attaques SSH.
 - **Utiliser nftables pour gérer un cluster avec Kubernetes.**
