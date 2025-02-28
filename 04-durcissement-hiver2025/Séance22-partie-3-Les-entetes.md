@@ -535,3 +535,92 @@ CSP est comme une **liste VIP pour ton site web**.
 Sans CSP, n’importe qui peut ajouter du contenu sur ton site, y compris des pirates.  
 Avec CSP, seules certaines sources fiables peuvent charger des scripts, des images et des styles.
 
+
+---
+# Annexe 2 
+----
+
+### **C'est quoi MIME ?**  
+MIME (**Multipurpose Internet Mail Extensions**) est un **système qui permet d'indiquer quel type de fichier est envoyé ou reçu** sur Internet.  
+
+#### **Un exemple concret :**  
+Imaginons que tu télécharges un fichier depuis un site web. Le serveur doit dire au navigateur **de quel type de fichier il s'agit** pour qu'il puisse le traiter correctement.  
+
+Voici quelques exemples de types MIME :  
+- **`text/html`** → Une page web en HTML  
+- **`image/png`** → Une image PNG  
+- **`application/pdf`** → Un fichier PDF  
+- **`audio/mp3`** → Un fichier MP3  
+
+#### **Pourquoi c'est important ?**  
+Si le serveur ne spécifie pas clairement le type MIME, le navigateur peut essayer de le "deviner" (**MIME sniffing**). Mais **ça peut être dangereux !**  
+
+👉 **Exemple de problème :**  
+- Un site permet d’envoyer un fichier `.txt`, mais un hacker envoie un fichier avec du code JavaScript malveillant dedans.  
+- Si le navigateur décide qu’il s’agit d’un fichier HTML au lieu de `text/plain`, il va exécuter le script au lieu d'afficher du texte.  
+- Résultat : **Une attaque XSS (Cross-Site Scripting)** peut se produire et compromettre la sécurité du site.  
+
+#### **Comment empêcher ça ?**  
+On utilise le header HTTP suivant :  
+```http
+X-Content-Type-Options: nosniff
+```
+🔒 **Ce que ça fait :** Il force le navigateur à respecter le type MIME donné par le serveur, empêchant ainsi toute tentative de "sniffing" qui pourrait exécuter un fichier malveillant.  
+
+👉 **En résumé :**  
+- **MIME** = Indique le type de fichier  
+- **MIME sniffing** = Quand le navigateur essaie de deviner le type  
+- **Problème** = Ça peut permettre des attaques  
+- **Solution** = `X-Content-Type-Options: nosniff` pour bloquer cette action  
+
+
+
+
+---
+# explication détaillée de `X-Content-Type-Options`**
+---
+
+#### **1. Définition**
+Le header `X-Content-Type-Options` est une directive de sécurité HTTP qui empêche les navigateurs d'effectuer du **MIME sniffing** sur les fichiers reçus. Son objectif est d'éviter qu'un fichier soit interprété dans un format autre que celui spécifié par le serveur.
+
+#### **2. Pourquoi est-il important ?**
+Certains navigateurs tentent d'interpréter automatiquement le type de contenu des fichiers, même si le serveur spécifie un `Content-Type` incorrect ou incomplet. Cette fonctionnalité, appelée **MIME sniffing**, peut être exploitée par des attaquants pour **détourner le comportement du navigateur** et exécuter du code malveillant.
+
+##### **Exemple d'attaque sans `X-Content-Type-Options: nosniff`**
+Un site web héberge un fichier `.txt` contenant du code HTML ou JavaScript malveillant. Si un attaquant parvient à amener un utilisateur à ouvrir ce fichier dans son navigateur, celui-ci pourrait être interprété comme du code exécutable (HTML/JS), **exposant ainsi l'utilisateur à du Cross-Site Scripting (XSS)**.
+
+#### **3. Recommandation**
+Pour empêcher ce type d'attaque, il est recommandé d'ajouter ce header HTTP avec la valeur :
+
+```http
+X-Content-Type-Options: nosniff
+```
+
+Cela force le navigateur à respecter strictement le `Content-Type` renvoyé par le serveur, sans essayer de le deviner.
+
+#### **4. Implémentation**
+- **Apache** (dans `.htaccess` ou configuration globale) :
+  ```apache
+  Header set X-Content-Type-Options "nosniff"
+  ```
+
+- **Nginx** :
+  ```nginx
+  add_header X-Content-Type-Options "nosniff" always;
+  ```
+
+- **Express.js (Node.js)** :
+  ```javascript
+  app.use((req, res, next) => {
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    next();
+  });
+  ```
+
+#### **5. Bénéfices**
+- **Empêche les attaques XSS via les fichiers mal interprétés**.
+- **Renforce la sécurité en garantissant que le type de fichier envoyé est celui attendu**.
+- **Réduit les risques d’exploitation des vulnérabilités liées au MIME sniffing**.
+
+#### **6. Conclusion**
+L'ajout de `X-Content-Type-Options: nosniff` est une **mesure de sécurité simple mais efficace** qui réduit considérablement les attaques basées sur des fichiers malicieux et le **MIME sniffing**. Il est **fortement recommandé** pour tout serveur web exposant des fichiers statiques ou dynamiques.
