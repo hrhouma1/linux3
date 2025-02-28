@@ -530,7 +530,7 @@ Explication :
 
 ---
 
-### **Explication simple pour les étudiants**
+### **Explication simple**
 CSP est comme une **liste VIP pour ton site web**.  
 Sans CSP, n’importe qui peut ajouter du contenu sur ton site, y compris des pirates.  
 Avec CSP, seules certaines sources fiables peuvent charger des scripts, des images et des styles.
