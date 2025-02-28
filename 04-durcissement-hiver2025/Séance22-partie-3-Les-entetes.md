@@ -470,4 +470,68 @@ Voici les en-têtes spécifiques manquants et leur rôle :
 Ce rapport montre que le site est vulnérable à plusieurs types d’attaques en raison de l’absence d’en-têtes de sécurité critiques. En ajoutant ces headers, vous renforcerez considérablement la sécurité et la confidentialité des utilisateurs. Si vous avez besoin d'aide pour les implémenter, je peux vous guider pas à pas !
 
 
+---
+# Annexe : Analyse du site du collège maisonneuve
+---
+
+
+### **Qu'est-ce que le CSP ?**
+CSP est une règle de sécurité qui protège un site web contre certaines attaques, comme l’injection de code malveillant. Il fonctionne comme un **videur de boîte de nuit** qui décide **qui peut entrer et ce qui est interdit** sur ton site.
+
+Sans CSP → Tout le monde peut charger du contenu sur ton site, y compris des pirates.  
+Avec CSP → Seules les sources autorisées peuvent charger du contenu.
+
+---
+
+### **Pourquoi CSP est important ?**
+Il empêche des attaques comme :
+- **Les scripts malveillants (XSS)** : Un hacker peut injecter du code dangereux dans une page.
+- **Le vol de données** : Un attaquant peut récupérer des informations des utilisateurs.
+- **Le chargement de fichiers non autorisés** : Empêche le site de charger des scripts ou des images d'origine inconnue.
+
+---
+
+### **Comment fonctionne CSP ?**
+CSP fonctionne avec des **directives** qui indiquent **quelles ressources** sont autorisées sur le site.
+
+Sans CSP :  
+> Tout le monde peut charger ce qu'il veut.
+
+Avec CSP :  
+> Seules certaines sources précises peuvent charger du contenu.
+
+---
+
+### **Principales directives CSP**
+- **default-src** : Définit les sources autorisées par défaut.  
+- **script-src** : Spécifie quelles sources peuvent charger des scripts (`.js`).  
+- **img-src** : Indique quelles sources peuvent afficher des images (`.png`, `.jpg`).  
+- **style-src** : Définit les sources autorisées pour les styles (`.css`).  
+- **font-src** : Précise quelles sources peuvent charger des polices (`.woff`, `woff2`).  
+
+---
+
+### **Exemple de règle CSP**
+```plaintext
+Content-Security-Policy: default-src 'self'; script-src 'self' https://apis.google.com; img-src 'self' data:;
+```
+Explication :
+- **'self'** : Seul le site lui-même peut charger du contenu.
+- **https://apis.google.com** : Autorise Google à charger des scripts.
+- **data:** : Autorise les images encodées en base64.
+
+---
+
+### **Pourquoi CSP est en rouge sur certains sites ?**
+1. **Le site n’a pas défini de CSP** : Il n’y a aucune règle de sécurité, ce qui est risqué.  
+2. **Le site utilise des directives dangereuses** : Par exemple, `'unsafe-inline'` permet d’exécuter des scripts intégrés, ce qui facilite les attaques.  
+3. **CSP bloque une ressource utile** : Une image ou un script légitime est refusé parce qu’il n’est pas dans la liste des sources autorisées.  
+4. **Erreur de syntaxe** : La règle CSP est mal écrite et ne fonctionne pas.
+
+---
+
+### **Explication simple pour les étudiants**
+CSP est comme une **liste VIP pour ton site web**.  
+Sans CSP, n’importe qui peut ajouter du contenu sur ton site, y compris des pirates.  
+Avec CSP, seules certaines sources fiables peuvent charger des scripts, des images et des styles.
 
