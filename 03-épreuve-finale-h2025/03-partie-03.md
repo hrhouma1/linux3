@@ -108,11 +108,12 @@ Analysez la sortie de `docker ps`. Tous les conteneurs sont-ils **"Up"** ? Y a-t
 ...........................................................................................................................  
 
 ### **💬 Question 6 :**  
-Si un ou plusieurs conteneurs ne fonctionnent pas, proposez **les commandes nécessaires** pour diagnostiquer le problème.  
+Si un ou plusieurs conteneurs ne fonctionnent pas, proposez **les commandes nécessaires** pour diagnostiquer le problème et expliquez-les de manière concise, en mettant l’accent sur leur utilité dans l’analyse et la résolution du dysfonctionnement.
+
 ...........................................................................................................................  
 
 ### **💬 Question 7 :**  
-Si un ou plusieurs conteneurs ne fonctionnent pas, expliquez au moins **deux solutions** que vous proposez pour résoudre le problème. Donnez les commandes associées.  
+Si un ou plusieurs conteneurs ne fonctionnent pas, expliquez au moins **deux solutions** que vous proposez pour résoudre le problème. Donnez les commandes associées et expliquez-les de manière concise, en mettant l’accent sur leur utilité dans l’analyse et la résolution du dysfonctionnement.
 
 **Solution 1**  
 ...........................................................................................................................  
@@ -167,7 +168,7 @@ IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
 Someone could be eavesdropping on you right now (man-in-the-middle attack)!
 ```
 
-Que faire ? Donnez toutes les commandes clés pour résoudre le problème.  
+Que faire ? Donnez toutes les commandes clés pour résoudre le problème et expliquez-les de manière concise, en mettant l’accent sur leur utilité dans l’analyse et la résolution du dysfonctionnement.
 ...........................................................................................................................  
 
 ### **💬 Question 9 :**  
@@ -200,6 +201,8 @@ Donnez la commande pour supprimer un hôte connu si l’empreinte change. C'est 
 ### **💬 Question 15 :**  
 
 Finalement, c'est quoi la cause la plus probable de cette erreure dans le contexte de notre travail ? Comparez avec votre réponse initiale de la question 8 !
+Expliquez vos commandes de manière concise, en mettant l’accent sur leur utilité dans l’analyse et la résolution du dysfonctionnement.
+
 ```bash
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
