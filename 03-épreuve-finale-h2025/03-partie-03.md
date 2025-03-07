@@ -199,7 +199,7 @@ Donnez la commande pour supprimer un hôte connu si l’empreinte change. C'est 
 
 ### **💬 Question 15 :**  
 
-Finalement, c'est quoi la cause la plus probable de cette erreure dans le contexte de notre travail ? Comparez avec votre réponse initaile à la question 8 !
+Finalement, c'est quoi la cause la plus probable de cette erreure dans le contexte de notre travail ? Comparez avec votre réponse initiale de la question 8 !
 ```bash
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
