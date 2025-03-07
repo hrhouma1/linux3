@@ -169,6 +169,7 @@ Someone could be eavesdropping on you right now (man-in-the-middle attack)!
 ```
 
 Que faire ? Donnez toutes les commandes clés pour résoudre le problème et expliquez-les de manière concise, en mettant l’accent sur leur utilité dans l’analyse et la résolution du dysfonctionnement.
+
 ...........................................................................................................................  
 
 ### **💬 Question 9 :**  
